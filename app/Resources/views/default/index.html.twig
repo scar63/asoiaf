@@ -1,0 +1,212 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2>ASOIAF Army Builder</h2>
+
+
+        <form>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="factionSelect">Faction</label>
+                        <select class="form-control" id="factionSelect">
+                            {% for faction in listFaction  %}
+                                <option value="{{ faction.id }}">
+                                    {{ faction.nom }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="armyPoint">Point de l'armée</label>
+                        <input type="text" class="form-control" id="armyPoint" placeholder="0">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="commandSelect">Commandant</label>
+                        <select class="form-control" id="commandSelect">
+                            <option></option>
+                            {% for commandant in listCommandant  %}
+                                <option value="{{ commandant.id }}" data-cout="{{ commandant.cout }}" data-isunique="{{ commandant.isunique }}">
+                                    {{ commandant.nom }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="combatUnit">Ajouter une unité de combat</label>
+                        <select class="form-control" id="combatUnit">
+                            <option></option>
+                            {% for unite in listUnite  %}
+                                <option value="{{ unite.id }}" data-cout="{{ unite.cout }}" data-isunique="{{ unite.isunique }}" data-typeunite="{{ unite.typeIndividu.id }}">
+                                    {{ unite.nom }} (cout :{{ unite.cout }}, type: {{ unite.typeIndividu.nom }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="nonCombatUnit">Ajouter une unité non-combatante</label>
+                        <select class="form-control" id="nonCombatUnit">
+                            <option></option>
+                            {% for ncu in listNCU  %}
+                                <option value="{{ ncu.id }}" data-cout="{{ ncu.cout }}" data-isunique="{{ ncu.isunique }}" data-typeunite="{{ ncu.typeIndividu.id }}">
+                                    {{ ncu.nom }} ({{ ncu.cout }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="armyName">Nom de l'armée</label>
+                        <input type="email" class="form-control" id="armyName" placeholder="">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <label for="">Résumé</label>
+                    <div class="form-group">
+                        {#<textarea class="form-control" rows="3" id="resumeSelect"></textarea>#}
+                        <ul>
+                            <li>Faction : <span class="factionNameResume"></span></li>
+                            <li>Commandant : <span class="commandantNameResume">Aucun selectionné</span></li>
+                            <li>Point : <span class="pointResume">0</span></li>
+                            <li>Unité de combat :
+                                <ul class="listCombatUnitNameResume">
+                                    <li class="nothingUC">Aucune</li>
+                                </ul>
+                            </li>
+                            <li>Unité non-combatante :
+                                <ul class="listNonCombatUnitNameResume">
+                                    <li class="nothingNUC">Aucune</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+
+
+
+            <button type="button" class="btn btn-default">Générer un PDF</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" media="screen">
+    <style>
+        .listCombatUnitNameResume li {
+
+            list-style-position: outside;
+            border: 1px solid black;
+            padding: 25px;
+            margin-bottom: 5px;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/i18n/fr.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $(".factionNameResume").empty().append($("#factionSelect option:selected").text());
+            $('#commandSelect').select2();
+            $('#combatUnit').select2();
+            $('#nonCombatUnit').select2();
+        });
+
+        $('#factionSelect').on('change', function () {
+            $(".factionNameResume").empty().append($(this).find("option:selected").text());
+        });
+
+        $('#commandSelect').on('change', function () {
+            $('.commandantNameResume').empty().append($(this).find("option:selected").text());
+        });
+
+
+        $('#combatUnit').on('change', function () {
+            if($('#combatUnit option:selected').attr('data-isunique')) {
+                $('#combatUnit option:selected').prop('disabled', true);
+            }
+            $(this).select2();
+            $(".nothingUC").hide();
+
+            $(".listCombatUnitNameResume").append('<li data-idselect ="'+$(this).find("option:selected").val()+'" data-typeindividu="'+$(this).find("option:selected").data('typeunite')+'">'+$(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove"></span>' +
+                '<select class="form-control attachmentUnit" ><option>Aucun</option></select></li>');
+
+        // <br><button type="button" class="btn btn-primary addAttachment">Add attachment</button>
+        });
+
+        $('#nonCombatUnit').on('change', function () {
+            $(".nothingNUC").hide();
+            $(".listNonCombatUnitNameResume").append('<li>'+$(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove"></span></li>');
+        });
+
+        $(document).on('click', '.listCombatUnitNameResume .glyphicon-remove', function() {
+            $(this).parent('li').remove();
+            $("#combatUnit").find('option[value="'+$(this).data('idselect')+'"]').prop('disabled', false)
+            if ( $('.listCombatUnitNameResume li').length == 1 )
+                $(".nothingUC").show();
+        });
+
+        $(document).one('click', '.attachmentUnit', function() {
+
+                var toto = $(this);
+                toto
+                .find('option')
+                .remove()
+                .end();
+                $.ajax({
+                    method: "POST",
+                    url: Routing.generate('ajaxGetListAttachement'),
+                    data: { idTypeIndividu: $(this).parent('li').data('typeindividu') }
+                })
+                .done(function( msg ) {
+                    toto.append(msg);
+                });
+        });
+
+
+         // $(document).on('click', '.addAttachment', function() {
+         //     var toto = $(this);
+         //     $.ajax({
+         //         method: "POST",
+         //         url: Routing.generate('ajaxGetListAttachement'),
+         //         data: { idTypeIndividu: $(this).parent('li').data('typeindividu') }
+         //     })
+         //     .done(function( msg ) {
+         //         toto.hide();
+         //         $(msg+'<span class="glyphicon glyphicon-remove removeAttachment"></span>').insertAfter(toto);
+         //     });
+         // });
+
+         $(document).on('click', '.listNonCombatUnitNameResume .glyphicon-remove', function() {
+            $(this).parent('li').remove();
+            if ( $('.listNonCombatUnitNameResume li').length == 1 )
+                $(".nothingNUC").show();
+        });
+
+
+    </script>
+{% endblock %}

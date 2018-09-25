@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Individus list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Cout</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for individu in individus %}
+            <tr>
+                <td><a href="{{ path('individu_show', { 'id': individu.id }) }}">{{ individu.id }}</a></td>
+                <td>{{ individu.nom }}</td>
+                <td>{{ individu.cout }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('individu_show', { 'id': individu.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('individu_edit', { 'id': individu.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('individu_new') }}">Create a new individu</a>
+        </li>
+    </ul>
+{% endblock %}

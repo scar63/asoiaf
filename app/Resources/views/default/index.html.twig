@@ -136,12 +136,47 @@
             $('#nonCombatUnit').select2();
         });
 
+        /*****************DROP DOWN SELECT***********************************************************************/
+
         $('#factionSelect').on('change', function () {
             $(".factionNameResume").empty().append($(this).find("option:selected").text());
+                $.ajax({
+                    method: "POST",
+                    url: Routing.generate('ajaxGetListCommandant'),
+                    data: { faction: $(this).find("option:selected").val(), type: 1}
+                })
+                .done(function( msg ) {
+                    $('#commandSelect').html();
+                    $('#commandSelect').html(msg);
+                    $("#commandSelect").select2();
+                });
+
+            $.ajax({
+                method: "GET",
+                url: Routing.generate('ajaxGetListUC'),
+                data: { faction: $(this).find("option:selected").val(), type: 2}
+            })
+                .done(function( msg ) {
+                    $('#combatUnit').html();
+                    $('#combatUnit').html(msg);
+                    $("#combatUnit").select2();
+                });
+
+            $.ajax({
+                method: "POST",
+                url: Routing.generate('ajaxGetListNUC'),
+                data: { faction: $(this).find("option:selected").val(), type: 4}
+            })
+                .done(function( msg ) {
+                    $('#nonCombatUnit').html();
+                    $('#nonCombatUnit').html(msg);
+                    $("#nonCombatUnit").select2();
+                });
         });
 
         $('#commandSelect').on('change', function () {
             $('.commandantNameResume').empty().append($(this).find("option:selected").text());
+
         });
 
 
@@ -149,43 +184,74 @@
             if($('#combatUnit option:selected').attr('data-isunique')) {
                 $('#combatUnit option:selected').prop('disabled', true);
             }
+
+
             $(this).select2();
             $(".nothingUC").hide();
 
-            $(".listCombatUnitNameResume").append('<li data-idselect ="'+$(this).find("option:selected").val()+'" data-typeindividu="'+$(this).find("option:selected").data('typeunite')+'">'+$(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove"></span>' +
+            $(".listCombatUnitNameResume").append('<li data-cout ="'+$(this).find("option:selected").data('cout')+'" ' +
+                'data-idselect ="'+$(this).find("option:selected").val()+'" data-typeindividu="'+$(this).find("option:selected").data('typeunite')+'">'+
+                $(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove uc"></span>' +
                 '<select class="form-control attachmentUnit" ><option>Aucun</option></select></li>');
+
+            $(".pointResume").html(Number($(".pointResume").html()) + Number($('#combatUnit option:selected').attr('data-cout')));
 
         // <br><button type="button" class="btn btn-primary addAttachment">Add attachment</button>
         });
 
         $('#nonCombatUnit').on('change', function () {
-            $(".nothingNUC").hide();
-            $(".listNonCombatUnitNameResume").append('<li>'+$(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove"></span></li>');
-        });
+            if($('#nonCombatUnit option:selected').attr('data-isunique')) {
+                $('#nonCombatUnit option:selected').prop('disabled', true);
+            }
 
-        $(document).on('click', '.listCombatUnitNameResume .glyphicon-remove', function() {
-            $(this).parent('li').remove();
-            $("#combatUnit").find('option[value="'+$(this).data('idselect')+'"]').prop('disabled', false)
-            if ( $('.listCombatUnitNameResume li').length == 1 )
-                $(".nothingUC").show();
+            $(this).select2();
+            $(".nothingNUC").hide();
+
+            $(".listNonCombatUnitNameResume").append('<li>'+$(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove nuc"></span></li>');
+
+            $(".pointResume").html(Number($(".pointResume").html()) + Number($('#nonCombatUnit option:selected').attr('data-cout')));
         });
 
         $(document).one('click', '.attachmentUnit', function() {
 
-                var toto = $(this);
-                toto
+            var toto = $(this);
+            toto
                 .find('option')
                 .remove()
                 .end();
-                $.ajax({
-                    method: "POST",
-                    url: Routing.generate('ajaxGetListAttachement'),
-                    data: { idTypeIndividu: $(this).parent('li').data('typeindividu') }
-                })
+            $.ajax({
+                method: "POST",
+                url: Routing.generate('ajaxGetListAttachement'),
+                data: { idTypeIndividu: $(this).parent('li').data('typeindividu') }
+            })
                 .done(function( msg ) {
                     toto.append(msg);
                 });
         });
+
+        /*****************REMOVE***********************************************************************/
+
+        $(document).on('click', '.listCombatUnitNameResume .glyphicon-remove.uc', function() {
+            $(this).parent('li').remove();
+            $("#combatUnit").find('option[value="'+$(this).data('idselect')+'"]').prop('disabled', false)
+            if ( $('.listCombatUnitNameResume li').length == 1 )
+                $(".nothingUC").show();
+
+            $(".pointResume").html(Number($(".pointResume").html()) - Number($('#combatUnit option:selected').attr('data-cout')));
+        });
+
+        $(document).on('click', '.listNonCombatUnitNameResume .glyphicon-remove.nuc', function() {
+            $(this).parent('li').remove();
+            $("#nonCombatUnit").find('option[value="'+$(this).data('idselect')+'"]').prop('disabled', false)
+            if ( $('.listNonCombatUnitNameResume li').length == 1 )
+                $(".nothingNUC").show();
+
+            $(".pointResume").html(Number($(".pointResume").html()) - Number($('#nonCombatUnit option:selected').attr('data-cout')));
+        });
+
+
+
+
 
 
          // $(document).on('click', '.addAttachment', function() {
@@ -200,13 +266,5 @@
          //         $(msg+'<span class="glyphicon glyphicon-remove removeAttachment"></span>').insertAfter(toto);
          //     });
          // });
-
-         $(document).on('click', '.listNonCombatUnitNameResume .glyphicon-remove', function() {
-            $(this).parent('li').remove();
-            if ( $('.listNonCombatUnitNameResume li').length == 1 )
-                $(".nothingNUC").show();
-        });
-
-
     </script>
 {% endblock %}

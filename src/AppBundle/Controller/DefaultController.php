@@ -54,4 +54,59 @@ class DefaultController extends Controller
 
         return new Response($selectTotReturn);
     }
+
+    public function getListFaction()
+    {
+        return $this->getDoctrine()->getRepository(Faction::class)->findAll();
+    }
+
+    /**
+     * @Route("/ajaxGetListCommandant", name="ajaxGetListCommandant")
+     */
+    public function getListCommandant(Request $request)
+    {
+
+        $listCommandant = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction' => $request->get('faction'), 'type'=>$request->get('type')]);
+
+        $select= '';
+        foreach($listCommandant as $command)
+        {
+            $select .= '<option value='.$command->getId().' data-cout='.$command->getCout().' data-isunique='.$command->getIsUnique().'>'.$command->getNom().'</option>';
+        }
+
+        return new Response($select);
+    }
+
+    /**
+     * @Route("/ajaxGetListUC", name="ajaxGetListUC")
+     */
+    public function getListUC()
+    {
+        //type =>
+        $listUC=  $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> [$request->get('faction')], 'type' => [$request->get('type')]] );
+
+        $select= '';
+        foreach($listUC as $uc)
+        {
+            $select .= '<option value='.$uc->getId().' data-cout='.$uc->getCout().' data-isunique='.$uc->getIsUnique().'>'.$uc->getNom().'</option>';
+        }
+
+        return new Response($select);
+    }
+
+    /**
+     * @Route("/ajaxGetListNUC", name="ajaxGetListNUC")
+     */
+    public function getListNCU()
+    {
+        $listNUC=  $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> [$request->get('faction')], 'type' => [$request->get('type')]] );
+
+        $select= '';
+        foreach($listNUC as $nuc)
+        {
+            $select .= '<option value='.$nuc->getId().' data-cout='.$nuc->getCout().' data-isunique='.$nuc->getIsUnique().'>'.$nuc->getNom().'</option>';
+        }
+
+        return new Response($select);
+    }
 }

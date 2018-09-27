@@ -47,7 +47,7 @@ class DefaultController extends Controller
 
         foreach($listAttachement as $attachment)
         {
-            $selectTotReturn .= '<option value="'.$attachment->getId().'" data-cout="'.$attachment->getCout().'" data-isunique="'.$attachment->getIsUnique().'" >';
+            $selectTotReturn .= '<option value="'.$attachment->getId().'" data-cout='.$attachment->getCout().' data-typeunite="'.$attachment->getTypeIndividu()->getId().'"  data-isunique="'.$attachment->getIsUnique().'" >';
             $selectTotReturn .=  $attachment->getNom().'('.$attachment->getCout().')';
             $selectTotReturn .= '</option>';
         }
@@ -88,7 +88,7 @@ class DefaultController extends Controller
         $select= '<option></option>';
         foreach($listUC as $uc)
         {
-            $select .= '<option value='.$uc->getId().' data-cout='.$uc->getCout().' data-isunique='.$uc->getIsUnique().'>'.$uc->getNom().'</option>';
+            $select .= '<option value='.$uc->getId().' data-cout='.$uc->getCout().'  data-typeunite="'.$uc->getTypeIndividu()->getId().'"  data-isunique='.$uc->getIsUnique().'>'.$uc->getNom().'</option>';
         }
 
         return new Response($select);
@@ -104,7 +104,7 @@ class DefaultController extends Controller
         $select= '<option></option>';
         foreach($listNUC as $nuc)
         {
-            $select .= '<option value='.$nuc->getId().' data-cout='.$nuc->getCout().' data-isunique='.$nuc->getIsUnique().'>'.$nuc->getNom().'</option>';
+            $select .= '<option value='.$nuc->getId().' data-cout='.$nuc->getCout().' data-typeunite="'.$nuc->getTypeIndividu()->getId().'" data-isunique='.$nuc->getIsUnique().'>'.$nuc->getNom().'</option>';
         }
 
         return new Response($select);

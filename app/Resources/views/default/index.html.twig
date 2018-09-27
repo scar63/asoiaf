@@ -139,7 +139,11 @@
         /*****************DROP DOWN SELECT***********************************************************************/
 
         $('#factionSelect').on('change', function () {
+
+
             $(".factionNameResume").empty().append($(this).find("option:selected").text());
+            $(".commandantNameResume").empty();
+            // $(".listCombatUnitNameResume").remove();
 
             getIndividus('ajaxGetListCommandant', $(this).find("option:selected").val(), 1, '#commandSelect');
 

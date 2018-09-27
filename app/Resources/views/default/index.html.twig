@@ -140,38 +140,12 @@
 
         $('#factionSelect').on('change', function () {
             $(".factionNameResume").empty().append($(this).find("option:selected").text());
-                $.ajax({
-                    method: "POST",
-                    url: Routing.generate('ajaxGetListCommandant'),
-                    data: { faction: $(this).find("option:selected").val(), type: 1}
-                })
-                .done(function( msg ) {
-                    $('#commandSelect').html();
-                    $('#commandSelect').html(msg);
-                    $("#commandSelect").select2();
-                });
 
-            $.ajax({
-                method: "GET",
-                url: Routing.generate('ajaxGetListUC'),
-                data: { faction: $(this).find("option:selected").val(), type: 2}
-            })
-                .done(function( msg ) {
-                    $('#combatUnit').html();
-                    $('#combatUnit').html(msg);
-                    $("#combatUnit").select2();
-                });
+            getIndividus('ajaxGetListCommandant', $(this).find("option:selected").val(), 1, '#commandSelect');
 
-            $.ajax({
-                method: "POST",
-                url: Routing.generate('ajaxGetListNUC'),
-                data: { faction: $(this).find("option:selected").val(), type: 4}
-            })
-                .done(function( msg ) {
-                    $('#nonCombatUnit').html();
-                    $('#nonCombatUnit').html(msg);
-                    $("#nonCombatUnit").select2();
-                });
+            getIndividus('ajaxGetListUC', $(this).find("option:selected").val(), 2, '#combatUnit');
+
+            getIndividus('ajaxGetListNUC', $(this).find("option:selected").val(), 4, '#nonCombatUnit');
         });
 
         $('#commandSelect').on('change', function () {
@@ -185,18 +159,32 @@
                 $('#combatUnit option:selected').prop('disabled', true);
             }
 
-
             $(this).select2();
             $(".nothingUC").hide();
 
-            $(".listCombatUnitNameResume").append('<li data-cout ="'+$(this).find("option:selected").data('cout')+'" ' +
-                'data-idselect ="'+$(this).find("option:selected").val()+'" data-typeindividu="'+$(this).find("option:selected").data('typeunite')+'">'+
+            var typeIndividu = $(this).find("option:selected").data('typeunite');
+            var toAdd = '<li data-cout ="'+$(this).find("option:selected").data('cout')+'" ' +
+                'data-idselect ="'+$(this).find("option:selected").val()+'" data-typeindividu="'+typeIndividu+'">'+
                 $(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove uc"></span>' +
-                '<select class="form-control attachmentUnit" ><option>Aucun</option></select></li>');
+                '<select class="form-control attachmentUnit" >';
 
+            $.ajax({
+                method: "POST",
+                url: Routing.generate('ajaxGetListAttachement'),
+                data: {idTypeIndividu: typeIndividu},
+                async:false
+            })
+            .done(function (msg) {
+                toAdd += msg;
+
+            });
+
+            toAdd += '</select></li>';
+
+            $(".listCombatUnitNameResume").append(toAdd);
+            $('.attachmentUnit').select2();
             $(".pointResume").html(Number($(".pointResume").html()) + Number($('#combatUnit option:selected').attr('data-cout')));
 
-        // <br><button type="button" class="btn btn-primary addAttachment">Add attachment</button>
         });
 
         $('#nonCombatUnit').on('change', function () {
@@ -212,28 +200,25 @@
             $(".pointResume").html(Number($(".pointResume").html()) + Number($('#nonCombatUnit option:selected').attr('data-cout')));
         });
 
-        $(document).one('click', '.attachmentUnit', function() {
+        $(document).on('change', '.attachmentUnit', function () {
 
-            var toto = $(this);
-            toto
-                .find('option')
-                .remove()
-                .end();
-            $.ajax({
-                method: "POST",
-                url: Routing.generate('ajaxGetListAttachement'),
-                data: { idTypeIndividu: $(this).parent('li').data('typeindividu') }
-            })
-                .done(function( msg ) {
-                    toto.append(msg);
-                });
+            if($('.attachmentUnit option:selected').attr('data-isunique')) {
+                $('.attachmentUnit option:selected').prop('disabled', true);
+            }
+            $(this).select2();
+
+            $(this).parent('li').append('<br><span style="margin-left: 20px;margin-top: 20px" data-cout ="'+$(this).find("option:selected").data('cout')+'" data-idselect ="'+$(this).find("option:selected").val()+'">'+$(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove attch"></span></span>');
+
+            $(".pointResume").html(Number($(".pointResume").html()) + Number($('.attachmentUnit option:selected').attr('data-cout')));
         });
+
 
         /*****************REMOVE***********************************************************************/
 
         $(document).on('click', '.listCombatUnitNameResume .glyphicon-remove.uc', function() {
+            $("#combatUnit").find('option[value="'+$(this).parent('li').data('idselect')+'"]').prop('disabled', false);
+            $("#combatUnit").select2();
             $(this).parent('li').remove();
-            $("#combatUnit").find('option[value="'+$(this).data('idselect')+'"]').prop('disabled', false)
             if ( $('.listCombatUnitNameResume li').length == 1 )
                 $(".nothingUC").show();
 
@@ -241,8 +226,9 @@
         });
 
         $(document).on('click', '.listNonCombatUnitNameResume .glyphicon-remove.nuc', function() {
+            $("#nonCombatUnit").find('option[value="'+$(this).parent('li').data('idselect')+'"]').prop('disabled', false);
+            $("#nonCombatUnit").select2();
             $(this).parent('li').remove();
-            $("#nonCombatUnit").find('option[value="'+$(this).data('idselect')+'"]').prop('disabled', false)
             if ( $('.listNonCombatUnitNameResume li').length == 1 )
                 $(".nothingNUC").show();
 
@@ -250,21 +236,30 @@
         });
 
 
+        $(document).on('click', '.listCombatUnitNameResume .glyphicon-remove.attch', function() {
+            $(this).parent('li').find(".attachmentUnit").find('option[value="'+$(this).data('idselect')+'"]').prop('disabled', false);
+            $(this).parent('span').remove();
+            $(this).parent('li').find(".attachmentUnit").select2();
+            console.log(Number($(this).parent('span').attr('data-cout')));
+            $(".pointResume").html(Number($(".pointResume").html()) - Number($(this).parent('span').attr('data-cout')));
+        });
 
 
+        function getIndividus(route, factionId, typeId, selectId)
+        {
+            $.ajax({
+                method: "POST",
+                url: Routing.generate(route),
+                data: { faction: factionId, type: typeId},
+                async:false
+            })
+            .done(function( msg ) {
+                $(selectId).html();
+                $(selectId).html(msg);
+                $(selectId).select2();
+            });
+        }
 
 
-         // $(document).on('click', '.addAttachment', function() {
-         //     var toto = $(this);
-         //     $.ajax({
-         //         method: "POST",
-         //         url: Routing.generate('ajaxGetListAttachement'),
-         //         data: { idTypeIndividu: $(this).parent('li').data('typeindividu') }
-         //     })
-         //     .done(function( msg ) {
-         //         toto.hide();
-         //         $(msg+'<span class="glyphicon glyphicon-remove removeAttachment"></span>').insertAfter(toto);
-         //     });
-         // });
     </script>
 {% endblock %}

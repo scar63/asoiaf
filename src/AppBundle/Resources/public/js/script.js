@@ -57,7 +57,7 @@ $('#combatUnit').on('change', function () {
 
     $(".listCombatUnitNameResume").append(toAdd);
     $('.attachmentUnit').select2();
-    $(".pointResume").html(Number($(".pointResume").html()) + Number($('#combatUnit option:selected').attr('data-cout')));
+    $(".pointResume").html(Number($(".pointResume").html()) + Number($(this).find('option:selected').attr('data-cout')));
 
 });
 
@@ -69,9 +69,12 @@ $('#nonCombatUnit').on('change', function () {
     $(this).select2();
     $(".nothingNUC").hide();
 
-    $(".listNonCombatUnitNameResume").append('<li class="card">'+$(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove nuc"></span></li>');
+    var toAdd = '<li class="card" data-cout ="'+$(this).find("option:selected").data('cout')+'" data-idselect ="'+$(this).find("option:selected").val()+'">'+
+        $(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove nuc"></span></li>';
 
-    $(".pointResume").html(Number($(".pointResume").html()) + Number($('#nonCombatUnit option:selected').attr('data-cout')));
+    $(".listNonCombatUnitNameResume").append(toAdd);
+
+    $(".pointResume").html(Number($(".pointResume").html()) + Number($(this).find('option:selected').attr('data-cout')));
 });
 
 $(document).on('change', '.attachmentUnit', function () {
@@ -83,7 +86,7 @@ $(document).on('change', '.attachmentUnit', function () {
 
     $(this).parent('li').append('<br><span class="attchSelect" style="margin-left: 20px;margin-top: 20px" data-cout ="'+$(this).find("option:selected").data('cout')+'" data-idselect ="'+$(this).find("option:selected").val()+'">'+$(this).find("option:selected").text()+'<span class="glyphicon glyphicon-remove attch"></span></span>');
 
-    $(".pointResume").html(Number($(".pointResume").html()) + Number($('.attachmentUnit option:selected').attr('data-cout')));
+    $(".pointResume").html(Number($(".pointResume").html()) + Number($(this).find('option:selected').attr('data-cout')));
 });
 
 
@@ -106,12 +109,13 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon-remove.uc', functi
 $(document).on('click', '.listNonCombatUnitNameResume .glyphicon-remove.nuc', function() {
     $("#nonCombatUnit").find('option[value="'+$(this).parent('li').data('idselect')+'"]').prop('disabled', false);
     $("#nonCombatUnit").select2();
+    var count = Number($(this).parent('li').attr('data-cout'));
     $(this).parent('li').remove();
     if ( $('.listNonCombatUnitNameResume li').length == 1 )
         $(".nothingNUC").show();
     //var count = Number($(this).parent('li').attr('data-cout'));
 
-    $(".pointResume").html(Number($(".pointResume").html()) - Number($("#nonCombatUnit").find('option[value="'+$(this).parent('li').data('idselect')+'"]').attr('data-cout')));
+    $(".pointResume").html(Number($(".pointResume").html()) - Number(count));
 });
 
 

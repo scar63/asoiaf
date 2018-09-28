@@ -88,7 +88,8 @@ class DefaultController extends Controller
         $select= '<option></option>';
         foreach($listUC as $uc)
         {
-            $select .= '<option value='.$uc->getId().' data-cout='.$uc->getCout().'  data-typeunite="'.$uc->getTypeIndividu()->getId().'"  data-isunique='.$uc->getIsUnique().'>'.$uc->getNom().'</option>';
+            $select .= '<option value='.$uc->getId().' data-cout='.$uc->getCout().'  data-typeunite="'.$uc->getTypeIndividu()->getId().'"  
+            data-isunique='.$uc->getIsUnique().'>'.$uc->getNom().'(cout : '.$uc->getCout().', type: '.$uc->getTypeIndividu()->getNom().')</option>';
         }
 
         return new Response($select);
@@ -104,7 +105,8 @@ class DefaultController extends Controller
         $select= '<option></option>';
         foreach($listNUC as $nuc)
         {
-            $select .= '<option value='.$nuc->getId().' data-cout='.$nuc->getCout().' data-typeunite="'.$nuc->getTypeIndividu()->getId().'" data-isunique='.$nuc->getIsUnique().'>'.$nuc->getNom().'</option>';
+            $select .= '<option value='.$nuc->getId().' data-cout='.$nuc->getCout().' data-typeunite="'.$nuc->getTypeIndividu()->getId().'" 
+            data-isunique='.$nuc->getIsUnique().'>'.$nuc->getNom().'(cout : '.$nuc->getCout().')</option>';
         }
 
         return new Response($select);

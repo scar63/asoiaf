@@ -1,12 +1,98 @@
-$(document).ready(function() {
-
-    $(".factionNameResume").empty().append($("#factionSelect option:selected").text());
-    $('#commandSelect').select2();
-    $('#combatUnit').select2();
-    $('#nonCombatUnit').select2();
+$('#btnListUC').on('click', function () {
+//    if($('#commandSelect').find("option:selected").val() == '')
+  //      alert('Veuillez selectionner un commandant');
+    //else
+        getIndividus('ajaxGetListUC', $('#factionSelect').find("option:selected").val(), 2, '#bodyListUC', '#modalListUC');
 });
 
+
+$(document).on('click', '.btnAddUc', function () {
+
+    $.ajax({
+        method: "POST",
+        url: Routing.generate('ajaxGetInfoIndividu'),
+        data: { id: $(this).attr('id')},
+    })
+        .done(function( msg ) {
+            $(".listCombatUnitNameResume").append(msg.html);
+            $(".pointResume").html(Number($(".pointResume").html()) + Number(msg.cout));
+            $("#modalListUC").modal('hide');
+        });
+});
+
+$(document).on('click', '.btnAddNUc', function () {
+
+    $.ajax({
+        method: "POST",
+        url: Routing.generate('ajaxGetInfoIndividu'),
+        data: { id: $(this).attr('id')},
+    })
+        .done(function( msg ) {
+            $(".listNonCombatUnitNameResume").append(msg.html);
+            $(".pointResume").html(Number($(".pointResume").html()) + Number(msg.cout));
+            $("#modalListNUC").modal('hide');
+        });
+});
+
+$(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash ', function () {
+
+    var toDelete = $(this);
+    $.ajax({
+        method: "POST",
+        url: Routing.generate('ajaxGetInfoIndividu'),
+        data: { id: $(this).data('id')},
+    })
+    .done(function( msg ) {
+        $(toDelete).closest("li").remove();
+        $(".pointResume").html(Number($(".pointResume").html()) - Number(msg.cout));
+    });
+});
+
+
+$('#btnListNUC').on('click', function () {
+        getIndividus('ajaxGetListNUC', $('#factionSelect').find("option:selected").val(), 4, '#bodyListNUC', '#modalListNUC');
+});
+
+
+$(document).on('click', '.btnAddNUc', function () {
+    $("#modalListNUC").modal('hide');
+});
+
+
+
+
+
+$(document).ready(function() {
+
+    //$(".factionNameResume").empty().append($("#factionSelect option:selected").text());
+    // $('#commandSelect').select2();
+    // $('#combatUnit').select2();
+    // $('#nonCombatUnit').select2();
+});
+
+function getIndividus(route, factionId, typeId, selectId, modalId)
+{
+    $.ajax({
+        method: "POST",
+        url: Routing.generate(route),
+        data: { faction: factionId, type: typeId},
+    })
+        .done(function( msg ) {
+            $(selectId).html();
+            $(selectId).html(msg);
+            //$(selectId).select2();
+            $(modalId).modal('show');
+        });
+}
+
+
 /*****************DROP DOWN SELECT***********************************************************************/
+
+
+
+
+
+/*****************DROP DOWN SELECT**********************************************************************
 
 $('#factionSelect').on('change', function () {
 
@@ -88,10 +174,10 @@ $(document).on('change', '.attachmentUnit', function () {
 
     $(".pointResume").html(Number($(".pointResume").html()) + Number($(this).find('option:selected').attr('data-cout')));
 });
-
+ */
 
 /*****************REMOVE***********************************************************************/
-
+/*
 $(document).on('click', '.listCombatUnitNameResume .glyphicon-remove.uc', function() {
     $("#combatUnit").find('option[value="'+$(this).parent('li').data('idselect')+'"]').prop('disabled', false);
     $("#combatUnit").select2();
@@ -126,19 +212,5 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon-remove.attch', fun
     console.log(Number($(this).parent('span').attr('data-cout')));
     $(".pointResume").html(Number($(".pointResume").html()) - Number($(this).parent('span').attr('data-cout')));
 });
+*/
 
-
-function getIndividus(route, factionId, typeId, selectId)
-{
-    $.ajax({
-        method: "POST",
-        url: Routing.generate(route),
-        data: { faction: factionId, type: typeId},
-        async:false
-    })
-        .done(function( msg ) {
-            $(selectId).html();
-            $(selectId).html(msg);
-            $(selectId).select2();
-        });
-}

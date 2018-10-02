@@ -1,41 +1,83 @@
+$('#btnListCmd').on('click', function () {
+    if($('#factionSelect').find("option:selected").val() == '')
+        alert('Veuillez selectionner une faction');
+    else
+        getIndividus($('#factionSelect').find("option:selected").val(), 1, '.listCmd', '#modalListCmd', 'btnAddCmd');
+});
+
 $('#btnListUC').on('click', function () {
-//    if($('#commandSelect').find("option:selected").val() == '')
-  //      alert('Veuillez selectionner un commandant');
-    //else
-        getIndividus('ajaxGetListUC', $('#factionSelect').find("option:selected").val(), 2, '#bodyListUC', '#modalListUC');
+   if($('#factionSelect').find("option:selected").val() == '')
+       alert('Veuillez selectionner une faction');
+    else
+        getIndividus($('#factionSelect').find("option:selected").val(), 2, '.listUC', '#modalListUC', 'btnAddUc');
+});
+
+$('#btnListNUC').on('click', function () {
+    if($('#factionSelect').find("option:selected").val() == '')
+        alert('Veuillez selectionner une faction');
+    else
+    getIndividus($('#factionSelect').find("option:selected").val(), 4, '.listNUC', '#modalListNUC', 'btnAddNUc');
 });
 
 
-$(document).on('click', '.btnAddUc', function () {
-
+$(document).on('click', '.btnAddCmd', function () {
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetInfoIndividu'),
         data: { id: $(this).attr('id')},
     })
-        .done(function( msg ) {
-            $(".listCombatUnitNameResume").append(msg.html);
-            $(".pointResume").html(Number($(".pointResume").html()) + Number(msg.cout));
-            $("#modalListUC").modal('hide');
+        .done(function( individuInfo ) {
+            var ul = '';
+            ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
+            ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span>';
+            ul += '</li>'
+            ul += '</ul>';
+            $(".commandantNameResume").empty();
+            $(".commandantNameResume").append(ul);
+            $("#modalListCmd").modal('hide');
         });
+});
+
+$(document).on('click', '.btnAddUc', function () {
+    $.ajax({
+        method: "POST",
+        url: Routing.generate('ajaxGetInfoIndividu'),
+        data: { id: $(this).attr('id')},
+    })
+    .done(function( individuInfo ) {
+        var ul = '';
+        ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
+        ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span>';
+        ul += '</li>'
+        ul += '</ul>';
+
+        $(".listCombatUnitNameResume").append(ul);
+        $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+        $("#modalListUC").modal('hide');
+    });
 });
 
 $(document).on('click', '.btnAddNUc', function () {
-
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetInfoIndividu'),
         data: { id: $(this).attr('id')},
     })
-        .done(function( msg ) {
-            $(".listNonCombatUnitNameResume").append(msg.html);
-            $(".pointResume").html(Number($(".pointResume").html()) + Number(msg.cout));
-            $("#modalListNUC").modal('hide');
-        });
+    .done(function( individuInfo ) {
+        var ul = '';
+        ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
+        ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span>';
+        ul += '</li>'
+        ul += '</ul>';
+        $(".listNonCombatUnitNameResume").append(ul);
+        $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+        $("#modalListNUC").modal('hide');
+    });
 });
 
-$(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash ', function () {
 
+
+$(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .listNonCombatUnitNameResume .glyphicon.glyphicon-trash, .commandantNameResume .glyphicon.glyphicon-trash', function () {
     var toDelete = $(this);
     $.ajax({
         method: "POST",
@@ -49,14 +91,36 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash ',
 });
 
 
-$('#btnListNUC').on('click', function () {
-        getIndividus('ajaxGetListNUC', $('#factionSelect').find("option:selected").val(), 4, '#bodyListNUC', '#modalListNUC');
-});
+function getIndividus(factionId, typeId, selectId, modalId, btnToAdd)
+{
+    $.ajax({
+        method: "POST",
+        url: Routing.generate('ajaxGetListIndividus'),
+        data: { faction: factionId, type: typeId},
+    })
+    .done(function( msg ) {
+
+        var ul = '';
+        for(var individuInfo in msg){
+            ul += '<li><span class="row">'+msg[individuInfo].nom+'</span>';
+            ul += '<span class="row">';
+            if(selectId != '.listCmd')
+                ul += msg[individuInfo].cout+' points - ';
+            ul += msg[individuInfo].typeIndividu;
+            ul +='</span>';
+            ul += '<span class="row text-center"><button type="button" class="btn btn-primary '+btnToAdd+'" id="'+msg[individuInfo].id+'">Ajouter</button></span>';
+            ul += '</li>'
+        }
+        ul += '</ul>';
+ 
+        $(selectId).empty();
+        $(selectId).append(ul);
+        $(modalId).modal('show');
+    });
+}
 
 
-$(document).on('click', '.btnAddNUc', function () {
-    $("#modalListNUC").modal('hide');
-});
+
 
 
 
@@ -70,20 +134,7 @@ $(document).ready(function() {
     // $('#nonCombatUnit').select2();
 });
 
-function getIndividus(route, factionId, typeId, selectId, modalId)
-{
-    $.ajax({
-        method: "POST",
-        url: Routing.generate(route),
-        data: { faction: factionId, type: typeId},
-    })
-        .done(function( msg ) {
-            $(selectId).html();
-            $(selectId).html(msg);
-            //$(selectId).select2();
-            $(modalId).modal('show');
-        });
-}
+
 
 
 /*****************DROP DOWN SELECT***********************************************************************/

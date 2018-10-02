@@ -95,4 +95,4 @@ braincrafted_bootstrap:
         bootstrap_output: '%kernel.root_dir%/Resources/less/bootstrap.less'
 
 fos_js_routing:
-    routes_to_expose: [ ajaxGetListAttachement, ajaxGetListCommandant, ajaxGetListUC, ajaxGetListNUC, ajaxGetInfoIndividu ]
+    routes_to_expose: [ ajaxGetListAttachement, ajaxGetInfoIndividu, ajaxGetListIndividus ]

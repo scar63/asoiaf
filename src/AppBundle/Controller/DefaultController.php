@@ -66,11 +66,15 @@ class DefaultController extends Controller
     {
         $indivu = $this->getDoctrine()->getRepository(Individu::class)->findOneById($request->get('id'));
 
+        if(!empty($request->get('idChild')))
+            $indivuAttch = $this->getDoctrine()->getRepository(Individu::class)->findOneById($request->get('idChild'));
+
         $infoIndividu = array(
             'id' => $indivu->getId(),
             'nom' => $indivu->getNom(),
             'cout' => $indivu->getCout(),
-            'typeIndividu' => $indivu->getTypeIndividu()->getNom()
+            'typeIndividu' => $indivu->getTypeIndividu()->getNom(),
+            'coutAttch' => (isset($indivuAttch)?$indivuAttch->getCout():0)
         );
 
         return new JsonResponse($infoIndividu);

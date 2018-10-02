@@ -5,6 +5,10 @@ $('#armyPoint').on('change', function () {
     $(".onPoints").html($(this).val());
 });
 
+$('#factionSelect').on('change', function () {
+    $(".factionNameResume").empty().append($(this).find("option:selected").text());
+});
+
 $('#btnListCmd').on('click', function () {
     if ($('#factionSelect').find("option:selected").val() == '')
         alert('Veuillez selectionner une faction');

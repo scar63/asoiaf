@@ -51,7 +51,8 @@ class DefaultController extends Controller
                 'id' => $uc->getId(),
                 'nom' => $uc->getNom(),
                 'cout' => $uc->getCout(),
-                'typeIndividu' => $uc->getTypeIndividu()->getNom()
+                'typeIndividu' => $uc->getTypeIndividu()->getNom(),
+                'isUnique' => $uc->getIsUnique()
             );
         }
 

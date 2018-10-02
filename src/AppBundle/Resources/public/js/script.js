@@ -57,7 +57,7 @@ $(document).on('click', '.btnAddUc', function () {
     })
     .done(function( individuInfo ) {
         var ul = '';
-        ul += '<li><span class="col-lg-11 col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
+        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
         ul += '<span class="pull-right"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
         ul += '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="'+individuInfo.id+'">Ajouter un attachment</button>';
         ul += '</li>';
@@ -76,7 +76,7 @@ $(document).on('click', '.btnAddNUc', function () {
     })
     .done(function( individuInfo ) {
         var ul = '';
-        ul += '<li><span class="col-lg-11 col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
+        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
         ul += '<span class="pull-right"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
         ul += '</li>';
         $(".listNonCombatUnitNameResume").append(ul);
@@ -95,8 +95,8 @@ $(document).on('click', '.btnAddAttachment', function () {
     })
     .done(function( individuInfo ) {
         var ul = '';
-        ul += '<ul><li class="attachmentResume"><span class="col-lg-11 col-xs-11 col-lg-offset-1" >avec '+individuInfo.nom+'('+individuInfo.cout+')';
-        ul += '<span class="pull-right" style="margin-right: 0.8em"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span></li></ul>';
+        ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'('+individuInfo.cout+')';
+        ul += '<span class="pull-right" style="margin-right: 0.8em"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></div>';
         $(".listCombatUnitNameResume").find("[data-idattach='" + idBtnClick + "']").replaceWith(ul);
         //$(".listNonCombatUnitNameResume").append(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));

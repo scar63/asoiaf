@@ -1,3 +1,6 @@
+$('#resetForm').on('click', function () {
+    location.reload(true);
+});
 $('#armyPoint').on('change', function () {
     $(".onPoints").html($(this).val());
 });
@@ -21,6 +24,11 @@ $('#btnListNUC').on('click', function () {
         alert('Veuillez selectionner une faction');
     else
     getIndividus($('#factionSelect').find("option:selected").val(), 4, '.listNUC', '#modalListNUC', 'btnAddNUc');
+});
+
+$(document).on('click', '#btnListAttchment', function () {
+
+    getIndividus($('#factionSelect').find("option:selected").val(), 3, '.listAttachment', '#modalListAttachment', 'btnAddAttachment', $(this).data('idattach'));
 });
 
 
@@ -49,8 +57,9 @@ $(document).on('click', '.btnAddUc', function () {
     })
     .done(function( individuInfo ) {
         var ul = '';
-        ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
-        ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span>';
+        ul += '<li><span class="col-lg-11 col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
+        ul += '<span class="pull-right"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
+        ul += '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="'+individuInfo.id+'">Ajouter un attachment</button>';
         ul += '</li>';
 
         $(".listCombatUnitNameResume").append(ul);
@@ -67,12 +76,31 @@ $(document).on('click', '.btnAddNUc', function () {
     })
     .done(function( individuInfo ) {
         var ul = '';
-        ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
-        ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span>';
+        ul += '<li><span class="col-lg-11 col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
+        ul += '<span class="pull-right"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
         ul += '</li>';
         $(".listNonCombatUnitNameResume").append(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
         $("#modalListNUC").modal('hide');
+    });
+});
+
+
+$(document).on('click', '.btnAddAttachment', function () {
+    var idBtnClick = $(this).data('idbtntoreplace');
+    $.ajax({
+        method: "POST",
+        url: Routing.generate('ajaxGetInfoIndividu'),
+        data: { id: $(this).attr('id')},
+    })
+    .done(function( individuInfo ) {
+        var ul = '';
+        ul += '<ul><li class="attachmentResume"><span class="col-lg-11 col-xs-11 col-lg-offset-1" >avec '+individuInfo.nom+'('+individuInfo.cout+')';
+        ul += '<span class="pull-right" style="margin-right: 0.8em"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span></li></ul>';
+        $(".listCombatUnitNameResume").find("[data-idattach='" + idBtnClick + "']").replaceWith(ul);
+        //$(".listNonCombatUnitNameResume").append(ul);
+        $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+        $("#modalListAttachment").modal('hide');
     });
 });
 
@@ -92,7 +120,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
 });
 
 
-function getIndividus(factionId, typeId, selectId, modalId, btnToAdd)
+function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idAttachBtnToRepace = null)
 {
     $.ajax({
         method: "POST",
@@ -106,14 +134,14 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd)
             var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
             ul += '<li>';
             if ((totalPoints > Number($("#armyPoint").val())))
-                ul += '<span class="row alert alert-danger col-lg-12" style="margin-left: 0">Le total des points ne peut pas dépasser la limite de taille de l\'armée.</span>';
+                ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Le total des points ne peut pas dépasser la limite de taille de l\'armée.</span>';
             ul += '<span class="row">' + msg[individuInfo].nom + '</span>';
             ul += '<span class="row">';
             if (selectId != '.listCmd')
                 ul += msg[individuInfo].cout + ' points - ';
             ul += msg[individuInfo].typeIndividu;
             ul += '</span>';
-            ul += '<span class="row text-center"><button type="button" class="btn btn-primary ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
+            ul += '<span class="row text-center"><button data-idbtntoreplace="'+idAttachBtnToRepace+'" type="button" class="btn btn-primary ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
             if(msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0)
                 ul += ' disabled ';
             ul += ' >Ajouter</button></span>';

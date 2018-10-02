@@ -2,9 +2,20 @@
 
 {% block body %}
     <div class="container">
-        <h1>ASOIAF Army Builder</h1>
-
-
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h1>ASOIAF Army Builder</h1>
+            </div>
+            <div class="col-lg-2">
+                <div class="languageSwitch dropdown pull-right">
+                    <a class="btn" btn-primary="" dropdown-toggle="" data-toggle="dropdown" href="#">Français&nbsp;<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="">Français</a></li>
+                        <li><a href="">English</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <form>
             <div class="row">
                 <div class="col-lg-6">
@@ -23,7 +34,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="armyPoint">Point de l'armée</label>
-                        <input type="number" min="10" max="100" class="form-control" id="armyPoint" placeholder="0">
+                        <input type="number" min="10" max="100" class="form-control" id="armyPoint"  pattern="\d*">
                     </div>
                 </div>
             </div>
@@ -58,10 +69,10 @@
                     </div>
                     <br>
                     <button type="button" class="btn btn-default">Générer un PDF</button>
-
                 </div>
                 <div class="col-lg-6">
                     <label for="">Résumé</label>
+                    <button type="button"  class="btn btn-default pull-right" title="Réinitialiser le formualaire" id="resetForm"><span class="glyphicon glyphicon-refresh"></span></button>
                     <div class="form-group">
                         <ul>
                             <li>Faction : <span class="factionNameResume"></span></li>
@@ -71,7 +82,7 @@
                                 <ul class="listCombatUnitNameResume">
                                 </ul>
                             </li>
-                            <li>Unité non-combatante :
+                            <li style="clear: both;">Unité non-combatante :
                                 <ul class="listNonCombatUnitNameResume">
                                 </ul>
                             </li>
@@ -129,6 +140,20 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalListAttachment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Attachment</h4>
+                </div>
+                <div class="modal-body"  id="bodyListAttachment"  style="max-height: 450px; overflow-x: auto">
+                    <ul class="listAttachment"></ul>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block stylesheets %}
@@ -138,7 +163,23 @@
             content: '';
             color: white;
             float: none;
+            padding-right: 0;
+            padding-top: 0;
         }
+
+        .languageSwitch  li::before, .attachmentResume::before{
+            content: '';
+            content: '';
+            color: white;
+            float: none;
+            font-size: 0.8em;
+            padding-right: 0;
+            padding-top: 0;
+        }
+
+        /*.listCombatUnitNameResume li::before, .listNonCombatUnitNameResume li::before{*/
+            /*padding-right: 0;*/
+        /*}*/
     </style>
 {% endblock %}
 {% block javascripts %}

@@ -42,6 +42,19 @@ class Individu
      */
     private $isUnique;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pathRectoPicture", type="string", length=500)
+     */
+    private $pathRectoPicture;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pathVersoPicture", type="string", length=500)
+     */
+    private $pathVersoPicture;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Faction")
@@ -213,5 +226,53 @@ class Individu
     public function getIsUnique()
     {
         return $this->isUnique;
+    }
+
+    /**
+     * Set pathRectoPicture
+     *
+     * @param string $pathRectoPicture
+     *
+     * @return Individu
+     */
+    public function setPathRectoPicture($pathRectoPicture)
+    {
+        $this->pathRectoPicture = $pathRectoPicture;
+
+        return $this;
+    }
+
+    /**
+     * Get pathRectoPicture
+     *
+     * @return string
+     */
+    public function getPathRectoPicture()
+    {
+        return $this->pathRectoPicture;
+    }
+
+    /**
+     * Set pathVersoPicture
+     *
+     * @param string $pathVersoPicture
+     *
+     * @return Individu
+     */
+    public function setPathVersoPicture($pathVersoPicture)
+    {
+        $this->pathVersoPicture = $pathVersoPicture;
+
+        return $this;
+    }
+
+    /**
+     * Get pathVersoPicture
+     *
+     * @return string
+     */
+    public function getPathVersoPicture()
+    {
+        return $this->pathVersoPicture;
     }
 }

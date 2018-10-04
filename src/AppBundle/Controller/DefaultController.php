@@ -45,12 +45,14 @@ class DefaultController extends Controller
         //type =>
         $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> [$request->get('faction')], 'type' => [$request->get('type')]] );
 
+        $manager = $this->get('assets.packages');
         $arrayCollection = array();
         foreach($listUC as $uc) {
             $arrayCollection[] = array(
                 'id' => $uc->getId(),
                 'nom' => $uc->getNom(),
                 'cout' => $uc->getCout(),
+                'pathRecto' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathRectoPicture(),
                 'typeIndividu' => $uc->getTypeIndividu()->getNom(),
                 'isUnique' => $uc->getIsUnique()
             );

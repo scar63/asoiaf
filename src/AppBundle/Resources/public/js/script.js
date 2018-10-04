@@ -150,13 +150,13 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idAttachBt
             ul += '<li>';
             if ((totalPoints > Number($("#armyPoint").val())))
                 ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Le total des points ne peut pas dépasser la limite de taille de l\'armée.</span>';
-            ul += '<span class="row">' + msg[individuInfo].nom + '</span>';
-            ul += '<span class="row">';
+            ul += '<span class="row">' + msg[individuInfo].nom + '<br>';
             if (selectId != '.listCmd')
                 ul += msg[individuInfo].cout + ' points - ';
             ul += msg[individuInfo].typeIndividu;
             ul += '</span>';
-            ul += '<span class="row text-center"><button data-idbtntoreplace="'+idAttachBtnToRepace+'" type="button" class="btn btn-primary ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
+            ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathRecto+'"></image></span>';
+            ul += '<br><span class="row text-center"><button data-idbtntoreplace="'+idAttachBtnToRepace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
             if(msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0)
                 ul += ' disabled ';
             ul += ' >Ajouter</button></span>';

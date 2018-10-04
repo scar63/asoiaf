@@ -52,7 +52,7 @@ class DefaultController extends Controller
                 'id' => $uc->getId(),
                 'nom' => $uc->getNom(),
                 'cout' => $uc->getCout(),
-                'pathRecto' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathRectoPicture(),
+                'pathVerso' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathVersoPicture(),
                 'typeIndividu' => $uc->getTypeIndividu()->getNom(),
                 'isUnique' => $uc->getIsUnique()
             );

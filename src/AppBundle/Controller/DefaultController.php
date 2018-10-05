@@ -42,8 +42,19 @@ class DefaultController extends Controller
      */
     public function getListIndividus(Request $request)
     {
-        //type =>
-        $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> [$request->get('faction')], 'type' => [$request->get('type')]] );
+        //type => 1 général , 2 unité, 3 attach, 4 NCU
+        //typeIndividu 1 infanterie, 2 CAvaleire, 3 Monstre, 4 ncu
+        //faction starr = 1 et lanniseter 2
+         $type[] = $request->get('type');
+       //  if($request->get('type' == 3))
+         //  $type = 1;
+
+         $faction[] = $request->get('faction');
+         //add neutre
+         if(($request->get('type') == 2 or $request->get('type') == 3 or $request->get('type') == 4) && ($request->get('faction') == 1 or $request->get('faction') == 2))
+           $faction[] = "3";
+
+        $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type ]);
 
         $manager = $this->get('assets.packages');
         $arrayCollection = array();

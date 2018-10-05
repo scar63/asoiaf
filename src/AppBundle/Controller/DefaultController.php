@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-
+use Doctrine\Common\Collections\ArrayCollection;
 class DefaultController extends Controller
 {
     /**
@@ -45,16 +45,38 @@ class DefaultController extends Controller
         //type => 1 général , 2 unité, 3 attach, 4 NCU
         //typeIndividu 1 infanterie, 2 CAvaleire, 3 Monstre, 4 ncu
         //faction starr = 1 et lanniseter 2
-         $type[] = $request->get('type');
-       //  if($request->get('type' == 3))
-         //  $type = 1;
 
          $faction[] = $request->get('faction');
+         $type[] = $request->get('type');
+         if($request->get('type' )== 3)
+         {
+             $typeIndividu = [1,2]; //on ajoute les type 1 (générals) et typeIndividu 1(infaterie), 2(Cavalerie)
+             $listUCCmd = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu]);
+         }
+
+         if($request->get('type' )== 4)
+         {
+             $typeIndividu = [4]; //on ajoute les type 1 (générals) et typeIndividu 1(infaterie), 2(Cavalerie)
+             $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu]);
+         }
+
          //add neutre
          if(($request->get('type') == 2 or $request->get('type') == 3 or $request->get('type') == 4) && ($request->get('faction') == 1 or $request->get('faction') == 2))
            $faction[] = "3";
 
         $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type ]);
+
+        if(isset($listUCCmd))
+            $listUC = new ArrayCollection(
+                array_merge($listUCCmd, $listUC)
+            );
+
+        if(isset($listUCNUC))
+            $listUC = new ArrayCollection(
+                array_merge($listUCNUC, $listUC)
+            );
+
+
 
         $manager = $this->get('assets.packages');
         $arrayCollection = array();

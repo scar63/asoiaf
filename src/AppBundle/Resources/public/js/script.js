@@ -140,7 +140,7 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idAttachBt
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetListIndividus'),
-        data: { faction: factionId, type: typeId},
+        data: { faction: factionId, type: typeId, individuId: idAttachBtnToRepace },
     })
     .done(function( msg ) {
 

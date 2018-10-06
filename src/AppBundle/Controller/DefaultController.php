@@ -48,11 +48,6 @@ class DefaultController extends Controller
 
          $faction[] = $request->get('faction');
          $type[] = $request->get('type');
-         if($request->get('type' )== 3)
-         {
-             $typeIndividu = [1,2]; //on ajoute les type 1 (générals) et typeIndividu 1(infaterie), 2(Cavalerie)
-             $listUCCmd = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu]);
-         }
 
          if($request->get('type' )== 4)
          {
@@ -64,7 +59,22 @@ class DefaultController extends Controller
          if(($request->get('type') == 2 or $request->get('type') == 3 or $request->get('type') == 4) && ($request->get('faction') == 1 or $request->get('faction') == 2))
            $faction[] = "3";
 
-        $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type ]);
+         //knight & gregor clegane
+        if($request->get('type' )== 3)
+        {
+            $indivu = $this->getDoctrine()->getRepository(Individu::class)->findOneById($request->get('individuId'));
+            $typeIndividu = [$indivu->getTypeIndividu()->getId()]
+            $type [] = 1; //on ajoute les type 1 (générals)
+            $em = $this->getDoctrine()->getEntityManager();
+            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu)' )
+                ->setParameter('faction', $faction)
+                ->setParameter('type', $type)
+                ->setParameter('typeIndividu', $typeIndividu);
+
+            $listUC= $query->getResult();
+        }
+        else
+            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type ]);
 
         if(isset($listUCCmd))
             $listUC = new ArrayCollection(

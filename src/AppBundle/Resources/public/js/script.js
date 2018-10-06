@@ -148,6 +148,11 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idAttachBt
         for(var individuInfo in msg) {
             var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
             ul += '<li>';
+            if(msg[individuInfo].factionId == '3'){
+                var neutralLimit = (Number($(".pointResume").html()) / Number($("#armyPoint").val()))*50;
+                if(Number(msg[individuInfo].cout) > neutralLimit)
+                    ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
+            }
             if ((totalPoints > Number($("#armyPoint").val())))
                 ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Le total des points ne peut pas dépasser la limite de taille de l\'armée.</span>';
             ul += '<span class="row">' + msg[individuInfo].nom + '<br>';

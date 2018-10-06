@@ -44,7 +44,7 @@ class DefaultController extends Controller
     {
         //type => 1 général , 2 unité, 3 attach, 4 NCU
         //typeIndividu 1 infanterie, 2 CAvaleire, 3 Monstre, 4 ncu
-        //faction starr = 1 et lanniseter 2
+        //faction starr = 1 et lanniseter 2 neutre 3
 
          $faction[] = $request->get('faction');
          $type[] = $request->get('type');
@@ -97,7 +97,8 @@ class DefaultController extends Controller
                 'cout' => $uc->getCout(),
                 'pathVerso' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathVersoPicture(),
                 'typeIndividu' => $uc->getTypeIndividu()->getNom(),
-                'isUnique' => $uc->getIsUnique()
+                'isUnique' => $uc->getIsUnique(),
+                'factionId' => $uc->getFaction()->getId(),
             );
         }
 

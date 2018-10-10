@@ -126,7 +126,6 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         if(!isAttch)
             $(toDelete).closest("li").remove();
         else {
-            console.log('qsdf');
             var btn = '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="' + child + '">Ajouter un attachment</button>';
             $(toDelete).parent().parent().replaceWith(btn);
         }

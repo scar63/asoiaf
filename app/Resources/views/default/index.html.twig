@@ -16,61 +16,68 @@
                 </div>
             </div>
         </div>
-        <form>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="factionSelect">Faction</label>
-                        <select class="form-control" id="factionSelect">
-                            <option></option>
-                            {% for faction in listFaction  %}
-                                <option value="{{ faction.id }}">
-                                    {{ faction.nom }}
-                                </option>
-                            {% endfor %}
-                        </select>
+        <div class="row">
+            <div class="col-sm-6">
+                <form>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="factionSelect">Faction</label>
+                                <select class="form-control" id="factionSelect">
+                                    <option></option>
+                                    {% for faction in listFaction  %}
+                                        <option value="{{ faction.id }}">
+                                            {{ faction.nom }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="armyPoint">Point de l'armée</label>
-                        <input type="number" min="10" max="100" class="form-control" id="armyPoint"  pattern="\d*">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="armyPoint">Point de l'armée</label>
+                                <input type="number" min="10" max="100" class="form-control" id="armyPoint"  pattern="\d*">
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="commandSelect">Commandant</label>
+                                <button id="btnListCmd" type="button" class="btn btn-primary form-control">Ajouter un commandant</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="combatUnit">Unité de combat</label>
+                                <button id="btnListUC" type="button" class="btn btn-primary form-control">Ajouter une unité de combat</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="nonCombatUnit">Unité non-combatante</label>
+                                <button id="btnListNUC" type="button" class="btn btn-primary form-control">Ajouter une unité non-combatante</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="armyName">Nom de l'armée</label>
+                                <input type="email" class="form-control" id="armyName" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="commandSelect">Commandant</label>
-                        <button id="btnListCmd" type="button" class="btn btn-primary form-control">Ajouter un commandant</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="combatUnit">Unité de combat</label>
-                        <button id="btnListUC" type="button" class="btn btn-primary form-control">Ajouter une unité de combat</button>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="nonCombatUnit">Unité non-combatante</label>
-                        <button id="btnListNUC" type="button" class="btn btn-primary form-control">Ajouter une unité non-combatante</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="armyName">Nom de l'armée</label>
-                        <input type="email" class="form-control" id="armyName" placeholder="">
-                    </div>
-                    <br>
-                    <button type="button" class="btn btn-default">Générer un PDF</button>
-                </div>
-                <div class="col-lg-6">
+            <div class="col-sm-6">
+                <div class="col-xs-12">
                     <label for="">Résumé</label>
                     <button type="button"  class="btn btn-default pull-right" title="Réinitialiser le formualaire" id="resetForm"><span class="glyphicon glyphicon-refresh"></span></button>
                     <div class="form-group">
@@ -88,10 +95,11 @@
                             </li>
                         </ul>
                     </div>
+                    <br>
+                    <button type="button" class="btn btn-default">Générer un PDF</button>
                 </div>
             </div>
-
-        </form>
+        </div>
     </div>
 
 

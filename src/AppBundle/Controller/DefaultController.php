@@ -55,11 +55,11 @@ class DefaultController extends Controller
              $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu]);
          }
 
-         //add neutre
-         if(($request->get('type') == 2 or $request->get('type') == 3 or $request->get('type') == 4) && ($request->get('faction') == 1 or $request->get('faction') == 2))
+         //add faction neutre
+         if(($request->get('type') != 1) && ($request->get('faction') != 3))
            $faction[] = "3";
 
-         //knight & gregor clegane
+         //si c'est un attachment alors on recup les général et indivdus avec le même typed'Individu que celui attaché
         if($request->get('type' )== 3)
         {
             $indivu = $this->getDoctrine()->getRepository(Individu::class)->findOneById($request->get('individuId'));
@@ -73,13 +73,16 @@ class DefaultController extends Controller
 
             $listUC= $query->getResult();
         }
+        //si commandant et faction non neutre alors on ajoute les commandant neutres
+        elseif($request->get('type' )== 1)
+        {
+            if($faction != 3)
+                $faction [] = 3;
+            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type ]);
+        }
         else
             $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type ]);
 
-        if(isset($listUCCmd))
-            $listUC = new ArrayCollection(
-                array_merge($listUCCmd, $listUC)
-            );
 
         if(isset($listUCNUC))
             $listUC = new ArrayCollection(
@@ -97,6 +100,7 @@ class DefaultController extends Controller
                 'cout' => $uc->getCout(),
                 'pathVerso' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathVersoPicture(),
                 'typeIndividu' => $uc->getTypeIndividu()->getNom(),
+                'type' => $uc->getType()->getId(),
                 'isUnique' => $uc->getIsUnique(),
                 'factionId' => $uc->getFaction()->getId(),
             );

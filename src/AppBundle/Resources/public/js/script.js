@@ -63,7 +63,7 @@ $(document).on('click', '.btnAddUc', function () {
         var ul = '';
         ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
-        ul += '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="'+individuInfo.id+'">Ajouter un attachment</button>';
+        ul += '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="'+individuInfo.id+'">Ajouter un attachement</button>';
         ul += '</li>';
 
         $(".listCombatUnitNameResume").append(ul);
@@ -126,7 +126,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         if(!isAttch)
             $(toDelete).closest("li").remove();
         else {
-            var btn = '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="' + child + '">Ajouter un attachment</button>';
+            var btn = '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="' + child + '">Ajouter un attachement</button>';
             $(toDelete).parent().parent().replaceWith(btn);
         }
         $(".pointResume").html(Number($(".pointResume").html()) - Number(msg.cout) - Number(msg.coutAttch));

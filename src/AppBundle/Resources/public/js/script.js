@@ -30,9 +30,9 @@ $('#btnListNUC').on('click', function () {
     getIndividus($('#factionSelect').find("option:selected").val(), 4, '.listNUC', '#modalListNUC', 'btnAddNUc');
 });
 
-$(document).on('click', '#btnListAttchment', function () {
+$(document).on('click', '.btnListAttchment', function () {
 
-    getIndividus($('#factionSelect').find("option:selected").val(), 3, '.listAttachment', '#modalListAttachment', 'btnAddAttachment', $(this).data('idattach'));
+    getIndividus($('#factionSelect').find("option:selected").val(), 3, '.listAttachment', '#modalListAttachment', 'btnAddAttachment', $(this).data('iducrattach'),  $(this).attr('id'));
 });
 
 
@@ -60,10 +60,11 @@ $(document).on('click', '.btnAddUc', function () {
         data: { id: $(this).attr('id')},
     })
     .done(function( individuInfo ) {
+        var random = Math.round(new Date().getTime() + (Math.random() * 100));
         var ul = '';
         ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
-        ul += '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="'+individuInfo.id+'">Ajouter un attachement</button>';
+        ul += '<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>';
         ul += '</li>';
 
         $(".listCombatUnitNameResume").append(ul);
@@ -90,8 +91,8 @@ $(document).on('click', '.btnAddNUc', function () {
 });
 
 
-$(document).on('click', '.btnAddAttachment', function () {
-    var idBtnClick = $(this).data('idbtntoreplace');
+$(document).on('click', '.btnAddAttachment', function (e) {
+    var idAttchBtnToReplace = $(this).data('idattchbtntoreplace');
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetInfoIndividu'),
@@ -101,8 +102,7 @@ $(document).on('click', '.btnAddAttachment', function () {
         var ul = '';
         ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'('+individuInfo.cout+')';
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></div>';
-        $(".listCombatUnitNameResume").find("[data-idattach='" + idBtnClick + "']").replaceWith(ul);
-        //$(".listNonCombatUnitNameResume").append(ul);
+        $("#"+idAttchBtnToReplace).replaceWith(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
         $("#modalListAttachment").modal('hide');
     });
@@ -126,7 +126,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         if(!isAttch)
             $(toDelete).closest("li").remove();
         else {
-            var btn = '<button id="btnListAttchment" type="button" class="btn btn-primary btn-sm" style="margin-left: 3.5em;" data-idattach="' + child + '">Ajouter un attachement</button>';
+            var btn = '<button type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + child + '">Ajouter un attachement</button>';
             $(toDelete).parent().parent().replaceWith(btn);
         }
         $(".pointResume").html(Number($(".pointResume").html()) - Number(msg.cout) - Number(msg.coutAttch));
@@ -134,12 +134,12 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
 });
 
 
-function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idAttachBtnToRepace = null)
+function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattach = null, idAttchBtnToReplace=null)
 {
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetListIndividus'),
-        data: { faction: factionId, type: typeId, individuId: idAttachBtnToRepace },
+        data: { faction: factionId, type: typeId, individuId: idUCrattach },
     })
     .done(function( msg ) {
 
@@ -160,7 +160,7 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idAttachBt
             ul += msg[individuInfo].typeIndividu;
             ul += '</span>';
             ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
-            ul += '<br><span class="row text-center"><button data-idbtntoreplace="'+idAttachBtnToRepace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
+            ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
             if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
                 ul += ' disabled ';
             ul += ' >Ajouter</button></span>';

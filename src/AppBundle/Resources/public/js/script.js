@@ -49,6 +49,10 @@ $(document).on('click', '.btnAddCmd', function () {
             ul += '</li>';
             $(".commandantNameResume").empty();
             $(".commandantNameResume").append(ul);
+            //si cmd est NCU alors ajoute direct à attement
+            if(individuInfo.typeIndividuId == 4)
+                addNCU(individuInfo);
+
             $("#modalListCmd").modal('hide');
         });
 });
@@ -80,16 +84,21 @@ $(document).on('click', '.btnAddNUc', function () {
         data: { id: $(this).attr('id')},
     })
     .done(function( individuInfo ) {
-        var ul = '';
-        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
-        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
-        ul += '</li>';
-        $(".listNonCombatUnitNameResume").append(ul);
-        $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
-        $("#modalListNUC").modal('hide');
+        addNCU(individuInfo);
     });
 });
 
+
+function addNCU(individuInfo)
+{
+    var ul = '';
+    ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
+    ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
+    ul += '</li>';
+    $(".listNonCombatUnitNameResume").append(ul);
+    $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+    $("#modalListNUC").modal('hide');
+}
 
 $(document).on('click', '.btnAddAttachment', function (e) {
     var idAttchBtnToReplace = $(this).data('idattchbtntoreplace');

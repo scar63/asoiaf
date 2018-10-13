@@ -124,6 +124,7 @@ class DefaultController extends Controller
             'nom' => $indivu->getNom(),
             'cout' => $indivu->getCout(),
             'typeIndividu' => $indivu->getTypeIndividu()->getNom(),
+            'typeIndividuId' => $indivu->getTypeIndividu()->getId(),
             'coutAttch' => (isset($indivuAttch)?$indivuAttch->getCout():0)
         );
 

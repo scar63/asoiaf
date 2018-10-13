@@ -158,7 +158,7 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
             ul += '<li>';
             if(msg[individuInfo].factionId == '3'){
                 var neutralLimit = (Number($(".pointResume").html()) / Number($("#armyPoint").val()))*50;
-                if(Number(msg[individuInfo].cout) > neutralLimit)
+                if(Number(msg[individuInfo].cout) > neutralLimit && $("#factionSelect option:selected").val() != 3)
                     ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
             }
             if ((totalPoints > Number($("#armyPoint").val())))

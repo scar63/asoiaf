@@ -125,6 +125,10 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
     var isAttch = toDelete.hasClass('attchment');
     if(!isAttch)
         child = toDelete.parent().parent().parent().find('.glyphicon.glyphicon-trash.attchment').data('id');
+    else {
+        child = toDelete.data('id');
+        console.log(child);
+    }
 
     $.ajax({
         method: "POST",
@@ -135,7 +139,8 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         if(!isAttch)
             $(toDelete).closest("li").remove();
         else {
-            var btn = '<button type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + child + '">Ajouter un attachement</button>';
+            var random = Math.round(new Date().getTime() + (Math.random() * 100));
+            var btn = '<button type="button" id="attachFrom'+random+'" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + child + '">Ajouter un attachement</button>';
             $(toDelete).parent().parent().replaceWith(btn);
         }
         $(".pointResume").html(Number($(".pointResume").html()) - Number(msg.cout) - Number(msg.coutAttch));

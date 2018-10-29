@@ -29,6 +29,20 @@ class Individu
     private $nom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nomFr", type="string", length=255)
+     */
+    private $nomFr;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomEs", type="string", length=255)
+     */
+    private $nomEs;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="cout", type="integer")
@@ -274,5 +288,53 @@ class Individu
     public function getPathVersoPicture()
     {
         return $this->pathVersoPicture;
+    }
+
+    /**
+     * Set nomFr
+     *
+     * @param string $nomFr
+     *
+     * @return Individu
+     */
+    public function setNomFr($nomFr)
+    {
+        $this->nomFr = $nomFr;
+
+        return $this;
+    }
+
+    /**
+     * Get nomFr
+     *
+     * @return string
+     */
+    public function getNomFr()
+    {
+        return $this->nomFr;
+    }
+
+    /**
+     * Set nomEs
+     *
+     * @param string $nomEs
+     *
+     * @return Individu
+     */
+    public function setNomEs($nomEs)
+    {
+        $this->nomEs = $nomEs;
+
+        return $this;
+    }
+
+    /**
+     * Get nomEs
+     *
+     * @return string
+     */
+    public function getNomEs()
+    {
+        return $this->nomEs;
     }
 }

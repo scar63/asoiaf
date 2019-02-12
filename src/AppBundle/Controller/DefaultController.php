@@ -14,6 +14,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * @Route("/{_locale}/", requirements={"_locale":"%app.locales%"} , name="homepageLocale")
      */
     public function indexAction(Request $request)
     {
@@ -99,6 +100,7 @@ class DefaultController extends Controller
                 'nom' => $uc->getNom(),
                 'cout' => $uc->getCout(),
                 'pathVerso' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathVersoPicture(),
+                'pathRecto' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathRectoPicture(),
                 'typeIndividu' => $uc->getTypeIndividu()->getNom(),
                 'type' => $uc->getType()->getId(),
                 'isUnique' => $uc->getIsUnique(),

@@ -173,7 +173,12 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
                 ul += msg[individuInfo].cout + ' points - ';
             ul += msg[individuInfo].typeIndividu;
             ul += '</span>';
-            ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
+            if(typeId == "1") {
+                ul += '<span class="row"><image class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></image>';
+                ul += '<image class="img-responsive col-xs-6 clearfix" src="'+msg[individuInfo].pathRecto+'"></image></span>';
+            }
+            else
+                ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
             ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
             if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
                 ul += ' disabled ';

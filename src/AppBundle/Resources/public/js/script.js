@@ -73,6 +73,7 @@ $(document).on('click', '.btnAddUc', function () {
 
         $(".listCombatUnitNameResume").append(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+        checkIfOutOfScore();
         $("#modalListUC").modal('hide');
     });
 });
@@ -100,6 +101,7 @@ function addNCU(individuInfo)
     ul += '</li>';
     $(".listNonCombatUnitNameResume").append(ul);
     $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+    checkIfOutOfScore();
     //si NCU est cmd alors ajoute direct à cmd
     if(individuInfo.typeId == 1)
     {
@@ -126,6 +128,7 @@ $(document).on('click', '.btnAddAttachment', function (e) {
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></div>';
         $("#"+idAttchBtnToReplace).replaceWith(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+        checkIfOutOfScore();
         $("#modalListAttachment").modal('hide');
     });
 });
@@ -168,6 +171,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
             $(toDelete).parent().parent().replaceWith(btn);
         }
         $(".pointResume").html(Number($(".pointResume").html()) - Number(msg.cout) - Number(msg.coutAttch));
+        checkIfOutOfScore();
     });
 });
 
@@ -224,7 +228,15 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
 
 
 
+function checkIfOutOfScore(){
+    var pointresume = Number($(".pointResume").html());
+    var on = Number($(".onPoints").html());
 
+    if(pointresume > on)
+        $('#limitOut').removeClass('hidden');
+    else if(!$('#limitOut').hasClass('hidden'))
+            $('#limitOut').addClass('hidden');
+}
 
 
 

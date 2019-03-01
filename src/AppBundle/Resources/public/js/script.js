@@ -93,10 +93,23 @@ function addNCU(individuInfo)
 {
     var ul = '';
     ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
-    ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
+    ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" ';
+    if(individuInfo.typeId == 1)
+        ul += 'data-isncucmd="true"';
+    ul += '></span></span></span>';
     ul += '</li>';
     $(".listNonCombatUnitNameResume").append(ul);
     $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+    //si NCU est cmd alors ajoute direct à cmd
+    if(individuInfo.typeId == 1)
+    {
+        var ul = '';
+        ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
+        ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-isncucmd="true"></span>';
+        ul += '</li>';
+        $(".commandantNameResume").empty();
+        $(".commandantNameResume").append(ul);
+    }
     $("#modalListNUC").modal('hide');
 }
 
@@ -123,6 +136,8 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
     var toDelete = $(this);
     var child = null;
     var isAttch = toDelete.hasClass('attchment');
+    var isNCnuCmd = toDelete.data('isncucmd');
+    //si c'est pas un attch, on check si y a pas un enfant
     if(!isAttch)
         child = toDelete.parent().parent().parent().find('.glyphicon.glyphicon-trash.attchment').data('id');
     else {
@@ -137,7 +152,16 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
     })
     .done(function( msg ) {
         if(!isAttch)
-            $(toDelete).closest("li").remove();
+        {
+            //si ncu et command on doit doit delete le cmd et le ncu
+            if(isNCnuCmd){
+                $(".commandantNameResume").find('[data-isncucmd="true"]').closest("li").remove();
+                $(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').closest("li").remove();
+            }
+            else
+                $(toDelete).closest("li").remove();
+
+        }
         else {
             var random = Math.round(new Date().getTime() + (Math.random() * 100));
             var btn = '<button type="button" id="attachFrom'+random+'" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + child + '">Ajouter un attachement</button>';
@@ -168,10 +192,13 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
             }
             if ((totalPoints > Number($("#armyPoint").val())))
                 ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Le total des points ne peut pas dépasser la limite de taille de l\'armée.</span>';
-            ul += '<span class="row">' + msg[individuInfo].nom + '<br>';
+            ul += '<span class="row">' + msg[individuInfo].nom;
+            ul += '<br>';
             if (selectId != '.listCmd')
                 ul += msg[individuInfo].cout + ' points - ';
             ul += msg[individuInfo].typeIndividu;
+            if(msg[individuInfo].type == 1)
+                ul += '<span class="glyphicon glyphicon-king" style="margin-left: 5px"></span>';
             ul += '</span>';
             if(typeId == "1" || typeId == "3" || typeId == "4") {
                 ul += '<span class="row"><image class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></image>';
@@ -180,7 +207,9 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
             else
                 ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
             ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
-            if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
+            //if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
+            //pas un cas spécial  ?
+            if(msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 )
                 ul += ' disabled ';
             ul += ' >Ajouter</button></span>';
             ul += '</li><hr>';

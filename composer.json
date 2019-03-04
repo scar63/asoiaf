@@ -36,7 +36,8 @@
         "twbs/bootstrap": "~3.3",
         "components/jquery": "~3.3",
         "oyejorge/less.php": "~1.7.0.9",
-        "friendsofsymfony/jsrouting-bundle": "~2.2"
+        "friendsofsymfony/jsrouting-bundle": "~2.2",
+        "knplabs/knp-snappy-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

@@ -16,91 +16,91 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <form>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for="factionSelect">Faction</label>
-                                <select class="form-control" id="factionSelect">
-                                    <option></option>
-                                    {% for faction in listFaction  %}
-                                        <option value="{{ faction.id }}">
-                                            {{ faction.nom }}
-                                        </option>
-                                    {% endfor %}
-                                </select>
+        <form action="{{ path('ajaxGeneratePDF') }}" method="POST">
+            <div class="row">
+                <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="factionSelect">Faction</label>
+                                    <select class="form-control" id="factionSelect">
+                                        <option></option>
+                                        {% for faction in listFaction  %}
+                                            <option value="{{ faction.id }}">
+                                                {{ faction.nom }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for="armyPoint">Point de l'armée</label>
-                                <input type="number" min="10" max="100" class="form-control" id="armyPoint"  pattern="\d*">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="armyPoint">Point de l'armée</label>
+                                    <input type="number" min="10" max="100" class="form-control" id="armyPoint" name="armyPoint"  pattern="\d*">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for="commandSelect">Commandant</label>
-                                <button id="btnListCmd" type="button" class="btn btn-primary form-control">Ajouter un commandant</button>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="commandSelect">Commandant</label>
+                                    <button id="btnListCmd" type="button" class="btn btn-primary form-control">Ajouter un commandant</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for="combatUnit">Unité de combat</label>
-                                <button id="btnListUC" type="button" class="btn btn-primary form-control">Ajouter une unité de combat</button>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="combatUnit">Unité de combat</label>
+                                    <button id="btnListUC" type="button" class="btn btn-primary form-control">Ajouter une unité de combat</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for="nonCombatUnit">Unité non-combattante (NCU)</label>
-                                <button id="btnListNUC" type="button" class="btn btn-primary form-control">Ajouter une unité non-combatante</button>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="nonCombatUnit">Unité non-combattante (NCU)</label>
+                                    <button id="btnListNUC" type="button" class="btn btn-primary form-control">Ajouter une unité non-combatante</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="form-group">
-                                <label for="armyName">Nom de l'armée</label>
-                                <input type="email" class="form-control" id="armyName" placeholder="">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label for="armyName">Nom de l'armée</label>
+                                    <input type="text" class="form-control" id="armyName" name="armyName" placeholder="">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-sm-6">
-                <div id="limitOut" class="alert alert-danger hidden" role="alert">Le total de points ne peut pas dépasser la taille limite de l'armée.</div>
-                <div class="col-xs-12">
-                    <label for="">Résumé</label>
-                    <button type="button"  class="btn btn-default pull-right" title="Réinitialiser le formualaire" id="resetForm"><span class="glyphicon glyphicon-refresh"></span></button>
-                    <div class="form-group">
-                        <ul>
-                            <li>Faction : <span class="factionNameResume"></span></li>
-                            <li>Commandant : <ul class="commandantNameResume"></ul></li>
-                            <li>Points : <span class="pointResume">0</span>/<span class="onPoints">0</span></li>
-                            <li>Unités de combat :
-                                <ul class="listCombatUnitNameResume">
+                </div>
+                <div class="col-sm-6">
+                    <div id="limitOut" class="alert alert-danger hidden" role="alert">Le total de points ne peut pas dépasser la taille limite de l'armée.</div>
+                    <div class="col-xs-12">
+                        <label for="">Résumé</label>
+                        <button type="button"  class="btn btn-default pull-right" title="Réinitialiser le formualaire" id="resetForm"><span class="glyphicon glyphicon-refresh"></span></button>
+                            <div class="form-group">
+                                <ul>
+                                    <li>Faction : <span class="factionNameResume"></span></li>
+                                    <li>Commandant : <ul class="commandantNameResume"></ul></li>
+                                    <li>Points : <span class="pointResume">0</span>/<span class="onPoints">0</span></li>
+                                    <li>Unités de combat :
+                                        <ul class="listCombatUnitNameResume">
+                                        </ul>
+                                    </li>
+                                    <li style="clear: both;">Unités non-combattantes (NCU) :
+                                        <ul class="listNonCombatUnitNameResume">
+                                        </ul>
+                                    </li>
                                 </ul>
-                            </li>
-                            <li style="clear: both;">Unités non-combattantes (NCU) :
-                                <ul class="listNonCombatUnitNameResume">
-                                </ul>
-                            </li>
-                        </ul>
+                            </div>
+                            <br>
+                            <button id="generatePDF" type="submit" class="btn btn-default pull-right">Générer un PDF</button>
                     </div>
-                    <br>
-                    <button type="button" class="btn btn-default pull-right">Générer un PDF</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
 

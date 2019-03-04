@@ -154,4 +154,39 @@ class DefaultController extends Controller
 
         return new Response($selectTotReturn);
     }
+
+
+    /**
+     * @Route("/ajaxGeneratePDF", name="ajaxGeneratePDF")
+     */
+    public function ajaxGeneratePDf(Request $request)
+    {
+        $faction = $this->getDoctrine()->getRepository(Faction::class)->findOneBy(['id'=>$request->get('factionID')]);
+        $cmd = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$request->get('cmdID')]);
+
+        $listPathUc = [];
+        foreach($request->get('ucID') as $ucId)
+        {
+            $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$ucId]);
+            $listPathUc[] = $uc->getPathRectoPicture();
+        }
+
+        $html = $this->renderView(':pdf:resume.html.twig',
+            array(
+                'pathCmdPicture' =>$cmd->getPathRectoPicture(),
+                'listPathUc' =>$listPathUc,
+                'nameFaction'  => $faction->getNom(),
+                'armyPoint'  => $request->get('armyPoint'),
+                'armyName'  => $request->get('armyName'),
+            ));
+        $response = new Response();
+
+        $response->setContent($this->get('knp_snappy.pdf')->getOutputFromHtml($html,array('orientation' => 'Landscape','load-error-handling' => 'ignore')));
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Type', ' charset=utf-8');
+        $response->headers->set('Content-disposition', 'filename=1.pdf');
+
+        return $response;
+
+    }
 }

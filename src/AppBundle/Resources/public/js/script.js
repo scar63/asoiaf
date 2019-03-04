@@ -6,8 +6,8 @@ $('#armyPoint').on('change', function () {
 });
 
 $('#factionSelect').on('change', function () {
-    $(".factionNameResume").empty().append($(this).find("option:selected").text());
-});
+    var infoFactionSelect = '<input type="hidden" name="factionID" value="'+$(this).find("option:selected").val()+'"/>';
+    $(".factionNameResume").empty().append($(this).find("option:selected").text()+infoFactionSelect);});
 
 $('#btnListCmd').on('click', function () {
     if ($('#factionSelect').find("option:selected").val() == '')
@@ -45,7 +45,9 @@ $(document).on('click', '.btnAddCmd', function () {
         .done(function( individuInfo ) {
             var ul = '';
             ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
-            ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span>';
+            ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'">';
+            ul +=  '<input type="hidden" name="cmdID" value="'+individuInfo.id+'"/>';
+            ul +=  '</span>';
             ul += '</li>';
             $(".commandantNameResume").empty();
             $(".commandantNameResume").append(ul);
@@ -67,7 +69,9 @@ $(document).on('click', '.btnAddUc', function () {
         var random = Math.round(new Date().getTime() + (Math.random() * 100));
         var ul = '';
         ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
-        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span></span></span>';
+        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'"></span>';
+        ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
+        ul +=   '</span></span>';
         ul += '<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>';
         ul += '</li>';
 
@@ -108,6 +112,7 @@ function addNCU(individuInfo)
         var ul = '';
         ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
         ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-isncucmd="true"></span>';
+        ul +=  '<input type="hidden" name="nucID[]" value="'+individuInfo.id+'"/>';
         ul += '</li>';
         $(".commandantNameResume").empty();
         $(".commandantNameResume").append(ul);
@@ -145,7 +150,6 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         child = toDelete.parent().parent().parent().find('.glyphicon.glyphicon-trash.attchment').data('id');
     else {
         child = toDelete.data('id');
-        console.log(child);
     }
 
     $.ajax({
@@ -236,6 +240,10 @@ function checkIfOutOfScore(){
         $('#limitOut').removeClass('hidden');
     else if(!$('#limitOut').hasClass('hidden'))
             $('#limitOut').addClass('hidden');
+
+    if(Number(msg[individuInfo].cout) > neutralLimit && $("#factionSelect option:selected").val() != 3)
+        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
+
 }
 
 

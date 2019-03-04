@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Titre de la page</title>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"></head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-xs-4">MAISON {{ nameFaction }}</div>
+                <div class="col-xs-4">{{ armyName }}</div>
+                <div class="col-xs-4">{{ armyPoint }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">Logo MAISON STARK</div>
+                <div class="col-xs-8">Général de l'armée</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-offset-4 col-xs-8">
+                    <ul class="list-inline">
+                        <li class="col-xs-4"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  pathCmdPicture }}"/></li></ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-6 text-center">Unités</div>
+                        <div class="col-xs-6 text-center">Attachements</div>
+                    </div>
+                    {% for path in listPathUc %}
+                        <div class="row">
+                            <div class="col-xs-offset-1 col-xs-4 text-center"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  path }}"/></div>
+                            <div class="col-xs-offset-2 col-xs-4 text-center"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  path }}"/></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

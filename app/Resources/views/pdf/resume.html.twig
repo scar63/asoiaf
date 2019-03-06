@@ -2,42 +2,82 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>Titre de la page</title>
+    <title>Asoiaf</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"></head>
-<body>
-    <div class="container">
-        <div class="jumbotron">
-            <div class="row">
-                <div class="col-xs-4">MAISON {{ nameFaction }}</div>
-                <div class="col-xs-4">{{ armyName }}</div>
-                <div class="col-xs-4">{{ armyPoint }}</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">Logo MAISON STARK</div>
-                <div class="col-xs-8">Général de l'armée</div>
-            </div>
-            <div class="row">
-                <div class="col-xs-offset-4 col-xs-8">
-                    <ul class="list-inline">
-                        <li class="col-xs-4"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  pathCmdPicture }}"/></li></ul>
-                </div>
-            </div>
+    <style>
+        .input{
+            display: block;
+            margin-top: 5px;
+        }
 
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="row">
-                        <div class="col-xs-6 text-center">Unités</div>
-                        <div class="col-xs-6 text-center">Attachements</div>
-                    </div>
-                    {% for path in listPathUc %}
-                        <div class="row">
-                            <div class="col-xs-offset-1 col-xs-4 text-center"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  path }}"/></div>
-                            <div class="col-xs-offset-2 col-xs-4 text-center"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  path }}"/></div>
-                        </div>
-                    {% endfor %}
-                </div>
+        .parentInput{
+            background-color: white;
+            height: 30px;
+        }
+
+        .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3,
+        .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,
+        .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8,
+        .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10,
+        .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12,
+        .col-xs-offset-1,.col-xs-offset-2{
+            border:0;
+            padding:0;
+        }
+
+    </style>
+<body style="background-color: #eeeeee;">
+    <div class="jumbotron">
+        <div class="container"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2">MAISON {{ nameFaction }}</div>
+            <div class="col-xs-6 text-center parentInput">
+                <span class="input">{{ armyName }}</span>
+            </div>
+            <div class="col-xs-1"></div>
+            <div class="col-xs-3 text-center parentInput">
+                <span class="input">{{ armyPoint }}
+                </span>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12">Logo</div>
+        </div>
+        <div class="row">
+
+            <div class="col-xs-offset-2 col-xs-10 text-center parentInput" style="">
+                <span class="input">Général de l'armée</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-offset-2 col-xs-10">
+                <ul class="list-inline" style=" margin-top: 15px;">
+                    <li class="col-xs-3"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  pathCmdPicture }}"/></li></ul>
+            </div>
+        </div>
+
+        <br>
+        <div class="row" style="border-style: dotted;padding: 10px;">
+            <div class="col-xs-12">
+                <div class="row"  style="margin-bottom: 15px;">
+                    <div class="col-xs-6 text-center">
+                        <span>Unités</span>
+                    </div>
+                    <div class="col-xs-6 text-center">
+                        <span>Attachements</span>
+                    </div>
+                </div>
+                {% for path in listPathUc %}
+                    <div class="row">
+                        <div class="col-xs-offset-1 col-xs-4 text-center"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  path }}"/></div>
+                        <div class="col-xs-offset-2 col-xs-4 text-center"><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  path }}"/></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
     </div>
 </body>
 </html>

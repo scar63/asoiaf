@@ -180,8 +180,10 @@ class DefaultController extends Controller
                 'armyName'  => $request->get('armyName'),
             ));
         $response = new Response();
-
-        $response->setContent($this->get('knp_snappy.pdf')->getOutputFromHtml($html,array('orientation' => 'Landscape','load-error-handling' => 'ignore')));
+        $mpdf = new \Mpdf\Mpdf(['tempDir' =>  sys_get_temp_dir().DIRECTORY_SEPARATOR.'mpdf', 'format' => 'Legal' ]);
+        $mpdf->AddPage('P');
+        $mpdf->WriteHTML($html);
+        $response->setContent($mpdf->Output());
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Type', ' charset=utf-8');
         $response->headers->set('Content-disposition', 'filename=1.pdf');

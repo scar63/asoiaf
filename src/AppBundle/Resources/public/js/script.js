@@ -241,8 +241,8 @@ function checkIfOutOfScore(){
     else if(!$('#limitOut').hasClass('hidden'))
             $('#limitOut').addClass('hidden');
 
-    if(Number(msg[individuInfo].cout) > neutralLimit && $("#factionSelect option:selected").val() != 3)
-        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
+    // if(Number(msg[individuInfo].cout) > neutralLimit && $("#factionSelect option:selected").val() != 3)
+    //     ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
 
 }
 

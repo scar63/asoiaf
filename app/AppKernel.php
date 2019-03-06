@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new TFox\MpdfPortBundle\TFoxMpdfPortBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

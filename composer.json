@@ -37,7 +37,7 @@
         "components/jquery": "~3.3",
         "oyejorge/less.php": "~1.7.0.9",
         "friendsofsymfony/jsrouting-bundle": "~2.2",
-        "knplabs/knp-snappy-bundle": "dev-master"
+        "tfox/mpdf-port-bundle" : "~2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

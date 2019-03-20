@@ -31,21 +31,21 @@ class Individu
     /**
      * @var string
      *
-     * @ORM\Column(name="nomFr", type="string", length=255)
+     * @ORM\Column(name="nomFr", type="string", length=255, nullable=true)
      */
     private $nomFr;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nomEs", type="string", length=255)
+     * @ORM\Column(name="nomEs", type="string", length=255, nullable=true)
      */
     private $nomEs;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="cout", type="integer")
+     * @ORM\Column(name="cout", type="integer", options={"default" : 0})
      */
     private $cout;
 
@@ -59,14 +59,14 @@ class Individu
     /**
      * @var string
      *
-     * @ORM\Column(name="pathRectoPicture", type="string", length=500)
+     * @ORM\Column(name="pathRectoPicture", type="string", length=500, nullable=true)
      */
     private $pathRectoPicture;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pathVersoPicture", type="string", length=500)
+     * @ORM\Column(name="pathVersoPicture", type="string", length=500, nullable=true)
      */
     private $pathVersoPicture;
 
@@ -87,6 +87,13 @@ class Individu
      * @ORM\JoinColumn(nullable=false)
      */
     private $typeIndividu;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="personnageRealName", type="string", length=500, nullable=true)
+     */
+    private $personnageRealName;
 
     /**
      * Get id
@@ -336,5 +343,21 @@ class Individu
     public function getNomEs()
     {
         return $this->nomEs;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPersonnageRealName()
+    {
+        return $this->personnageRealName;
+    }
+
+    /**
+     * @param string $personnageRealName
+     */
+    public function setPersonnageRealName($personnageRealName)
+    {
+        $this->personnageRealName = $personnageRealName;
     }
 }

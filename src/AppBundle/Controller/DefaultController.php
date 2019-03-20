@@ -105,6 +105,7 @@ class DefaultController extends Controller
                 'type' => $uc->getType()->getId(),
                 'isUnique' => $uc->getIsUnique(),
                 'factionId' => $uc->getFaction()->getId(),
+                'realName' => $uc->getPersonnageRealName(),
             );
         }
 
@@ -128,7 +129,8 @@ class DefaultController extends Controller
             'typeIndividu' => $indivu->getTypeIndividu()->getNom(),
             'typeIndividuId' => $indivu->getTypeIndividu()->getId(),
             'typeId' => $indivu->getType()->getId(),
-            'coutAttch' => (isset($indivuAttch)?$indivuAttch->getCout():0)
+            'coutAttch' => (isset($indivuAttch)?$indivuAttch->getCout():0),
+            'realName' => $indivu->getPersonnageRealName(),
         );
 
         return new JsonResponse($infoIndividu);

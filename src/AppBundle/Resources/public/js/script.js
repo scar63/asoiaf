@@ -45,7 +45,7 @@ $(document).on('click', '.btnAddCmd', function () {
         .done(function( individuInfo ) {
             var ul = '';
             ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
-            ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'">';
+            ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'">';
             ul +=  '<input type="hidden" name="cmdID" value="'+individuInfo.id+'"/>';
             ul +=  '</span>';
             ul += '</li>';
@@ -191,7 +191,7 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
 
         var ul = '';
         for(var individuInfo in msg) {
-            var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
+                var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
             ul += '<li>';
             if(msg[individuInfo].factionId == '3'){
                 var neutralLimit = (Number($(".pointResume").html()) / Number($("#armyPoint").val()))*50;
@@ -209,8 +209,8 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
                 ul += '<span class="glyphicon glyphicon-king" style="margin-left: 5px"></span>';
             ul += '</span>';
             if(typeId == "1" || typeId == "3" || typeId == "4") {
-                ul += '<span class="row"><image class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></image>';
-                ul += '<image class="img-responsive col-xs-6 clearfix" src="'+msg[individuInfo].pathRecto+'"></image></span>';
+                ul += '<span class="row"><image class="img-responsive col-xs-6 clearfix" src="'+msg[individuInfo].pathRecto+'"></image>';
+                ul += '<image class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></image></span>';
             }
             else
                 ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
@@ -219,6 +219,7 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
             //pas un cas spécial  ?
             if(msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 )
                 ul += ' disabled ';
+            }
             ul += ' >Ajouter</button></span>';
             ul += '</li><hr>';
         }

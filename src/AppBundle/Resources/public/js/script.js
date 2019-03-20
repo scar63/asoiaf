@@ -217,9 +217,9 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
             ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
             //if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
             //pas un cas spécial  ?
-            if(msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 )
+            if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 )
                 ul += ' disabled ';
-            }
+
             ul += ' >Ajouter</button></span>';
             ul += '</li><hr>';
         }

@@ -190,47 +190,59 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
     .done(function( msg ) {
 
         var ul = '';
+        var ulDisabled = '';
         for(var individuInfo in msg) {
-                var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
-            ul += '<li>';
-            if(msg[individuInfo].factionId == '3'){
-                var neutralLimit = (Number($(".pointResume").html()) / Number($("#armyPoint").val()))*50;
-                if(Number(msg[individuInfo].cout) > neutralLimit && $("#factionSelect option:selected").val() != 3)
-                    ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
-            }
-            if ((totalPoints > Number($("#armyPoint").val())))
-                ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Le total des points ne peut pas dépasser la limite de taille de l\'armée.</span>';
-            ul += '<span class="row">' + msg[individuInfo].nom;
-            ul += '<br>';
-            if (selectId != '.listCmd')
-                ul += msg[individuInfo].cout + ' points - ';
-            ul += msg[individuInfo].typeIndividu;
-            if(msg[individuInfo].type == 1)
-                ul += '<span class="glyphicon glyphicon-king" style="margin-left: 5px"></span>';
-            ul += '</span>';
-            if(typeId == "1" || typeId == "3" || typeId == "4") {
-                ul += '<span class="row"><image class="img-responsive col-xs-6 clearfix" src="'+msg[individuInfo].pathRecto+'"></image>';
-                ul += '<image class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></image></span>';
-            }
-            else
-                ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
-            ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
-            //if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
-            //pas un cas spécial  ?
-            if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 )
-                ul += ' disabled ';
 
-            ul += ' >Ajouter</button></span>';
-            ul += '</li><hr>';
+            if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 )
+                ulDisabled += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd);
+            else
+                ul += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd);
         }
 
-
         $(selectId).empty();
-        $(selectId).append(ul);
+        $(selectId).append(ul += ulDisabled);
         $(modalId).modal('show');
     });
 }
 
+
+function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd){
+
+    var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
+
+    var ul = '<li>';
+    if(msg[individuInfo].factionId == '3'){
+        var neutralLimit = (Number($(".pointResume").html()) / Number($("#armyPoint").val()))*50;
+        if(Number(msg[individuInfo].cout) > neutralLimit && $("#factionSelect option:selected").val() != 3)
+            ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
+    }
+    if ((totalPoints > Number($("#armyPoint").val())))
+        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Le total des points ne peut pas dépasser la limite de taille de l\'armée.</span>';
+    ul += '<span class="row">' + msg[individuInfo].nom;
+    ul += '<br>';
+    if (selectId != '.listCmd')
+        ul += msg[individuInfo].cout + ' points - ';
+    ul += msg[individuInfo].typeIndividu;
+    if(msg[individuInfo].type == 1)
+        ul += '<span class="glyphicon glyphicon-king" style="margin-left: 5px"></span>';
+    ul += '</span>';
+    if(typeId == "1" || typeId == "3" || typeId == "4") {
+        ul += '<span class="row"><image class="img-responsive col-xs-6 clearfix" src="'+msg[individuInfo].pathRecto+'"></image>';
+        ul += '<image class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></image></span>';
+    }
+    else
+        ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
+    ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
+    //if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
+    //pas un cas spécial  ?
+    if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 )
+        ul += ' disabled ';
+
+    ul += ' >Ajouter</button></span>';
+    ul += '</li><hr>';
+
+    return ul;
+}
 
 
 function checkIfOutOfScore(){

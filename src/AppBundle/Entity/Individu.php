@@ -270,7 +270,7 @@ class Individu
      */
     public function getPathRectoPicture()
     {
-        return $this->pathRectoPicture;
+        return str_replace("'", "_", $this->pathRectoPicture);
     }
 
     /**
@@ -294,7 +294,7 @@ class Individu
      */
     public function getPathVersoPicture()
     {
-        return $this->pathVersoPicture;
+        return  str_replace("'", "_",$this->pathVersoPicture);
     }
 
     /**

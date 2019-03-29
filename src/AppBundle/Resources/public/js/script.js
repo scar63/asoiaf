@@ -102,6 +102,7 @@ function addNCU(individuInfo)
     if(individuInfo.typeId == 1)
         ul += 'data-isncucmd="true"';
     ul += '></span></span></span>';
+    ul +=  '<input type="hidden" name="nucID[]" value="'+individuInfo.id+'"/>';
     ul += '</li>';
     $(".listNonCombatUnitNameResume").append(ul);
     $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
@@ -112,7 +113,7 @@ function addNCU(individuInfo)
         var ul = '';
         ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
         ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-isncucmd="true" data-realname="'+individuInfo.realName+'"></span>';
-        ul +=  '<input type="hidden" name="nucID[]" value="'+individuInfo.id+'"/>';
+        ul +=  '<input type="hidden" name="cmdID"  value="'+individuInfo.id+'"/>';
         ul += '</li>';
         $(".commandantNameResume").empty();
         $(".commandantNameResume").append(ul);
@@ -130,7 +131,7 @@ $(document).on('click', '.btnAddAttachment', function (e) {
     .done(function( individuInfo ) {
         var ul = '';
         ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'('+individuInfo.cout+')';
-        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span></span></div>';
+        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span></span><input type="hidden" name="nattchID[]" value="'+individuInfo.id+'"></div>';
         $("#"+idAttchBtnToReplace).replaceWith(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
         checkIfOutOfScore();

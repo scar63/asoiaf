@@ -173,10 +173,18 @@ class DefaultController extends Controller
             $listPathUc[] = $uc->getPathRectoPicture();
         }
 
+       $listPathNUc = [];
+        foreach($request->get('nucID') as $nucID)
+        {
+            $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$nucID]);
+            $listPathNUc[] = $uc->getPathRectoPicture();
+        }
+
         $html = $this->renderView(':pdf:resume.html.twig',
             array(
                 'pathCmdPicture' =>$cmd->getPathRectoPicture(),
                 'listPathUc' =>$listPathUc,
+                'listPathNUc' =>$listPathNUc,
                 'nameFaction'  => $faction->getNom(),
                 'armyPoint'  => $request->get('armyPoint'),
                 'armyName'  => $request->get('armyName'),

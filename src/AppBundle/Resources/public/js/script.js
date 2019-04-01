@@ -123,6 +123,7 @@ function addNCU(individuInfo)
 
 $(document).on('click', '.btnAddAttachment', function (e) {
     var idAttchBtnToReplace = $(this).data('idattchbtntoreplace');
+    var parent = $(this).data('parent');
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetInfoIndividu'),
@@ -131,7 +132,8 @@ $(document).on('click', '.btnAddAttachment', function (e) {
     .done(function( individuInfo ) {
         var ul = '';
         ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'('+individuInfo.cout+')';
-        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span></span><input type="hidden" name="nattchID[]" value="'+individuInfo.id+'"></div>';
+        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span></span>' +
+            '<input type="hidden" name="nattchID[]" value="'+individuInfo.id+'_'+parent+'"></div>';
         $("#"+idAttchBtnToReplace).replaceWith(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
         checkIfOutOfScore();
@@ -151,6 +153,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         child = toDelete.parent().parent().parent().find('.glyphicon.glyphicon-trash.attchment').data('id');
     else {
         child = toDelete.data('id');
+        parent = toDelete.parent().parent().parent().find('.glyphicon.glyphicon-trash').data('id');
     }
 
     $.ajax({
@@ -172,7 +175,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         }
         else {
             var random = Math.round(new Date().getTime() + (Math.random() * 100));
-            var btn = '<button type="button" id="attachFrom'+random+'" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + child + '">Ajouter un attachement</button>';
+            var btn = '<button type="button" id="attachFrom'+random+'" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + parent + '">Ajouter un attachement</button>';
             $(toDelete).parent().parent().replaceWith(btn);
         }
         $(".pointResume").html(Number($(".pointResume").html()) - Number(msg.cout) - Number(msg.coutAttch));
@@ -197,7 +200,7 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
             if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || (msg[individuInfo].realName != "" && $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 ))
                 ulDisabled += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd);
             else
-                ul += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd);
+                ul += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd, idUCrattach);
         }
 
         $(selectId).empty();
@@ -207,7 +210,7 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
 }
 
 
-function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd){
+function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd, idUCrattach){
 
     var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
 
@@ -233,7 +236,7 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     }
     else
         ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
-    ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" ';
+    ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" data-parent="'+idUCrattach+'"';
     //if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
     //pas un cas spécial  ?
     if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || (msg[individuInfo].realName != "" && $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 ))

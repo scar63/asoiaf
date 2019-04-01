@@ -166,11 +166,26 @@ class DefaultController extends Controller
         $faction = $this->getDoctrine()->getRepository(Faction::class)->findOneBy(['id'=>$request->get('factionID')]);
         $cmd = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$request->get('cmdID')]);
 
+        $listNattachcID = $request->get('nattchID');
+
         $listPathUc = [];
         foreach($request->get('ucID') as $ucId)
         {
             $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$ucId]);
-            $listPathUc[] = $uc->getPathRectoPicture();
+
+            $listPathUc[$ucId]['uc'] = $uc->getPathRectoPicture();
+
+            foreach ($listNattachcID as $nucID)
+            {
+                $ids =  explode('_', $nucID);
+                $parentId = $ids[1];
+                $attchId = $ids[0];
+                if($parentId == $ucId)
+                {
+                    $nattchuc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$attchId]);
+                    $listPathUc[$ucId]['nattchId'] = $nattchuc->getPathRectoPicture();
+                }
+            }
         }
 
        $listPathNUc = [];

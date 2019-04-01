@@ -64,10 +64,19 @@
         </ul>
     </div>
 
-    <div style="position: absolute;margin-top: 49.5em;padding-left: 2em">
+    <div style="position: absolute;margin-top: 49.5em;padding-left: 2em;width: 100%">
         <ul class="list-inline listNuc">
             {% for path in listPathUc %}
-                <li style="width: 25.5em; " {% if not loop.first %}class="noFirst"{% endif %}><img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  path }}"/></li>
+                {% for test in listPathUc %}
+                    <li style="" {% if not loop.first %}class="noFirst"{% endif %}>
+                        <div style="float:left;width: 25.5em; ">
+                            <img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  test.uc }}"/>
+                        </div>
+                        <div style="float: left;width: 10.5em;padding-left:2.4em">
+                            <img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  test.nattchId }}"/>
+                        </div>
+                    </li>
+                {% endfor %}
             {% endfor %}
         </ul>
     </div>

@@ -168,13 +168,13 @@ class DefaultController extends Controller
 
         $listNattachcID = $request->get('nattchID');
 
-        $listPathUc = [];
+        $listPathUcTmp = [];
         $i=0;
         foreach($request->get('ucID') as $ucId)
         {
             $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$ucId]);
 
-            $listPathUc[$i][$ucId]['uc'] = $uc->getPathRectoPicture();
+            $listPathUcTmp[$i][$ucId]['uc'] = $uc->getPathRectoPicture();
 
             foreach ($listNattachcID as $nucID)
             {
@@ -184,11 +184,13 @@ class DefaultController extends Controller
                 if($parentId == $ucId)
                 {
                     $nattchuc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$attchId]);
-                    $listPathUc[$i][$ucId]['nattchId'] = $nattchuc->getPathRectoPicture();
+                    $listPathUcTmp[$i][$ucId]['nattchId'] = $nattchuc->getPathRectoPicture();
                 }
             }
             $i++;
         }
+
+        $listPathUc = array_chunk($listPathUcTmp, 2);
 
        $listPathNUc = [];
         foreach($request->get('nucID') as $nucID)
@@ -200,7 +202,7 @@ class DefaultController extends Controller
         $html = $this->renderView(':pdf:resume.html.twig',
             array(
                 'pathCmdPicture' =>$cmd->getPathRectoPicture(),
-                'listPathUc' =>$listPathUc,
+                'listPathUc' =>$listPathUc[0],
                 'listPathNUc' =>$listPathNUc,
                 'nameFaction'  => $faction->getNom(),
                 'armyPoint'  => $request->get('armyPoint'),

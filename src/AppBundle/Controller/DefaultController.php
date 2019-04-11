@@ -169,11 +169,12 @@ class DefaultController extends Controller
         $listNattachcID = $request->get('nattchID');
 
         $listPathUc = [];
+        $i=0;
         foreach($request->get('ucID') as $ucId)
         {
             $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$ucId]);
 
-            $listPathUc[$ucId]['uc'] = $uc->getPathRectoPicture();
+            $listPathUc[$i][$ucId]['uc'] = $uc->getPathRectoPicture();
 
             foreach ($listNattachcID as $nucID)
             {
@@ -183,9 +184,10 @@ class DefaultController extends Controller
                 if($parentId == $ucId)
                 {
                     $nattchuc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$attchId]);
-                    $listPathUc[$ucId]['nattchId'] = $nattchuc->getPathRectoPicture();
+                    $listPathUc[$i][$ucId]['nattchId'] = $nattchuc->getPathRectoPicture();
                 }
             }
+            $i++;
         }
 
        $listPathNUc = [];

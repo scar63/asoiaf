@@ -192,6 +192,16 @@ class DefaultController extends Controller
 
         $listPathUc = array_chunk($listPathUcTmp, 2);
 
+        if(count($listPathUcTmp) > 2 && count($listPathUcTmp) <= 7 )
+            $listPathUc2 =  array_slice($listPathUcTmp, 2);
+        elseif(count($listPathUcTmp) > 7 )
+        {
+            $listPathUc2Tmp =  array_chunk(array_slice($listPathUcTmp, 2),5 );
+            $listPathUc2 = $listPathUc2Tmp[0];
+            if(!empty( $listPathUc2Tmp[1]))
+                $listPathUc3 = $listPathUc2Tmp[1];
+        }
+
        $listPathNUc = [];
         foreach($request->get('nucID') as $nucID)
         {
@@ -212,6 +222,24 @@ class DefaultController extends Controller
         $mpdf = new \Mpdf\Mpdf(['tempDir' =>  sys_get_temp_dir().DIRECTORY_SEPARATOR.'mpdf', 'format' => 'Legal' ]);
         $mpdf->AddPage('P');
         $mpdf->WriteHTML($html);
+
+        if(isset($listPathUc2)) {
+            $html = $this->renderView(':pdf:resume2.html.twig',
+                array(
+                    'listPathUc2' => [$listPathUc2],
+                ));
+            $mpdf->AddPage('P');
+            $mpdf->WriteHTML($html);
+        }
+
+        if(isset($listPathUc3)) {//
+            $html = $this->renderView(':pdf:resume2.html.twig',
+                array(
+                    'listPathUc2' => [$listPathUc3],
+                ));
+            $mpdf->AddPage('P');
+            $mpdf->WriteHTML($html);
+        }
         $response->setContent($mpdf->Output());
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Type', ' charset=utf-8');

@@ -72,9 +72,11 @@
                         <div style="float:left;width: 25.5em;padding-bottom: 2.7em ">
                             <img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  test.uc }}" />
                         </div>
-                        <div style="float: left;width: 10em;padding-left:0.5em;padding-top: 0.3em">
-                            <img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  test.nattchId }}"/>
-                        </div>
+                        {% if test.nattchId is defined %}
+                            <div style="float: left;width: 10em;padding-left:0.5em;padding-top: 0.3em">
+                                <img class="img-responsive" src="{{ asset('bundles/app/images/uniteus/') ~  test.nattchId }}"/>
+                            </div>
+                        {% endif %}
                     </li>
                 {% endfor %}
             {% endfor %}

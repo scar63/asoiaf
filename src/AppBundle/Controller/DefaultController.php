@@ -176,6 +176,7 @@ class DefaultController extends Controller
 
             $listPathUcTmp[$i][$ucId]['uc'] = $uc->getPathRectoPicture();
 
+            if($listNattachcID)
             foreach ($listNattachcID as $nucID)
             {
                 $ids =  explode('_', $nucID);

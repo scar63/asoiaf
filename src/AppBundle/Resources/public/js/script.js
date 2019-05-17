@@ -3,6 +3,7 @@ $('#resetForm').on('click', function () {
 });
 $('#armyPoint').on('change', function () {
     $(".onPoints").html($(this).val());
+    checkIfOutOfScore();
 });
 
 $('#factionSelect').on('change', function () {
@@ -68,7 +69,7 @@ $(document).on('click', '.btnAddUc', function () {
     .done(function( individuInfo ) {
         var random = Math.round(new Date().getTime() + (Math.random() * 100));
         var ul = '';
-        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
+        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'(<span class="coutUc">'+individuInfo.cout+'</span>)';
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
         ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
         ul +=   '</span></span>';
@@ -97,7 +98,7 @@ $(document).on('click', '.btnAddNUc', function () {
 function addNCU(individuInfo)
 {
     var ul = '';
-    ul += '<li><span class="col-xs-11">'+individuInfo.nom+'('+individuInfo.cout+')';
+    ul += '<li><span class="col-xs-11">'+individuInfo.nom+'(<span class="coutNUC">'+individuInfo.cout+'</span>)';
     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
     if(individuInfo.typeId == 1)
         ul += 'data-isncucmd="true"';
@@ -131,7 +132,7 @@ $(document).on('click', '.btnAddAttachment', function (e) {
     })
     .done(function( individuInfo ) {
         var ul = '';
-        ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'('+individuInfo.cout+')';
+        ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'(<span class="coutAttach">'+individuInfo.cout+'</span>)';
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span></span>' +
             '<input type="hidden" name="nattchID[]" value="'+individuInfo.id+'_'+parent+'"></div>';
         $("#"+idAttchBtnToReplace).replaceWith(ul);
@@ -215,9 +216,13 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
 
     var ul = '<li>';
-    if(msg[individuInfo].factionId == '3'){
-        var neutralLimit = (Number($(".pointResume").html()) / Number($("#armyPoint").val()))*50;
-        if(Number(msg[individuInfo].cout) > neutralLimit && $("#factionSelect option:selected").val() != 3)
+    if(msg[individuInfo].factionId != '3' && typeId == "4" ){
+        var coutNUC = 0;
+         $('.coutNUC').each(function() {
+             coutNUC += Number($(this).html());
+         });
+         var neutralLimit = ((Number(msg[individuInfo].cout) + coutNUC) / Number($("#armyPoint").val())) *100;
+        if( neutralLimit > 50  && $("#factionSelect option:selected").val() != 3)
             ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
     }
     if ((totalPoints > Number($("#armyPoint").val())))
@@ -258,9 +263,28 @@ function checkIfOutOfScore(){
     else if(!$('#limitOut').hasClass('hidden'))
             $('#limitOut').addClass('hidden');
 
-    // if(Number(msg[individuInfo].cout) > neutralLimit && $("#factionSelect option:selected").val() != 3)
-    //     ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
 
+    var countPointUC = 0;
+    var countPointAttch = 0;
+    var coutNUC = 0;
+    $('.coutUc').each(function() {
+        countPointUC += Number($(this).html());
+    });
+
+    $('.coutAttach').each(function() {
+        countPointAttch += Number($(this).html());
+    });
+
+     $('.coutNUC').each(function() {
+         coutNUC += Number($(this).html());
+    });
+
+
+    var neutralLimit = (coutNUC / Number($("#armyPoint").val())) *100;
+    if( neutralLimit > 50  && $("#factionSelect option:selected").val() != 3)
+        $('#limitOutNCU').removeClass('hidden');
+    else if(!$('#limitOutNCU').hasClass('hidden'))
+        $('#limitOutNCU').addClass('hidden');
 }
 
 

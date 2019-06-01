@@ -96,6 +96,13 @@ class Individu
     private $personnageRealName;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="isOnlySetWhenAttach", type="boolean" , options={"default" : false})
+     */
+    private $isOnlySetWhenAttach;
+
+    /**
      * Get id
      *
      * @return int
@@ -359,5 +366,22 @@ class Individu
     public function setPersonnageRealName($personnageRealName)
     {
         $this->personnageRealName = $personnageRealName;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isOnlySetWhenAttach()
+    {
+        return $this->isOnlySetWhenAttach;
+    }
+
+    /**
+     * @param bool $isOnlySetWhenAttach
+     */
+    public function setIsOnlySetWhenAttach($isOnlySetWhenAttach)
+    {
+        $this->isOnlySetWhenAttach = $isOnlySetWhenAttach;
     }
 }

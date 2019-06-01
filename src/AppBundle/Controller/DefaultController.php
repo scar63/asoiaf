@@ -46,6 +46,7 @@ class DefaultController extends Controller
         //type => 1 général , 2 unité, 3 attach, 4 NCU
         //typeIndividu 1 infanterie, 2 CAvaleire, 3 Monstre, 4 ncu
         //faction starr = 1 et lanniseter 2 neutre 3
+        //attention cas uniquemnet set en attach (today type unite(2)/attach(3)) => 'isOnlySetWhenAttach' => false
 
          $faction[] = $request->get('faction');
          $type[] = $request->get('type');
@@ -53,7 +54,7 @@ class DefaultController extends Controller
          if($request->get('type' )== 4)
          {
              $typeIndividu = [4]; //on ajoute les type 1 (générals) et typeIndividu 1(infaterie), 2(Cavalerie)
-             $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu]);
+             $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu, 'isOnlySetWhenAttach' => false]);
          }
 
          //add faction neutre
@@ -67,10 +68,11 @@ class DefaultController extends Controller
             $typeIndividu = [$indivu->getTypeIndividu()->getId()];
             $type [] = 1; //on ajoute les type 1 (générals)
             $em = $this->getDoctrine()->getEntityManager();
-            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu)' )
+            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach' )
                 ->setParameter('faction', $faction)
                 ->setParameter('type', $type)
-                ->setParameter('typeIndividu', $typeIndividu);
+                ->setParameter('typeIndividu', $typeIndividu)
+                ->setParameter('isOnlySetWhenAttach', false);
 
             $listUC= $query->getResult();
         }
@@ -79,10 +81,10 @@ class DefaultController extends Controller
         {
             if($faction != 3)
                 $faction [] = 3;
-            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type ]);
+            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ]);
         }
         else
-            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type ]);
+            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ]);
 
 
         if(isset($listUCNUC))

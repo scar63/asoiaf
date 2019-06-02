@@ -50,6 +50,13 @@ class Individu
     private $cout;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="attachId", type="integer", options={"default" : 0})
+     */
+    private $attachId;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="isUnique", type="boolean")
@@ -384,4 +391,22 @@ class Individu
     {
         $this->isOnlySetWhenAttach = $isOnlySetWhenAttach;
     }
+
+    /**
+     * @return int
+     */
+    public function getAttachId()
+    {
+        return $this->attachId;
+    }
+
+    /**
+     * @param int $attachId
+     */
+    public function setAttachId($attachId)
+    {
+        $this->attachId = $attachId;
+    }
+
+
 }

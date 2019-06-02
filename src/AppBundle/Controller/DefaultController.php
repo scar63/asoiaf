@@ -133,6 +133,8 @@ class DefaultController extends Controller
             'typeId' => $indivu->getType()->getId(),
             'coutAttch' => (isset($indivuAttch)?$indivuAttch->getCout():0),
             'realName' => $indivu->getPersonnageRealName(),
+            'hasAttachId' => $indivu->getAttachId(),
+            'isOnlySetWhenAttach' => $indivu->isOnlySetWhenAttach(),
         );
 
         return new JsonResponse($infoIndividu);

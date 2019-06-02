@@ -61,27 +61,35 @@ $(document).on('click', '.btnAddCmd', function () {
 });
 
 $(document).on('click', '.btnAddUc', function () {
+    addUC($(this).attr('id'));
+});
+
+function addUC(idUCToAdd)
+{
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetInfoIndividu'),
-        data: { id: $(this).attr('id')},
+        data: { id: idUCToAdd},
     })
-    .done(function( individuInfo ) {
-        var random = Math.round(new Date().getTime() + (Math.random() * 100));
-        var ul = '';
-        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'(<span class="coutUc">'+individuInfo.cout+'</span>)';
-        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
-        ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
-        ul +=   '</span></span>';
-        ul += '<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>';
-        ul += '</li>';
+        .done(function( individuInfo ) {
+            var random = Math.round(new Date().getTime() + (Math.random() * 100));
+            var ul = '';
+            ul += '<li><span class="col-xs-11">'+individuInfo.nom+'(<span class="coutUc">'+individuInfo.cout+'</span>)';
+            if(!individuInfo.isOnlySetWhenAttach)
+                ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
+            ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
+            ul +=   '</span></span>';
+            if(!individuInfo.isOnlySetWhenAttach)
+                ul += '<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>';
+            ul += '</li>';
 
-        $(".listCombatUnitNameResume").append(ul);
-        $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
-        checkIfOutOfScore();
-        $("#modalListUC").modal('hide');
-    });
-});
+            $(".listCombatUnitNameResume").append(ul);
+            $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
+            checkIfOutOfScore();
+            $("#modalListUC").modal('hide');
+        });
+}
+
 
 $(document).on('click', '.btnAddNUc', function () {
     $.ajax({
@@ -135,6 +143,10 @@ $(document).on('click', '.btnAddAttachment', function (e) {
         ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'(<span class="coutAttach">'+individuInfo.cout+'</span>)';
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span></span>' +
             '<input type="hidden" name="nattchID[]" value="'+individuInfo.id+'_'+parent+'"></div>';
+
+        if(individuInfo.hasAttachId != 0)
+            addUC(individuInfo.hasAttachId);
+
         $("#"+idAttchBtnToReplace).replaceWith(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
         checkIfOutOfScore();

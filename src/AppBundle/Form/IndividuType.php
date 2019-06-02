@@ -13,7 +13,9 @@ class IndividuType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('cout')->add('faction')->add('type');
+        $builder->add('nom')->add('cout')->add('isUnique')
+            ->add('isOnlySetWhenAttach')->add('pathRectoPicture')
+            ->add('pathVersoPicture')->add('attachId');
     }/**
      * {@inheritdoc}
      */

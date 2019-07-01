@@ -224,7 +224,7 @@ class DefaultController extends Controller
                 'armyName'  => $request->get('armyName'),
             ));
         $response = new Response();
-        $mpdf = new \Mpdf\Mpdf(['tempDir' =>  sys_get_temp_dir().DIRECTORY_SEPARATOR.'mpdf', 'format' => 'Legal' ]);
+        $mpdf = new \Mpdf\Mpdf(['tempDir' =>  sys_get_temp_dir().DIRECTORY_SEPARATOR.'mpdf', 'format' => 'A4' ]);
         $mpdf->AddPage('P');
         $mpdf->WriteHTML($html);
 

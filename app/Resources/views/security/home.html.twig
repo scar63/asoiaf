@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ul class="jumbotron">
+        <li><a href="{{ path('faction_index') }}" target="_blank">Gérer faction</a></li>
+        <li><a href="{{ path('individu_index') }}" target="_blank">Gérer Individus</a></li>
+        <li><a href="{{ path('type_index') }}" target="_blank">Gérer Types</a></li>
+        <li><a href="{{ path('typeindividu_index') }}" target="_blank">Gérer Types d'Individus</a></li>
+    </ul>
+
+{% endblock %}

@@ -50,9 +50,9 @@ class Individu
     private $cout;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="attachId", type="integer", options={"default" : 0})
+     * One Product has One Shipment.
+     * @ORM\OneToOne(targetEntity="Individu")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
     private $attachId;
 
@@ -429,6 +429,10 @@ class Individu
     public function setLibelleSpecial($libelleSpecial)
     {
         $this->libelleSpecial = $libelleSpecial;
+    }
+
+    public function __toString() {
+        return $this->nom;
     }
 
 }

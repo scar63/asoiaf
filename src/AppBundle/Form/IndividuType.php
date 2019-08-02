@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Individu;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +16,7 @@ class IndividuType extends AbstractType
     {
         $builder->add('nom')->add('nomFr')->add('nomEs')->add('cout')
             ->add('isUnique')->add('pathRectoPicture')->add('pathVersoPicture')
-            ->add('personnageRealName')->add('isOnlySetWhenAttach')->add('faction')
+            ->add('personnageRealName')->add('isOnlySetWhenAttach')->add('attachId')->add('faction')
             ->add('type')->add('typeIndividu')->add('libelleSpecial', ChoiceType::class, [
                     'choices' => [
                         '' => null,
@@ -24,7 +25,6 @@ class IndividuType extends AbstractType
                     ]
                 ]
             );
-            //        ->add('attachId')
     }
 
     /**

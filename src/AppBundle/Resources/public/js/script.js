@@ -59,6 +59,11 @@ $(document).on('click', '.btnAddCmd', function () {
             if($(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').length != 0)
                 $(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').closest("li").remove();
 
+            if($(".listCombatUnitNameResume").find('[data-isncucmd="true"]').length != 0) {
+                var random = Math.round(new Date().getTime() + (Math.random() * 100));
+                $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").replaceWith('<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>');
+            }
+
             //si cmd est NCU alors ajoute direct à attement
             if(individuInfo.typeIndividuId == 4)
                 addNCU(individuInfo);
@@ -148,7 +153,10 @@ $(document).on('click', '.btnAddAttachment', function (e) {
     .done(function( individuInfo ) {
         var ul = '';
         ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'(<span class="coutAttach">'+individuInfo.cout+'</span>)';
-        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span></span>' +
+        ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
+        if(individuInfo.typeId == 1)
+            ul += 'data-isncucmd="true"';
+        ul += '></span></span>' +
             '<input type="hidden" name="nattchID[]" value="'+individuInfo.id+'_'+parent+'"></div>';
 
         if(individuInfo.hasAttachId != 0)
@@ -157,6 +165,17 @@ $(document).on('click', '.btnAddAttachment', function (e) {
         $("#"+idAttchBtnToReplace).replaceWith(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
         checkIfOutOfScore();
+        //si NCU est cmd alors ajoute direct à cmd
+        if(individuInfo.typeId == 1)
+        {
+            var ul = '';
+            ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
+            ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-isncucmd="true" data-realname="'+individuInfo.realName+'"></span>';
+            ul +=  '<input type="hidden" name="cmdID"  value="'+individuInfo.id+'"/>';
+            ul += '</li>';
+            $(".commandantNameResume").empty();
+            $(".commandantNameResume").append(ul);
+        }
         $("#modalListAttachment").modal('hide');
     });
 });

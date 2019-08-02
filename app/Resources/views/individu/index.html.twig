@@ -8,15 +8,19 @@
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>Nomfr</th>
-                <th>Nomes</th>
+                <th>Nom fr</th>
+                <th>Nom ES</th>
                 <th>Cout</th>
-                <th>Attachid</th>
-                <th>Isunique</th>
-                <th>Pathrectopicture</th>
-                <th>Pathversopicture</th>
-                <th>Personnagerealname</th>
-                <th>Isonlysetwhenattach</th>
+                <th>Unique</th>
+                <th>Recto US</th>
+                <th>Verso US</th>
+                <th>Vrai nom individu</th>
+                <th>Uniquement dispo en attach</th>
+                <th>Attaché à</th>
+                <th>Faction</th>
+                <th>Type</th>
+                <th>Type Individu</th>
+                <th>Spécial</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,21 +32,20 @@
                 <td>{{ individu.nomFr }}</td>
                 <td>{{ individu.nomEs }}</td>
                 <td>{{ individu.cout }}</td>
-                <td>{{ individu.attachId }}</td>
                 <td>{% if individu.isUnique %}Yes{% else %}No{% endif %}</td>
                 <td>{{ individu.pathRectoPicture }}</td>
                 <td>{{ individu.pathVersoPicture }}</td>
                 <td>{{ individu.personnageRealName }}</td>
                 <td>{% if individu.isOnlySetWhenAttach %}Yes{% else %}No{% endif %}</td>
+                <td>{{ individu.attachId }}</td>
+                <td>{{ individu.faction }}</td>
+                <td>{{ individu.type }}</td>
+                <td>{{ individu.typeIndividu }}</td>
+                <td>{{ individu.libelleSpecial }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('individu_show', { 'id': individu.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('individu_edit', { 'id': individu.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('individu_show', { 'id': individu.id }) }}">show</a>
+                    <br>
+                    <a href="{{ path('individu_edit', { 'id': individu.id }) }}">edit</a>
                 </td>
             </tr>
         {% endfor %}

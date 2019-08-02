@@ -54,6 +54,11 @@ $(document).on('click', '.btnAddCmd', function () {
             ul += '</li>';
             $(".commandantNameResume").empty();
             $(".commandantNameResume").append(ul);
+
+            //on check si y a pas un ncu-cmd qui traine
+            if($(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').length != 0)
+                $(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').closest("li").remove();
+
             //si cmd est NCU alors ajoute direct à attement
             if(individuInfo.typeIndividuId == 4)
                 addNCU(individuInfo);

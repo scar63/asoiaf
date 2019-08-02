@@ -3,12 +3,20 @@
 {% block body %}
     <h1>Individus list</h1>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
+                <th>Nomfr</th>
+                <th>Nomes</th>
                 <th>Cout</th>
+                <th>Attachid</th>
+                <th>Isunique</th>
+                <th>Pathrectopicture</th>
+                <th>Pathversopicture</th>
+                <th>Personnagerealname</th>
+                <th>Isonlysetwhenattach</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -17,7 +25,15 @@
             <tr>
                 <td><a href="{{ path('individu_show', { 'id': individu.id }) }}">{{ individu.id }}</a></td>
                 <td>{{ individu.nom }}</td>
+                <td>{{ individu.nomFr }}</td>
+                <td>{{ individu.nomEs }}</td>
                 <td>{{ individu.cout }}</td>
+                <td>{{ individu.attachId }}</td>
+                <td>{% if individu.isUnique %}Yes{% else %}No{% endif %}</td>
+                <td>{{ individu.pathRectoPicture }}</td>
+                <td>{{ individu.pathVersoPicture }}</td>
+                <td>{{ individu.personnageRealName }}</td>
+                <td>{% if individu.isOnlySetWhenAttach %}Yes{% else %}No{% endif %}</td>
                 <td>
                     <ul>
                         <li>
@@ -38,4 +54,22 @@
             <a href="{{ path('individu_new') }}">Create a new individu</a>
         </li>
     </ul>
+    <style>
+        #DataTables_Table_0_paginate{
+            float:right;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/app/js/datatables_1.10.19.js') }}" ></script>
+    <script>
+        $(document).ready(function() {
+            $('.table').DataTable( {
+                "language": {
+                    "url": "{{ asset('bundles/app/language/French.json') }}"
+                }
+            } );
+        } );
+    </script>
 {% endblock %}

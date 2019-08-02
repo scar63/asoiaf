@@ -14,8 +14,40 @@
                 <td>{{ individu.nom }}</td>
             </tr>
             <tr>
+                <th>Nomfr</th>
+                <td>{{ individu.nomFr }}</td>
+            </tr>
+            <tr>
+                <th>Nomes</th>
+                <td>{{ individu.nomEs }}</td>
+            </tr>
+            <tr>
                 <th>Cout</th>
                 <td>{{ individu.cout }}</td>
+            </tr>
+            <tr>
+                <th>Attachid</th>
+                <td>{{ individu.attachId }}</td>
+            </tr>
+            <tr>
+                <th>Isunique</th>
+                <td>{% if individu.isUnique %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Pathrectopicture</th>
+                <td>{{ individu.pathRectoPicture }}</td>
+            </tr>
+            <tr>
+                <th>Pathversopicture</th>
+                <td>{{ individu.pathVersoPicture }}</td>
+            </tr>
+            <tr>
+                <th>Personnagerealname</th>
+                <td>{{ individu.personnageRealName }}</td>
+            </tr>
+            <tr>
+                <th>Isonlysetwhenattach</th>
+                <td>{% if individu.isOnlySetWhenAttach %}Yes{% else %}No{% endif %}</td>
             </tr>
         </tbody>
     </table>

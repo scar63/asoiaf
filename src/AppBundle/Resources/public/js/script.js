@@ -8,7 +8,9 @@ $('#armyPoint').on('change', function () {
 
 $('#factionSelect').on('change', function () {
     var infoFactionSelect = '<input type="hidden" name="factionID" value="'+$(this).find("option:selected").val()+'"/>';
-    $(".factionNameResume").empty().append($(this).find("option:selected").text()+infoFactionSelect);});
+    $(".factionNameResume").empty().append($(this).find("option:selected").text()+infoFactionSelect);
+    clearResume();
+});
 
 $('#btnListCmd').on('click', function () {
     if ($('#factionSelect').find("option:selected").val() == '')
@@ -306,11 +308,17 @@ $(document).ready(function() {
 
     //$(".factionNameResume").empty().append($("#factionSelect option:selected").text());
     // $('#commandSelect').select2();
-    // $('#combatUnit').select2();
+    // $('#commandSelect').select2();
     // $('#nonCombatUnit').select2();
 });
 
-
+function clearResume()
+{
+    $(".commandantNameResume").empty();
+    $(".pointResume").html("0");
+    $(".listCombatUnitNameResume").empty();
+    $(".listNonCombatUnitNameResume").empty();
+}
 
 
 /*****************DROP DOWN SELECT***********************************************************************/

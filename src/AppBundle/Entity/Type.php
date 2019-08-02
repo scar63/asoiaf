@@ -85,4 +85,8 @@ class Type
     {
         return $this->individu;
     }
+
+    public function __toString() {
+        return $this->nom;
+    }
 }

@@ -110,6 +110,13 @@ class Individu
     private $isOnlySetWhenAttach;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="libelleSpecial", type="string", length=500, nullable=true)
+     */
+    private $libelleSpecial;
+
+    /**
      * Get id
      *
      * @return int
@@ -408,5 +415,20 @@ class Individu
         $this->attachId = $attachId;
     }
 
+    /**
+     * @return string
+     */
+    public function getLibelleSpecial()
+    {
+        return $this->libelleSpecial;
+    }
+
+    /**
+     * @param string $personnageRealName
+     */
+    public function setLibelleSpecial($libelleSpecial)
+    {
+        $this->libelleSpecial = $libelleSpecial;
+    }
 
 }

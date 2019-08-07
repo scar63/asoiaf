@@ -7,9 +7,40 @@ $('#armyPoint').on('change', function () {
 });
 
 $('#factionSelect').on('change', function () {
-    var infoFactionSelect = '<input type="hidden" name="factionID" value="'+$(this).find("option:selected").val()+'"/>';
+    var factionId = $(this).find("option:selected").val();
+    var infoFactionSelect = '<input type="hidden" name="factionID" value="'+factionId+'"/>';
     $(".factionNameResume").empty().append($(this).find("option:selected").text()+infoFactionSelect);
+
+    //si faciotn szelect == lanister alrs on check si les individues on un cas specila attachUnitAdverse) si c'sety le ca on le set
+    if(factionId == 2) {
+        //on peuple les individus attch à l'adversaire
+        $.ajax({
+            method: "POST",
+            url: Routing.generate('ajaxGetAdversInclude'),
+            data: { factionID: factionId},
+        })
+            .done(function( individusInfo ) {
+                $(".listNameAdversInclude").empty();
+                var ul = '<ul class="">';
+                for(var [key, individuInfo]  of Object.entries(individusInfo)) {
+                    ul += '<li><span class="col-lg-11"><input class="coutAdversInclude" type="checkbox" value="' + individuInfo.cout + '"> Inclure <span class="nameAdversInclude">"' + individuInfo.nom + '(' + individuInfo.cout + ')"</span> ';
+                    ul += '</li>';
+                }
+                ul += '</ul>';
+                $(".listNameAdversInclude").append(ul);
+                $(".listNameAdversInclude").show();
+            });
+    }
+    else
+        $(".listNameAdversInclude").hide();
     clearResume();
+});
+
+$(document).on('click', '.coutAdversInclude', function () {
+    if($(this).prop('checked'))
+        $(".pointResume").html(Number($(".pointResume").html()) + Number($(this).val()));
+    else
+        $(".pointResume").html(Number($(".pointResume").html()) - Number($(this).val()));
 });
 
 $('#btnListCmd').on('click', function () {

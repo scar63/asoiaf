@@ -39,6 +39,36 @@ class DefaultController extends Controller
 
 
     /**
+     * @Route("/ajaxGetAdversInclude", name="ajaxGetAdversInclude")
+     */
+    public function getAdversInclude(Request $request)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $query = $em->createQuery('SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction_id) and i.libelleSpecial = :libelleSpecial')
+            ->setParameter('faction_id', $request->get('factionID'))
+            ->setParameter('libelleSpecial', 'attachUnitAdverse');
+
+        $infoIndividus = [];
+        foreach ($query->getResult() as $indivu)
+        {
+            $infoIndividus [] = array(
+                'id' => $indivu->getId(),
+                'nom' => $indivu->getNom(),
+                'cout' => $indivu->getCout(),
+                'typeIndividu' => $indivu->getTypeIndividu()->getNom(),
+                'typeIndividuId' => $indivu->getTypeIndividu()->getId(),
+                'typeId' => $indivu->getType()->getId(),
+                'coutAttch' => (isset($indivuAttch) ? $indivuAttch->getCout() : 0),
+                'realName' => $indivu->getPersonnageRealName(),
+                'hasAttachId' => $indivu->getAttachId(),
+                'isOnlySetWhenAttach' => $indivu->isOnlySetWhenAttach(),
+            );
+        }
+
+        return new JsonResponse($infoIndividus);
+    }
+
+    /**
      * @Route("/ajaxGetListIndividus", name="ajaxGetListIndividus")
      */
     public function getListIndividus(Request $request)

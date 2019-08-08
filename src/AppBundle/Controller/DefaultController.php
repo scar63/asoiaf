@@ -139,6 +139,7 @@ class DefaultController extends Controller
                 'isUnique' => $uc->getIsUnique(),
                 'factionId' => $uc->getFaction()->getId(),
                 'realName' => $uc->getPersonnageRealName(),
+                'libelleSpecial' => $uc->getLibelleSpecial(),
             );
         }
 

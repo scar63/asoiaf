@@ -6,6 +6,7 @@ use AppBundle\Entity\Individu;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Individu controller.
@@ -44,6 +45,50 @@ class IndividuController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $pictureFilePathRectoPicture = $form['pathRectoPicture']->getData();
+            $pictureFilePathVersoPicture = $form['pathVersoPicture']->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($pictureFilePathRectoPicture) {
+                $originalFilename = pathinfo($pictureFilePathRectoPicture->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'.'.$pictureFilePathRectoPicture->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pictureFilePathRectoPicture->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $individu->setPathRectoPicture($newFilename);
+            }
+
+            if ($pictureFilePathVersoPicture) {
+                $originalFilename = pathinfo($pictureFilePathVersoPicture->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'.'.$pictureFilePathVersoPicture->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pictureFilePathVersoPicture->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $individu->setPathVersoPicture($newFilename);
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($individu);
             $em->flush();
@@ -86,9 +131,65 @@ class IndividuController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $pictureFilePathRectoPicture = $editForm['pathRectoPicture']->getData();
+            $pictureFilePathVersoPicture = $editForm['pathVersoPicture']->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($pictureFilePathRectoPicture) {
+                $originalFilename = pathinfo($pictureFilePathRectoPicture->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'.'.$pictureFilePathRectoPicture->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pictureFilePathRectoPicture->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $individu->setPathRectoPicture($newFilename);
+            }
+
+            if ($pictureFilePathVersoPicture) {
+                $originalFilename2 = pathinfo($pictureFilePathVersoPicture->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename2 = $originalFilename2.'.'.$pictureFilePathVersoPicture->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pictureFilePathVersoPicture->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename2
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $individu->setPathVersoPicture($newFilename2);
+            }
+
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('individu_edit', array('id' => $individu->getId()));
+        }
+
+        if(!empty($individu->getPathRectoPicture())) {
+            $individu->setPathRectoPicture(
+                new File($this->getParameter('pictures_directory') . '/' . $individu->getPathRectoPicture())
+            );
+        }
+        if(!empty($individu->getPathVersoPicture())) {
+            $individu->setPathVersoPicture(
+                new File($this->getParameter('pictures_directory') . '/' . $individu->getPathVersoPicture())
+            );
         }
 
         return $this->render('individu/edit.html.twig', array(

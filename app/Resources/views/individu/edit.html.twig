@@ -5,8 +5,19 @@
     <h1>Individu edit</h1>
 
     {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+    {{ form_row(edit_form.pathRectoPicture) }}
+    {% if edit_form.pathRectoPicture is defined and edit_form.pathRectoPicture.vars.block_prefixes[1] == "file" and edit_form.pathRectoPicture.vars.form.parent.vars.value.pathRectoPicture %}
+        {% set str = edit_form.pathRectoPicture.vars.form.parent.vars.value.pathRectoPicture|split('/') %}
+        <img style="max-width: 100px" src="/asoiaf/web/bundles/app/images/uniteus/{{ str|last }}">
+    {% endif %}
+    {{ form_row(edit_form.pathVersoPicture) }}
+    {% if edit_form.pathVersoPicture is defined and edit_form.pathVersoPicture.vars.block_prefixes[1] == "file" and edit_form.pathRectoPicture.vars.form.parent.vars.value.pathVersoPicture %}
+        {% set str = edit_form.pathVersoPicture.vars.form.parent.vars.value.pathVersoPicture|split('/') %}
+        <img style="max-width: 100px" src="/asoiaf/web/bundles/app/images/uniteus/{{ str|last }}">
+    {% endif %}
+    {{ form_widget(edit_form) }}
+
+    <input type="submit" value="Edit" />
     {{ form_end(edit_form) }}
 
     <ul>

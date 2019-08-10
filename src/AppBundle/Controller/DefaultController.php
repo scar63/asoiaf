@@ -255,9 +255,23 @@ class DefaultController extends Controller
                 'armyPoint'  => $request->get('armyPoint'),
                 'armyName'  => $request->get('armyName'),
             ));
+        $footer = '<table width="100%" style="vertical-align: bottom; ">
+                    <tr>
+                        <td width="33%"></td>
+                        <td width="33%" align="center"></td>
+                        <td width="33%" style="text-align: right;margin-left: -5px;padding-left: -5px">{PAGENO}/{nbpg}</td>
+                    </tr>
+                </table>';
         $response = new Response();
         $mpdf = new \Mpdf\Mpdf(['tempDir' =>  sys_get_temp_dir().DIRECTORY_SEPARATOR.'mpdf', 'format' => 'A4' ]);
-        $mpdf->AddPage('P');
+        $mpdf->AddPage('P','', '', '', '',
+            '', // margin_left
+            '', // margin right
+            '', // margin top
+            '', // margin bottom
+            '', // margin header
+            11.5); // margin footer
+        $mpdf->SetHTMLFooter($footer);
         $mpdf->WriteHTML($html);
 
         if(isset($listPathUc2)) {
@@ -265,7 +279,14 @@ class DefaultController extends Controller
                 array(
                     'listPathUc2' => [$listPathUc2],
                 ));
-            $mpdf->AddPage('P');
+            $mpdf->AddPage('P','', '', '', '',
+                '', // margin_left
+                '', // margin right
+                '', // margin top
+                '', // margin bottom
+                '', // margin header
+                11.5); // margin footer
+            $mpdf->SetHTMLFooter($footer);
             $mpdf->WriteHTML($html);
         }
 
@@ -274,7 +295,14 @@ class DefaultController extends Controller
                 array(
                     'listPathUc2' => [$listPathUc3],
                 ));
-            $mpdf->AddPage('P');
+            $mpdf->AddPage('P','', '', '', '',
+                '', // margin_left
+                '', // margin right
+                '', // margin top
+                '', // margin bottom
+                '', // margin header
+                11.5); // margin footer
+            $mpdf->SetHTMLFooter($footer);
             $mpdf->WriteHTML($html);
         }
         $response->setContent($mpdf->Output());

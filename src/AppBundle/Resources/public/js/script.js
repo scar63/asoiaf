@@ -306,14 +306,14 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
         ul += msg[individuInfo].cout + ' points - ';
     ul += msg[individuInfo].typeIndividu;
     if(msg[individuInfo].type == 1)
-        ul += '<span class="glyphicon glyphicon-king" style="margin-left: 5px"></span>';
+        ul += '<span style="margin-left: 5px"><img src="/asoiaf/web/bundles/app/images/sigle-commandant.png"></span>';
     ul += '</span>';
     if(typeId == "1" || typeId == "3" || typeId == "4") {
-        ul += '<span class="row"><image class="img-responsive col-xs-6 clearfix" src="'+msg[individuInfo].pathRecto+'"></image>';
-        ul += '<image class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></image></span>';
+        ul += '<span class="row"><img class="img-responsive col-xs-6 clearfix" src="'+msg[individuInfo].pathRecto+'">';
+        ul += '<img class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></span>';
     }
     else
-        ul += '<span class="row"><image class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></image></span>';
+        ul += '<span class="row"><img class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></span>';
     ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" data-parent="'+idUCrattach+'"';
     //if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
     //pas un cas spécial  ?

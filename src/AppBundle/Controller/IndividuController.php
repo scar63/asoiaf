@@ -181,12 +181,12 @@ class IndividuController extends Controller
             return $this->redirectToRoute('individu_edit', array('id' => $individu->getId()));
         }
 
-        if(!empty($individu->getPathRectoPicture())) {
+        if(!empty($individu->getPathRectoPicture()) && file_exists($this->getParameter('pictures_directory') . '/' . $individu->getPathRectoPicture())) {
             $individu->setPathRectoPicture(
                 new File($this->getParameter('pictures_directory') . '/' . $individu->getPathRectoPicture())
             );
         }
-        if(!empty($individu->getPathVersoPicture())) {
+        if(!empty($individu->getPathVersoPicture()) && file_exists($this->getParameter('pictures_directory') . '/' . $individu->getPathVersoPicture())) {
             $individu->setPathVersoPicture(
                 new File($this->getParameter('pictures_directory') . '/' . $individu->getPathVersoPicture())
             );

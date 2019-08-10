@@ -78,7 +78,7 @@ $(document).on('click', '.btnAddCmd', function () {
     })
         .done(function( individuInfo ) {
             var ul = '';
-            ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
+            ul += '<li><span class="col-lg-10">'+individuInfo.nom+'&nbsp;('+individuInfo.cout+')</span> ';
             ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'">';
             ul +=  '<input type="hidden" name="cmdID" value="'+individuInfo.id+'"/>';
             ul +=  '</span>';
@@ -117,7 +117,7 @@ function addUC(idUCToAdd)
         .done(function( individuInfo ) {
             var random = Math.round(new Date().getTime() + (Math.random() * 100));
             var ul = '';
-            ul += '<li><span class="col-xs-11">'+individuInfo.nom+'(<span class="coutUc">'+individuInfo.cout+'</span>)';
+            ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
             if(!individuInfo.isOnlySetWhenAttach)
                 ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
             ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
@@ -149,7 +149,7 @@ $(document).on('click', '.btnAddNUc', function () {
 function addNCU(individuInfo)
 {
     var ul = '';
-    ul += '<li><span class="col-xs-11">'+individuInfo.nom+'(<span class="coutNUC">'+individuInfo.cout+'</span>)';
+    ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutNUC">'+individuInfo.cout+'</span>)';
     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
     if(individuInfo.typeId == 1)
         ul += 'data-isncucmd="true"';
@@ -163,7 +163,7 @@ function addNCU(individuInfo)
     if(individuInfo.typeId == 1)
     {
         var ul = '';
-        ul += '<li><span class="col-lg-10">'+individuInfo.nom+'('+individuInfo.cout+')</span> ';
+        ul += '<li><span class="col-lg-10">'+individuInfo.nom+'&nbsp;('+individuInfo.cout+')</span> ';
         ul += '<span class="col-lg-1"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-isncucmd="true" data-realname="'+individuInfo.realName+'"></span>';
         ul +=  '<input type="hidden" name="cmdID"  value="'+individuInfo.id+'"/>';
         ul += '</li>';
@@ -183,7 +183,7 @@ $(document).on('click', '.btnAddAttachment', function (e) {
     })
     .done(function( individuInfo ) {
         var ul = '';
-        ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'(<span class="coutAttach">'+individuInfo.cout+'</span>)';
+        ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'&nbsp;(<span class="coutAttach">'+individuInfo.cout+'</span>)';
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
         if(individuInfo.typeId == 1)
             ul += 'data-isncucmd="true"';

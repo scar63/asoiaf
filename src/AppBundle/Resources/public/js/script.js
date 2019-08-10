@@ -317,7 +317,8 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     ul += '<br><span class="row text-center"><button data-idattchbtntoreplace="'+idAttchBtnToReplace+'" type="button" class="btn btn-danger col-xs-12 ' + btnToAdd + '" id="' + msg[individuInfo].id + '" data-parent="'+idUCrattach+'"';
     //if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
     //pas un cas spécial  ?
-    if( (msg[individuInfo].type != 1) && (msg[individuInfo].libelleSpecial != 'processByTwo') && (msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || (msg[individuInfo].realName != "" && $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 )))
+    //(msg[individuInfo].type != 1) &&
+    if(typeId != 1 && (msg[individuInfo].libelleSpecial != 'processByTwo') && (msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || (msg[individuInfo].realName != "" && $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 )))
         ul += ' disabled ';
 
     if(msg[individuInfo].type == 1 && msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length > 1 ))
@@ -325,6 +326,7 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
 
     if(msg[individuInfo].libelleSpecial == 'processByTwo'  &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length >= 2 ))
         ul += ' disabled ';
+
 
         ul += ' >Ajouter</button></span>';
     ul += '</li><hr>';

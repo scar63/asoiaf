@@ -165,7 +165,7 @@ class DefaultController extends Controller
             'typeId' => $indivu->getType()->getId(),
             'coutAttch' => (isset($indivuAttch)?$indivuAttch->getCout():0),
             'realName' => $indivu->getPersonnageRealName(),
-            'hasAttachId' => $indivu->getAttachId(),
+            'hasAttachId' => (!empty($indivu->getAttachId())?$indivu->getAttachId()->getId():0),
             'isOnlySetWhenAttach' => $indivu->isOnlySetWhenAttach(),
         );
 

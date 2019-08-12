@@ -23,7 +23,7 @@ $('#factionSelect').on('change', function () {
                 $(".listNameAdversInclude").empty();
                 var ul = '<ul class="">';
                 for(var [key, individuInfo]  of Object.entries(individusInfo)) {
-                    ul += '<li><span class="col-lg-11"><input class="coutAdversInclude" type="checkbox" value="' + individuInfo.cout + '"> Inclure <span class="nameAdversInclude">"' + individuInfo.nom + '(' + individuInfo.cout + ')"</span> ';
+                    ul += '<li><span class="col-lg-11"><input class="coutAdversInclude" type="checkbox" value="' + individuInfo.cout + '"> Inclure <span class="nameAdversInclude">"' + individuInfo.nom + '&nbsp;(' + individuInfo.cout + ')"</span> ';
                     ul += '</li>';
                 }
                 ul += '</ul>';

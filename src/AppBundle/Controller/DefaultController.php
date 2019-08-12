@@ -81,15 +81,15 @@ class DefaultController extends Controller
          $faction[] = $request->get('faction');
          $type[] = $request->get('type');
 
-         if($request->get('type' )== 4)
-         {
-             $typeIndividu = [4]; //on ajoute les type 1 (générals) et typeIndividu 1(infaterie), 2(Cavalerie)
-             $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu, 'isOnlySetWhenAttach' => false]);
-         }
-
          //add faction neutre
          if(($request->get('type') != 1) && ($request->get('faction') != 3) && ($request->get('faction') != 5))
            $faction[] = "3";
+
+        if($request->get('type' )== 4)
+        {
+            $typeIndividu = [4]; //on ajoute les type 1 (générals) et typeIndividu 1(infaterie), 2(Cavalerie)
+            $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu, 'isOnlySetWhenAttach' => false]);
+        }
 
          //si c'est un attachment alors on recup les général et indivdus avec le même typed'Individu que celui attaché
         if($request->get('type' )== 3)

@@ -88,7 +88,7 @@ class DefaultController extends Controller
          }
 
          //add faction neutre
-         if(($request->get('type') != 1) && ($request->get('faction') != 3))
+         if(($request->get('type') != 1) && ($request->get('faction') != 3) && ($request->get('faction') != 5))
            $faction[] = "3";
 
          //si c'est un attachment alors on recup les général et indivdus avec le même typed'Individu que celui attaché

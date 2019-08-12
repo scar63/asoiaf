@@ -118,7 +118,7 @@ function addUC(idUCToAdd)
             var random = Math.round(new Date().getTime() + (Math.random() * 100));
             var ul = '';
             ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
-            if(!individuInfo.isOnlySetWhenAttach)
+            // if(!individuInfo.isOnlySetWhenAttach)
                 ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
             ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
             ul +=   '</span></span>';

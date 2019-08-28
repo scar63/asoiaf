@@ -110,6 +110,13 @@ class Individu
     private $isOnlySetWhenAttach;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="isOnlySetWhenCmdSelect", type="boolean" , options={"default" : false})
+     */
+    private $isOnlySetWhenCmdSelect;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="libelleSpecial", type="string", length=500, nullable=true)
@@ -429,6 +436,22 @@ class Individu
     public function setLibelleSpecial($libelleSpecial)
     {
         $this->libelleSpecial = $libelleSpecial;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnlySetWhenCmdSelect()
+    {
+        return $this->isOnlySetWhenCmdSelect;
+    }
+
+    /**
+     * @param bool $isOnlySetWhenCmdSelect
+     */
+    public function setIsOnlySetWhenCmdSelect($isOnlySetWhenCmdSelect)
+    {
+        $this->isOnlySetWhenCmdSelect = $isOnlySetWhenCmdSelect;
     }
 
     public function __toString() {

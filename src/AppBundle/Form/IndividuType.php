@@ -18,7 +18,7 @@ class IndividuType extends AbstractType
         $builder->add('nom')->add('nomFr')->add('nomEs')->add('cout')
             ->add('isUnique')->add('pathRectoPicture', FileType::class, ['mapped' => false, 'required' => false])
             ->add('pathVersoPicture', FileType::class, ['mapped' => false, 'required' => false])
-            ->add('personnageRealName')->add('isOnlySetWhenAttach')->add('attachId')->add('faction')
+            ->add('personnageRealName')->add('isOnlySetWhenAttach')->add('isOnlySetWhenCmdSelect')->add('attachId')->add('faction')
             ->add('type')->add('typeIndividu')->add('libelleSpecial', ChoiceType::class, [
                     'choices' => [
                         '' => null,

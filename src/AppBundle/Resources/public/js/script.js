@@ -122,8 +122,29 @@ function addUC(idUCToAdd)
                 ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
             ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
             ul +=   '</span></span>';
-            if(!individuInfo.isOnlySetWhenAttach)
+
+            if(!individuInfo.isOnlySetWhenAttach && !individuInfo.isOnlySetWhenCmdSelect)
                 ul += '<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>';
+
+            if(individuInfo.isOnlySetWhenCmdSelect)
+            {
+                $.ajax({
+                    method: "POST",
+                    url: Routing.generate('ajaxGetInfoIndividu'),
+                    data: { id: individuInfo.hasAttachId},
+                    async:false
+                })
+                .done(function( individuInfo ) {
+                    ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'&nbsp;(<span class="coutAttach">'+individuInfo.cout+'</span>)';
+                    ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
+                    // if(individuInfo.typeId == 1)
+                        ul += 'data-isncucmd="true"';
+                    ul += '></span></span>' +
+                    '<input type="hidden" name="nattchID[]" value="'+individuInfo.id+'"></div>';
+
+                    $(".glyphicon.glyphicon-trash[data-id='"+individuInfo.id+"']").attr('data-isncucmd', 'true');
+               });
+            }
             ul += '</li>';
 
             $(".listCombatUnitNameResume").append(ul);
@@ -237,6 +258,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
             //si ncu et command on doit doit delete le cmd et le ncu
             if(isNCnuCmd){
                 $(".commandantNameResume").find('[data-isncucmd="true"]').closest("li").remove();
+                $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("li").remove();
                 $(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').closest("li").remove();
             }
             else
@@ -256,10 +278,14 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
 
 function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattach = null, idAttchBtnToReplace=null)
 {
+    var idCmd = null;
+    if(typeof $('.commandantNameResume').find('.glyphicon.glyphicon-trash').data('id') !== 'undefined')
+        idCmd = $('.commandantNameResume').find('.glyphicon.glyphicon-trash').data('id');
+
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetListIndividus'),
-        data: { faction: factionId, type: typeId, individuId: idUCrattach },
+        data: { faction: factionId, type: typeId, individuId: idUCrattach, idCmd: idCmd },//attention arg !!idCmd: idCmd
     })
     .done(function( msg ) {
 

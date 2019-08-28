@@ -123,7 +123,13 @@ class DefaultController extends Controller
                 array_merge($listUCNUC, $listUC)
             );
 
-
+        //cas eddard honor guard (specific cmd select)
+        if(!empty($idCmdSelect = $request->get('idCmd'))) {
+            if(!empty($listAttchToCmdUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['isOnlySetWhenCmdSelect' => true, 'attachId' => $idCmdSelect])))
+                $listUC = new ArrayCollection(
+                    array_merge($listAttchToCmdUC, $listUC)
+                );
+        }
 
         $manager = $this->get('assets.packages');
         $arrayCollection = array();
@@ -167,6 +173,7 @@ class DefaultController extends Controller
             'realName' => $indivu->getPersonnageRealName(),
             'hasAttachId' => (!empty($indivu->getAttachId())?$indivu->getAttachId()->getId():0),
             'isOnlySetWhenAttach' => $indivu->isOnlySetWhenAttach(),
+            'isOnlySetWhenCmdSelect' => $indivu->isOnlySetWhenCmdSelect(),
         );
 
         return new JsonResponse($infoIndividu);

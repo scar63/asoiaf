@@ -128,6 +128,7 @@ function addUC(idUCToAdd)
 
             if(individuInfo.isOnlySetWhenCmdSelect)
             {
+                var idParent = individuInfo.id;
                 $.ajax({
                     method: "POST",
                     url: Routing.generate('ajaxGetInfoIndividu'),

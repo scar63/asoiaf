@@ -140,7 +140,7 @@ function addUC(idUCToAdd)
                     // if(individuInfo.typeId == 1)
                         ul += 'data-isncucmd="true"';
                     ul += '></span></span>' +
-                    '<input type="hidden" name="nattchID[]" value="'+individuInfo.id+'"></div>';
+                    '<input type="hidden" name="nattchID[]" value="'+individuInfo.id+'_'+idParent+'"></div>';
 
                     $(".glyphicon.glyphicon-trash[data-id='"+individuInfo.id+"']").attr('data-isncucmd', 'true');
                });
@@ -392,6 +392,8 @@ function checkIfOutOfScore(){
         $('#limitOutNCU').removeClass('hidden');
     else if(!$('#limitOutNCU').hasClass('hidden'))
         $('#limitOutNCU').addClass('hidden');
+
+    $(".pointResume").html(countPointUC + countPointAttch + coutNUC);
 }
 
 

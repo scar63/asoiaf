@@ -159,7 +159,10 @@ function addUC(idUCToAdd, idParentToAttach = null)
             }
             ul += '</li>';
 
-            $(".listCombatUnitNameResume").append(ul);
+            if(idParentToAttach !== null)
+                $('.listCombatUnitNameResume').find('[data-id="'+idParentToAttach+'"]').closest('div').append(ul);
+            else
+                $(".listCombatUnitNameResume").append(ul);
             $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));
             checkIfOutOfScore();
             $("#modalListUC").modal('hide');
@@ -270,8 +273,8 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
             //si ncu et command on doit doit delete le cmd et le ncu
             if(isNCnuCmd){
                 $(".commandantNameResume").find('[data-isncucmd="true"]').closest("li").remove();
-                $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("li").remove();
-                $(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').closest("li").remove();
+                $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").remove();
+                $(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").remove();
             }
             else
                 $(toDelete).closest("li").remove();

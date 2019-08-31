@@ -107,7 +107,7 @@ $(document).on('click', '.btnAddUc', function () {
     addUC($(this).attr('id'));
 });
 
-function addUC(idUCToAdd)
+function addUC(idUCToAdd, idParentToAttach = null)
 {
     $.ajax({
         method: "POST",
@@ -117,11 +117,22 @@ function addUC(idUCToAdd)
         .done(function( individuInfo ) {
             var random = Math.round(new Date().getTime() + (Math.random() * 100));
             var ul = '';
-            ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
-            // if(!individuInfo.isOnlySetWhenAttach)
+            if(idParentToAttach !== null) {
+                ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutAttach">' + individuInfo.cout + '</span>)';
+                ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="' + individuInfo.id + '" data-realname="' + individuInfo.realName + '"';
+                if (individuInfo.typeId == 1)
+                    ul += 'data-isncucmd="true"';
+                ul += '></span></span>' +
+                    '<input type="hidden" name="nattchID[]" value="' + individuInfo.id + '_' + idParentToAttach + '"></div>';
+            }
+            else
+            {
+                ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
+                // if(!individuInfo.isOnlySetWhenAttach)
                 ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
-            ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
-            ul +=   '</span></span>';
+                ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
+                ul +=   '</span></span>';
+            }
 
             if(!individuInfo.isOnlySetWhenAttach && !individuInfo.isOnlySetWhenCmdSelect)
                 ul += '<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>';
@@ -213,7 +224,7 @@ $(document).on('click', '.btnAddAttachment', function (e) {
             '<input type="hidden" name="nattchID[]" value="'+individuInfo.id+'_'+parent+'"></div>';
 
         if(individuInfo.hasAttachId != 0)
-            addUC(individuInfo.hasAttachId);
+            addUC(individuInfo.hasAttachId, individuInfo.id);
 
         $("#"+idAttchBtnToReplace).replaceWith(ul);
         $(".pointResume").html(Number($(".pointResume").html()) + Number(individuInfo.cout));

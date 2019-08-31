@@ -50,8 +50,7 @@ class Individu
     private $cout;
 
     /**
-     * One Product has One Shipment.
-     * @ORM\OneToOne(targetEntity="Individu")
+     * @ORM\ManyToOne(targetEntity="Individu", inversedBy="attachId")
      * @ORM\JoinColumn(referencedColumnName="id", nullable=true)
      */
     private $attachId;

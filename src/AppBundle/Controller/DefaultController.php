@@ -96,7 +96,10 @@ class DefaultController extends Controller
         {
             $indivu = $this->getDoctrine()->getRepository(Individu::class)->findOneById($request->get('individuId'));
 //            $typeIndividu = [$indivu->getTypeIndividu()->getId()];
-            $typeIndividu = [1,2]; //corrige bug no list Boltons Cutthroats ?
+            if($indivu->getTypeIndividu()->getId() == 2) //cas cavalerie
+                $typeIndividu = [2];
+            else
+                $typeIndividu = [1,2]; //corrige bug no list Boltons Cutthroats ?
             $type [] = 1; //on ajoute les type 1 (générals)
             $em = $this->getDoctrine()->getEntityManager();
             $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach' )
@@ -107,8 +110,8 @@ class DefaultController extends Controller
 
             $listUC= $query->getResult();
         }
-        //si commandant et faction non neutre alors on ajoute les commandant neutres
-        elseif($request->get('type' )== 1)
+        //si commandant et faction non neutre alors on ajoute les commandant neutres et pas free folk
+        elseif($request->get('type' )== 1 && $request->get('faction') != 5)
         {
             if($faction != 3)
                 $faction [] = 3;

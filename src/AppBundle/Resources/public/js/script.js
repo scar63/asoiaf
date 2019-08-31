@@ -129,7 +129,7 @@ function addUC(idUCToAdd, idParentToAttach = null)
             {
                 ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
                 // if(!individuInfo.isOnlySetWhenAttach)
-                ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
+                ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="'+individuInfo.special+'" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
                 ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
                 ul +=   '</span></span>';
             }
@@ -414,6 +414,11 @@ function checkIfOutOfScore(){
         $('#limitOutNCU').removeClass('hidden');
     else if(!$('#limitOutNCU').hasClass('hidden'))
         $('#limitOutNCU').addClass('hidden');
+
+    if($('.listCombatUnitNameResume').find("*[data-special='processByTwo']").length%2 != 0)
+        $('#processByTwo').removeClass('hidden');
+    else if(!$('#processByTwo').hasClass('hidden'))
+        $('#processByTwo').addClass('hidden');
 
     $(".pointResume").html(countPointUC + countPointAttch + coutNUC);
 }

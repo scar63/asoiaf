@@ -177,6 +177,7 @@ class DefaultController extends Controller
             'hasAttachId' => (!empty($indivu->getAttachId())?$indivu->getAttachId()->getId():0),
             'isOnlySetWhenAttach' => $indivu->isOnlySetWhenAttach(),
             'isOnlySetWhenCmdSelect' => $indivu->isOnlySetWhenCmdSelect(),
+            'special' => $indivu->getLibelleSpecial(),
         );
 
         return new JsonResponse($infoIndividu);

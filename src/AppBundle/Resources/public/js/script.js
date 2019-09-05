@@ -389,8 +389,8 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
         if(typeId != 1 && msg[individuInfo].type == 1 && msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length > 1 ))
             ul += ' disabled ';
 
-        if(msg[individuInfo].libelleSpecial == 'processByTwo'  &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length >= 2 ))
-            ul += ' disabled ';
+        // if(msg[individuInfo].libelleSpecial == 'processByTwo'  &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length >= 2 ))
+        //     ul += ' disabled ';
     }
 
 

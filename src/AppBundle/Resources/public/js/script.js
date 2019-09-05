@@ -396,9 +396,9 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     //if((msg[individuInfo].isUnique &&  $('*[data-id="'+msg[individuInfo].id+'"]').length != 0 && msg[individuInfo].type != 1)  || (msg[individuInfo].type == 1 && $('.listCombatUnitNameResume').find('*[data-id="'+msg[individuInfo].id+'"]').length != 0))
     //pas un cas spécial  ?
     //(msg[individuInfo].type != 1) &&
-
-    //cmd peut être set en attch
-    if(msg[individuInfo].type == 1 &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length >= 2))
+    if(msg[individuInfo].isOnlySetWhenCmdSelect && msg[individuInfo].hasAttachId != $('input[name=cmdID]').val() )
+        ul += ' disabled ';
+    else if(msg[individuInfo].type == 1 &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length >= 2)) //cmd peut être set en attch
         ul += ' disabled ';
     else if(msg[individuInfo].type != 1)
     {

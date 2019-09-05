@@ -150,6 +150,8 @@ class DefaultController extends Controller
                 'realName' => $uc->getPersonnageRealName(),
                 'libelleSpecial' => $uc->getLibelleSpecial(),
                 'faction' => $uc->getFaction()->getId(),
+                'isOnlySetWhenCmdSelect' => $uc->isOnlySetWhenCmdSelect(),
+                'hasAttachId' => (!empty($uc->getAttachId())?$uc->getAttachId()->getId():0),
             );
         }
 

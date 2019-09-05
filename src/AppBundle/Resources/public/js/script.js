@@ -119,7 +119,12 @@ function addUC(idUCToAdd, idParentToAttach = null)
             var ul = '';
             if(idParentToAttach !== null) {
                 ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutAttach">' + individuInfo.cout + '</span>)';
-                ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="' + individuInfo.id + '" data-realname="' + individuInfo.realName + '"';
+                ul += '<span style="margin-left: 10px">';
+                if(individuInfo.isOnlySetWhenAttach)
+                    ul += '<span class="glyphicon glyphicon-trash attchment isOnlySetWhenAttach"'
+                else
+                    ul += '<span class="glyphicon glyphicon-trash attchment"'
+                ul+= '" style="cursor: pointer" data-id="' + individuInfo.id + '" data-realname="' + individuInfo.realName + '"';
                 if (individuInfo.typeId == 1)
                     ul += 'data-isncucmd="true"';
                 ul += '></span></span>' +
@@ -253,6 +258,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
     var toDelete = $(this);
     var child = null;
     var isAttch = toDelete.hasClass('attchment');
+    var isOnlySetWhenAttach = toDelete.hasClass('isOnlySetWhenAttach');
     var isNCnuCmd = toDelete.data('isncucmd');
     //si c'est pas un attch, on check si y a pas un enfant
     if(!isAttch)
@@ -272,18 +278,30 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         {
             //si ncu et command on doit doit delete le cmd et le ncu
             if(isNCnuCmd){
-                $(".commandantNameResume").find('[data-isncucmd="true"]').closest("li").remove();
-                $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").remove();
-                $(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").remove();
+               $(".commandantNameResume").find('[data-isncucmd="true"]').closest("li").remove();
+
+                var idFirst = $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').parent().parent().find('input').first().val();
+                if(idFirst) {
+                    var res = idFirst.split("_");
+                    var random = Math.round(new Date().getTime() + (Math.random() * 100));
+                    var btn = '<button type="button" id="attachFrom' + random + '" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + res[1] + '">Ajouter un attachement</button>';
+                    $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").replaceWith(btn);
+                }
+
+                $(".listNonCombatUnitNameResume").find('[data-isncucmd="true"]').closest("li").remove();
             }
             else
                 $(toDelete).closest("li").remove();
 
         }
         else {
-            var random = Math.round(new Date().getTime() + (Math.random() * 100));
-            var btn = '<button type="button" id="attachFrom'+random+'" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + parent + '">Ajouter un attachement</button>';
-            $(toDelete).parent().parent().replaceWith(btn);
+            if(!isOnlySetWhenAttach) {
+                var random = Math.round(new Date().getTime() + (Math.random() * 100));
+                var btn = '<button type="button" id="attachFrom' + random + '" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + parent + '">Ajouter un attachement</button>';
+                $(toDelete).parent().parent().replaceWith(btn);
+            }
+            else
+                $(toDelete).parent().parent().remove();
         }
         $(".pointResume").html(Number($(".pointResume").html()) - Number(msg.cout) - Number(msg.coutAttch));
         checkIfOutOfScore();

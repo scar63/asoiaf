@@ -217,26 +217,27 @@ class DefaultController extends Controller
 
         $listPathUcTmp = [];
         $i=0;
-        foreach($request->get('ucID') as $ucId)
-        {
-            $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$ucId]);
-
-            $listPathUcTmp[$i][$ucId]['uc'] = $uc->getPathVersoPicture();
-
-            if($listNattachcID)
-            foreach ($listNattachcID as $nucID)
+        if($listUC = $request->get('ucID'))
+            foreach($listUC as $ucId)
             {
-                $ids =  explode('_', $nucID);
-                $parentId = $ids[1];
-                $attchId = $ids[0];
-                if($parentId == $ucId)
+                $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$ucId]);
+
+                $listPathUcTmp[$i][$ucId]['uc'] = $uc->getPathVersoPicture();
+
+                if($listNattachcID)
+                foreach ($listNattachcID as $nucID)
                 {
-                    $nattchuc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$attchId]);
-                    $listPathUcTmp[$i][$ucId]['nattchId'] = $nattchuc->getPathVersoPicture();
+                    $ids =  explode('_', $nucID);
+                    $parentId = $ids[1];
+                    $attchId = $ids[0];
+                    if($parentId == $ucId)
+                    {
+                        $nattchuc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$attchId]);
+                        $listPathUcTmp[$i][$ucId]['nattchId'] = $nattchuc->getPathVersoPicture();
+                    }
                 }
+                $i++;
             }
-            $i++;
-        }
 
         $listPathUc = array_chunk($listPathUcTmp, 2);
 
@@ -250,21 +251,22 @@ class DefaultController extends Controller
                 $listPathUc3 = $listPathUc2Tmp[1];
         }
 
-       $listPathNUc = [];
-        foreach($request->get('nucID') as $nucID)
-        {
-            $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$nucID]);
-            $listPathNUc[] = $uc->getPathVersoPicture();
-        }
+        $listPathNUc = [];
+        if($listNuc = $request->get('nucID'))
+            foreach($request->get('nucID') as $nucID)
+            {
+                $uc = $this->getDoctrine()->getRepository(Individu::class)->findOneBy(['id'=>$nucID]);
+                $listPathNUc[] = $uc->getPathVersoPicture();
+            }
 
         $html = $this->renderView(':pdf:resume.html.twig',
             array(
-                'pathCmdPicture' =>$cmd->getPathVersoPicture(),
-                'listPathUc' =>$listPathUc[0],
-                'listPathNUc' =>$listPathNUc,
-                'nameFaction'  => $faction->getNom(),
-                'armyPoint'  => $request->get('armyPoint'),
-                'armyName'  => $request->get('armyName'),
+                'pathCmdPicture' => (!empty($cmd) ? $cmd->getPathVersoPicture() : null),
+                'listPathUc' => (isset($listPathUc[0]) ? $listPathUc[0] : null),
+                'listPathNUc' => (!empty($listPathNUc) ? $listPathNUc : null),
+                'nameFaction'  => (!empty($faction) ? $faction->getNom() : null),
+                'armyPoint'  => (empty($request->get('armyPoint')) ? 0 : $request->get('armyPoint')) ,
+                'armyName'  => (empty($request->get('armyName')) ? "N/R" : $request->get('armyName'))
             ));
         $footer = '<table width="100%" style="vertical-align: bottom; ">
                     <tr>

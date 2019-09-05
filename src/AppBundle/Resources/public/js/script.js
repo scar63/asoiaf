@@ -190,7 +190,10 @@ $(document).on('click', '.btnAddNUc', function () {
 function addNCU(individuInfo)
 {
     var ul = '';
-    ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutNUC">'+individuInfo.cout+'</span>)';
+    if(individuInfo.faction == 3)
+        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutNeutral">'+individuInfo.cout+'</span>)';
+    else
+        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutNUC">'+individuInfo.cout+'</span>)';
     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
     if(individuInfo.typeId == 1)
         ul += 'data-isncucmd="true"';
@@ -346,15 +349,31 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     var totalPoints = Number($(".pointResume").html()) + Number(msg[individuInfo].cout);
 
     var ul = '<li>';
-    if(msg[individuInfo].factionId != '3' && typeId == "4" ){
-        var coutNUC = 0;
-         $('.coutNUC').each(function() {
-             coutNUC += Number($(this).html());
-         });
-         var neutralLimit = ((Number(msg[individuInfo].cout) + coutNUC) / Number($("#armyPoint").val())) *100;
-        if( neutralLimit > 50  && $("#factionSelect option:selected").val() != 3)
-            ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
-    }
+    var countPointUC = 0;
+    var countPointAttch = 0;
+    var coutNUC = 0;
+    var coutNeutral = 0;
+    $('.coutUc').each(function() {
+        countPointUC += Number($(this).html());
+    });
+    $('.coutAttach').each(function() {
+        countPointAttch += Number($(this).html());
+    });
+    $('.coutNUC').each(function() {
+        coutNUC += Number($(this).html());
+    });
+    $('.coutNeutral').each(function() {
+        coutNeutral += Number($(this).html());
+    });
+    var coutNeutral = 0;
+    $('.coutNeutral').each(function() {
+    coutNeutral += Number($(this).html());
+    });
+
+    var neutralLimit = ((Number(msg[individuInfo].cout) + coutNeutral) / totalPoints)  *100;
+    if( neutralLimit > 50  && $("#factionSelect option:selected").val() != 3 && msg[individuInfo].faction == 3)
+        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
+
     if (msg[individuInfo].libelleSpecial == 'processByTwo' && $('*[data-id="'+msg[individuInfo].id+'"]').length < 2 )
         ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+msg[individuInfo].nom+' ne peuvent être alignés que par paires.</span>';
     if ((totalPoints > Number($("#armyPoint").val())))
@@ -414,6 +433,7 @@ function checkIfOutOfScore(){
     var countPointUC = 0;
     var countPointAttch = 0;
     var coutNUC = 0;
+    var coutNeutral = 0;
     $('.coutUc').each(function() {
         countPointUC += Number($(this).html());
     });
@@ -426,8 +446,11 @@ function checkIfOutOfScore(){
          coutNUC += Number($(this).html());
     });
 
+    $('.coutNeutral').each(function() {
+        coutNeutral += Number($(this).html());
+    });
 
-    var neutralLimit = (coutNUC / Number($("#armyPoint").val())) *100;
+    var neutralLimit = (coutNeutral / (countPointUC + countPointAttch + coutNUC + coutNeutral))  *100;
     if( neutralLimit > 50  && $("#factionSelect option:selected").val() != 3)
         $('#limitOutNCU').removeClass('hidden');
     else if(!$('#limitOutNCU').hasClass('hidden'))
@@ -438,7 +461,14 @@ function checkIfOutOfScore(){
     else if(!$('#processByTwo').hasClass('hidden'))
         $('#processByTwo').addClass('hidden');
 
-    $(".pointResume").html(countPointUC + countPointAttch + coutNUC);
+    $(".pointResume").html(countPointUC + countPointAttch + coutNUC + coutNeutral);
+
+    if(coutNeutral ==  Number($(".pointResume").html()) && Number($(".pointResume").html()) != 0 && (countPointUC + countPointAttch + coutNUC) == 0)
+        $(".pointNeutralie").html(coutNeutral + ' (100%)');
+    else if(Number($(".pointResume").html()) == 0 || coutNeutral == 0)
+        $(".pointNeutralie").html(coutNeutral);
+    else
+        $(".pointNeutralie").html(coutNeutral + ' (' + neutralLimit.toFixed(1) + '%)');
 }
 
 

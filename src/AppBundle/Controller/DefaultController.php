@@ -149,6 +149,7 @@ class DefaultController extends Controller
                 'factionId' => $uc->getFaction()->getId(),
                 'realName' => $uc->getPersonnageRealName(),
                 'libelleSpecial' => $uc->getLibelleSpecial(),
+                'faction' => $uc->getFaction()->getId(),
             );
         }
 
@@ -178,6 +179,7 @@ class DefaultController extends Controller
             'isOnlySetWhenAttach' => $indivu->isOnlySetWhenAttach(),
             'isOnlySetWhenCmdSelect' => $indivu->isOnlySetWhenCmdSelect(),
             'special' => $indivu->getLibelleSpecial(),
+            'faction' => $indivu->getFaction()->getId(),
         );
 
         return new JsonResponse($infoIndividu);

@@ -122,6 +122,28 @@ class Individu
      */
     private $libelleSpecial;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="$pathTactilCardFirst", type="string", length=500, nullable=true)
+     */
+    private $pathTactilCardFirst;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="$pathTactilCardSecond", type="string", length=500, nullable=true)
+     */
+    private $pathTactilCardSecond;
+
+     /**
+     * @var string
+     *
+     * @ORM\Column(name="$pathTactilCardThird", type="string", length=500, nullable=true)
+     */
+    private $pathTactilCardThird;
+
     /**
      * Get id
      *
@@ -455,6 +477,54 @@ class Individu
 
     public function __toString() {
         return $this->nom;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathTactilCardFirst()
+    {
+        return $this->pathTactilCardFirst;
+    }
+
+    /**
+     * @param string $pathTactilCardFirst
+     */
+    public function setPathTactilCardFirst($pathTactilCardFirst)
+    {
+        $this->pathTactilCardFirst = $pathTactilCardFirst;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathTactilCardSecond()
+    {
+        return $this->pathTactilCardSecond;
+    }
+
+    /**
+     * @param string $pathTactilCardSecond
+     */
+    public function setPathTactilCardSecond($pathTactilCardSecond)
+    {
+        $this->pathTactilCardSecond = $pathTactilCardSecond;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathTactilCardThird()
+    {
+        return $this->pathTactilCardThird;
+    }
+
+    /**
+     * @param string $pathTactilCardThird
+     */
+    public function setPathTactilCardThird($pathTactilCardThird)
+    {
+        $this->pathTactilCardThird = $pathTactilCardThird;
     }
 
 }

@@ -15,6 +15,22 @@
         {% set str = edit_form.pathVersoPicture.vars.form.parent.vars.value.pathVersoPicture|split('/') %}
         <img style="max-width: 100px" src="/asoiaf/web/bundles/app/images/uniteus/{{ str|last }}">
     {% endif %}
+    {{ form_row(edit_form.pathTactilCardFirst) }}
+    {% if edit_form.pathTactilCardFirst is defined and edit_form.pathTactilCardFirst.vars.block_prefixes[1] == "file" and edit_form.pathTactilCardFirst.vars.form.parent.vars.value.pathTactilCardFirst %}
+        {% set str = edit_form.pathTactilCardFirst.vars.form.parent.vars.value.pathTactilCardFirst|split('/') %}
+        <img style="max-width: 100px" src="/asoiaf/web/bundles/app/images/uniteus/{{ str|last }}">
+    {% endif %}
+        {{ form_row(edit_form.pathTactilCardSecond) }}
+    {% if edit_form.pathTactilCardSecond is defined and edit_form.pathTactilCardSecond.vars.block_prefixes[1] == "file" and edit_form.pathTactilCardSecond.vars.form.parent.vars.value.pathTactilCardSecond %}
+        {% set str = edit_form.pathTactilCardSecond.vars.form.parent.vars.value.pathTactilCardSecond|split('/') %}
+        <img style="max-width: 100px" src="/asoiaf/web/bundles/app/images/uniteus/{{ str|last }}">
+    {% endif %}
+        {{ form_row(edit_form.pathTactilCardThird) }}
+    {% if edit_form.pathTactilCardThird is defined and edit_form.pathTactilCardThird.vars.block_prefixes[1] == "file" and edit_form.pathTactilCardThird.vars.form.parent.vars.value.pathTactilCardThird %}
+        {% set str = edit_form.pathTactilCardThird.vars.form.parent.vars.value.pathTactilCardThird|split('/') %}
+        <img style="max-width: 100px" src="/asoiaf/web/bundles/app/images/uniteus/{{ str|last }}">
+    {% endif %}
+
     {{ form_widget(edit_form) }}
 
     <input type="submit" value="Edit" />

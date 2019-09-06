@@ -135,6 +135,10 @@ class IndividuController extends Controller
             $pictureFilePathRectoPicture = $editForm['pathRectoPicture']->getData();
             $pictureFilePathVersoPicture = $editForm['pathVersoPicture']->getData();
 
+            $pathTactilCardFirst = $editForm['pathTactilCardFirst']->getData();
+            $pathTactilCardSecond = $editForm['pathTactilCardSecond']->getData();
+            $pathTactilCardThird = $editForm['pathTactilCardThird']->getData();
+
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
             if ($pictureFilePathRectoPicture) {
@@ -173,6 +177,63 @@ class IndividuController extends Controller
                 // updates the 'brochureFilename' property to store the PDF file name
                 // instead of its contents
                 $individu->setPathVersoPicture($newFilename2);
+            }
+
+            if ($pathTactilCardFirst) {
+                $originalFilename3 = pathinfo($pathTactilCardFirst->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename3 = $originalFilename3.'.'.$pathTactilCardFirst->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pathTactilCardFirst->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename3
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $individu->setPathTactilCardFirst($newFilename3);
+            }
+
+            if ($pathTactilCardSecond) {
+                $originalFilename4 = pathinfo($pathTactilCardSecond->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename4 = $originalFilename4.'.'.$pathTactilCardSecond->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pathTactilCardSecond->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename4
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $individu->setPathTactilCardSecond($newFilename4);
+            }
+
+            if ($pathTactilCardThird) {
+                $originalFilename5 = pathinfo($pathTactilCardThird->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename5 = $originalFilename5.'.'.$pathTactilCardThird->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $pathTactilCardThird->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename5
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $individu->setPathTactilCardThird($newFilename5);
             }
 
 

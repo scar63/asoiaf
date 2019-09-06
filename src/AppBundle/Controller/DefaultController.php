@@ -266,6 +266,9 @@ class DefaultController extends Controller
         $html = $this->renderView(':pdf:resume.html.twig',
             array(
                 'pathCmdPicture' => (!empty($cmd) ? $cmd->getPathVersoPicture() : null),
+                'pathTactilCardFirst' => (!empty($cmd) ? $cmd->getPathTactilCardFirst() : null),
+                'pathTactilCardSecond' => (!empty($cmd) ? $cmd->getPathTactilCardSecond() : null),
+                'pathTactilCardThird' => (!empty($cmd) ? $cmd->getPathTactilCardThird() : null),
                 'listPathUc' => (isset($listPathUc[0]) ? $listPathUc[0] : null),
                 'listPathNUc' => (!empty($listPathNUc) ? $listPathNUc : null),
                 'nameFaction'  => (!empty($faction) ? $faction->getNom() : null),

@@ -14,6 +14,9 @@
                 <th>Unique</th>
                 <th>Recto US</th>
                 <th>Verso US</th>
+                <th>TactilCard First</th>
+                <th>TactilCard Second</th>
+                <th>TactilCard Third</th>
                 <th>Vrai nom individu</th>
                 <th>Uniquement dispo en attach</th>
                 <th>Uniquement dispo quand cmd attach</th>
@@ -36,6 +39,9 @@
                 <td>{% if individu.isUnique %}Yes{% else %}No{% endif %}</td>
                 <td>{{ individu.pathRectoPicture }}</td>
                 <td>{{ individu.pathVersoPicture }}</td>
+                <td>{{ individu.pathTactilCardFirst }}</td>
+                <td>{{ individu.pathTactilCardSecond }}</td>
+                <td>{{ individu.pathTactilCardThird }}</td>
                 <td>{{ individu.personnageRealName }}</td>
                 <td>{% if individu.isOnlySetWhenAttach %}Yes{% else %}No{% endif %}</td>
                 <td>{% if individu.isOnlySetWhenCmdSelect %}Yes{% else %}No{% endif %}</td>

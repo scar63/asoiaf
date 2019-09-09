@@ -69,6 +69,48 @@ class DefaultController extends Controller
     }
 
     /**
+    /**
+     * @Route("/ajaxGetLisTacticalCards", name="ajaxGetLisTacticalCards")
+     * @return JsonResponse
+     */
+    public function getLisTacticalCards(Request $request)
+    {
+        $result = array_merge([$request->get('idCmd')], (!empty($request->get('idsUC'))?$request->get('idsUC'):[]),(!empty($request->get('idsNUC'))?$request->get('idsNUC'):[]),(!empty($request->get('nattchID'))?$request->get('nattchID'):[]));
+
+        foreach($result as $rs)
+        {
+
+            $em = $this->getDoctrine()->getEntityManager();
+            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.id in (:faction)' )
+                ->setParameter('faction', $result);
+
+            $manager = $this->get('assets.packages');
+            $arrayCollection = array();
+            foreach($query->getResult() as $uc) {
+                $arrayCollection[] = array(
+                    'id' => $uc->getId(),
+                    'nom' => $uc->getNom(),
+                    'cout' => $uc->getCout(),
+                    'pathTactilCardFirst' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardFirst(),
+                    'pathTactilCardSecond' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardSecond(),
+                    'pathTactilCardThird' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardThird(),
+                    'typeIndividu' => $uc->getTypeIndividu()->getNom(),
+                    'type' => $uc->getType()->getId(),
+                    'isUnique' => $uc->getIsUnique(),
+                    'factionId' => $uc->getFaction()->getId(),
+                    'realName' => $uc->getPersonnageRealName(),
+                    'libelleSpecial' => $uc->getLibelleSpecial(),
+                    'faction' => $uc->getFaction()->getId(),
+                    'isOnlySetWhenCmdSelect' => $uc->isOnlySetWhenCmdSelect(),
+                    'hasAttachId' => (!empty($uc->getAttachId())?$uc->getAttachId()->getId():0),
+                );
+            }
+
+            return new JsonResponse($arrayCollection);
+        }
+    }
+
+    /**
      * @Route("/ajaxGetListIndividus", name="ajaxGetListIndividus")
      */
     public function getListIndividus(Request $request)

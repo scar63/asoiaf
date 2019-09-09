@@ -95,6 +95,9 @@
                                     <ul class="listNonCombatUnitNameResume">
                                     </ul>
                                 </li>
+                                <li style="clear: both;">Cartes tactiques :
+                                    <button id="btnlistCartesTactiques" type="button" class="btn btn-primary form-control">Voir cartes tactiques</button>
+                                </li>
                                 <li style="clear: both;display:none"  class="listNameAdversInclude">Attachement à l'adversaire  :</li>
                             </ul>
                         </div>
@@ -161,6 +164,20 @@
                 </div>
                 <div class="modal-body"  id="bodyListAttachment"  style="overflow-x: auto">
                     <ul class="listAttachment"></ul>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalListTacticalCards" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Cartes tactiques</h4>
+                </div>
+                <div class="modal-body"  id="bodyListTacticalCards"  style="overflow-x: auto">
+                    <ul class="listTacticalCards"></ul>
                 </div>
                 <div class="modal-footer"></div>
             </div>

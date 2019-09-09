@@ -64,6 +64,40 @@ $('#btnListNUC').on('click', function () {
     getIndividus($('#factionSelect').find("option:selected").val(), 4, '.listNUC', '#modalListNUC', 'btnAddNUc');
 });
 
+$('#btnlistCartesTactiques').on('click', function () {
+    if($('#factionSelect').find("option:selected").val() == '')
+        alert('Veuillez selectionner une faction');
+    else
+    {
+        //on recup l'id du cmd
+        var idCmd = $('input[name=cmdID]').val();
+        //on recup les id des uc et leurs attch
+        var idsUC = $("input[name='ucID[]']").map(function(){return $(this).val();}).get();
+        //on recup les id des ncu et leurs attch
+        var idsNUC = $("input[name='nucID[]']").map(function(){return $(this).val();}).get();
+        var nattchID = $("input[name='nattchID[]']").map(function(){ return $(this).val().split("_")[0];}).get();
+
+        $.ajax({
+            method: "POST",
+            url: Routing.generate('ajaxGetLisTacticalCards'),
+            data: { idCmd: idCmd, idsUC: idsUC, idsNUC: idsNUC, nattchID: nattchID, isTogetTacticalCards: true  },
+        })
+        .done(function( msg ) {
+
+            var ul = '';
+            var ulDisabled = '';
+            for(var individuInfo in msg) {
+                //si individu est général et select en cmd peut être add en attch
+                    ul += buildLiTactilcalCards(msg, individuInfo, '.listTacticalCards');
+            }
+
+            $('.listTacticalCards').empty();
+            $('.listTacticalCards').append(ul += ulDisabled);
+            $('#modalListTacticalCards').modal('show');
+        });
+    }
+});
+
 $(document).on('click', '.btnListAttchment', function () {
 
     getIndividus($('#factionSelect').find("option:selected").val(), 3, '.listAttachment', '#modalListAttachment', 'btnAddAttachment', $(this).data('iducrattach'),  $(this).attr('id'));
@@ -415,6 +449,39 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
 
         ul += ' >Ajouter</button></span>';
     ul += '</li><hr>';
+
+    return ul;
+}
+
+/**
+ *
+ * @param msg
+ * @param individuInfo
+ * @param selectId
+ * @returns {string}
+ */
+function buildLiTactilcalCards(msg, individuInfo, selectId){
+
+    var ul = '<li>';
+    ul += '<br><span class="row">';
+
+    var mustHr = false;
+    if(msg[individuInfo].pathTactilCardFirst != "" && msg[individuInfo].pathTactilCardFirst.indexOf("jpg") > -1) {
+        mustHr = true;
+        ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardFirst + '">';
+    }
+    if(msg[individuInfo].pathTactilCardFirst != "" && msg[individuInfo].pathTactilCardSecond.indexOf("jpg") > -1) {
+        mustHr = true;
+        ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardSecond + '">';
+    }
+    if(msg[individuInfo].pathTactilCardFirst != "" && msg[individuInfo].pathTactilCardThird.indexOf("jpg") > -1) {
+        mustHr = true;
+        ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardThird + '">';
+    }
+    ul += '</span>';
+    ul += '</li>';
+    if(mustHr)
+        ul += '<hr>';
 
     return ul;
 }

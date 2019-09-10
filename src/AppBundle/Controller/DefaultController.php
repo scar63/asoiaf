@@ -69,6 +69,37 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/copyToClipboard", name="copyToClipboard")
+     * @return JsonResponse
+     */
+    public function copyToClipboard(Request $request)
+    {
+        $cmdInfo= $this->getDoctrine()->getRepository(Individu::class)->findOneById($request->get('idCmd'));
+        $resume = 'Commandant: '.$cmdInfo->getNom().' ('.$cmdInfo->getCout().')\r';
+        $resume .= 'Points: '.$request->get('points').'('.$request->get('neutral').' Neutralité: )\r';
+        $resume .= 'Unités de combat: \r';
+        if(!empty($request->get('idsUC')))
+            foreach($request->get('idsUC') as $ucId){
+                $info = $this->getDoctrine()->getRepository(Individu::class)->findOneById($ucId);
+                $resume .= '- '.$info->getNom().' ('.$info->getCout().')\r';
+            }
+        $resume .= 'Unités non-combattantes: \r';
+        if(!empty($request->get('idsNUC')))
+            foreach($request->get('idsNUC') as $ucId){
+                $info = $this->getDoctrine()->getRepository(Individu::class)->findOneById($ucId);
+                $resume .= '- '.$info->getNom().' ('.$info->getCout().')\r';
+            }
+        $resume .= 'Attachements: \r';
+        if(!empty($request->get('nattchID')))
+            foreach($request->get('nattchID') as $ucId){
+                $info = $this->getDoctrine()->getRepository(Individu::class)->findOneById($ucId);
+                $resume .= '- '.$info->getNom().' ('.$info->getCout().')\r';
+            }
+
+        return new JsonResponse($resume);
+    }
+
+
     /**
      * @Route("/ajaxGetLisTacticalCards", name="ajaxGetLisTacticalCards")
      * @return JsonResponse

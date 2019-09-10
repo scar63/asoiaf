@@ -96,13 +96,19 @@
                                     </ul>
                                 </li>
                                 <li style="clear: both;">Cartes tactiques :
-                                    <button id="btnlistCartesTactiques" type="button" class="btn btn-primary form-control">Voir cartes tactiques</button>
+                                    <button id="btnlistCartesTactiques" type="button" style="margin-top: 5px" class="btn btn-primary form-control">Voir cartes tactiques</button>
                                 </li>
                                 <li style="clear: both;display:none"  class="listNameAdversInclude">Attachement à l'adversaire  :</li>
                             </ul>
                         </div>
                         <br>
-                        <button id="generatePDF" type="submit" class="btn btn-default pull-right" formtarget="_blank">Générer un PDF</button>
+                        <div class="row">
+                            <button id="generatePDF" type="submit" class="btn btn-default pull-right"  formtarget="_blank">Générer un PDF</button>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <button id="copyToClipboard" class="btn btn-default pull-right" type="button">Copier dans le presse papier</button>
+                        </div>
                 </div>
             </div>
         </div>

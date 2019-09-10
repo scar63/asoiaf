@@ -141,6 +141,42 @@ $(document).on('click', '.btnAddUc', function () {
     addUC($(this).attr('id'));
 });
 
+$(document).on('click', '#copyToClipboard', function () {
+
+
+    var resume = 'Faction: '+$("#factionSelect option:selected").html()+'\n\r';
+
+
+    $.ajax({
+        method: "POST",
+        url: Routing.generate('copyToClipboard'),
+        async: false,
+        data: {
+            points: $('.pointResume').html()+'/'+$('.onPoints').html(),
+            neutral: $('.pointNeutralie').html(),
+            idCmd: $("input[name='cmdID']").val(),
+            idsUC: $("input[name='ucID[]']").map(function () {
+                return $(this).val();
+            }).get(),
+            idsNUC: $("input[name='nucID[]']").map(function () {
+                return $(this).val();
+            }).get(),
+            nattchID: $("input[name='nattchID[]']").map(function () {
+                return $(this).val().split("_")[0];
+            }).get()
+        }
+    })
+    .done(function( rslt ) {
+        let copyFrom = document.createElement("textarea");
+        document.body.appendChild(copyFrom);
+        copyFrom.textContent = resume+rslt;
+        copyFrom.select();
+        document.execCommand("copy");
+        copyFrom.remove();
+    });
+
+});
+
 function addUC(idUCToAdd, idParentToAttach = null)
 {
     $.ajax({

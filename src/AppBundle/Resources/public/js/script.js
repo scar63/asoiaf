@@ -501,15 +501,15 @@ function buildLiTactilcalCards(msg, individuInfo, selectId){
     ul += '<br><span class="row">';
 
     var mustHr = false;
-    if(msg[individuInfo].pathTactilCardFirst != "" && msg[individuInfo].pathTactilCardFirst.indexOf("jpg") > -1) {
+    if(msg[individuInfo].pathTactilCardFirst != "") {
         mustHr = true;
         ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardFirst + '">';
     }
-    if(msg[individuInfo].pathTactilCardFirst != "" && msg[individuInfo].pathTactilCardSecond.indexOf("jpg") > -1) {
+    if(msg[individuInfo].pathTactilCardFirst != "") {
         mustHr = true;
         ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardSecond + '">';
     }
-    if(msg[individuInfo].pathTactilCardFirst != "" && msg[individuInfo].pathTactilCardThird.indexOf("jpg") > -1) {
+    if(msg[individuInfo].pathTactilCardFirst != "") {
         mustHr = true;
         ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardThird + '">';
     }

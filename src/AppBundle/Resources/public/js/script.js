@@ -144,7 +144,7 @@ $(document).on('click', '.btnAddUc', function () {
 $(document).on('click', '#copyToClipboard', function () {
 
 
-    var resume = 'Faction: '+$("#factionSelect option:selected").html()+'\n\r';
+    var resume = 'Faction: '+$("#factionSelect option:selected").html().trim()+'\n';
 
 
     $.ajax({
@@ -167,12 +167,11 @@ $(document).on('click', '#copyToClipboard', function () {
         }
     })
     .done(function( rslt ) {
-        let copyFrom = document.createElement("textarea");
-        document.body.appendChild(copyFrom);
-        copyFrom.textContent = resume+rslt;
-        copyFrom.select();
+        var $temp = $("<textarea>");
+        $("body").append($temp);
+        $temp.val(rslt.replace('/<br\\s*[\\/]?>/gi', "\r\n")).select();
         document.execCommand("copy");
-        copyFrom.remove();
+        $temp.remove();
     });
 
 });

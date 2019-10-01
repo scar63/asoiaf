@@ -171,6 +171,8 @@ class DefaultController extends Controller
 //            $typeIndividu = [$indivu->getTypeIndividu()->getId()];
             if($indivu->getTypeIndividu()->getId() == 2) //cas cavalerie
                 $typeIndividu = [2];
+            elseif($indivu->getTypeIndividu()->getId() == 5) //cas war machine
+                $typeIndividu = [5];
             else
                 $typeIndividu = [1,2]; //corrige bug no list Boltons Cutthroats ?
             $type [] = 1; //on ajoute les type 1 (générals)

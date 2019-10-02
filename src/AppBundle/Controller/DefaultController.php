@@ -210,14 +210,16 @@ class DefaultController extends Controller
         }
 
         $manager = $this->get('assets.packages');
+        $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.png');
+        $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.png');
         $arrayCollection = array();
         foreach($listUC as $uc) {
             $arrayCollection[] = array(
                 'id' => $uc->getId(),
                 'nom' => $uc->getNom(),
                 'cout' => $uc->getCout(),
-                'pathVerso' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathVersoPicture(),
-                'pathRecto' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathRectoPicture(),
+                'pathVerso' => (!empty($pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathVersoPicture()) && $pathVerso != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathVerso : $noAvailableUnit),
+                'pathRecto' => (!empty($pathRecto = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathRectoPicture()) && $pathRecto != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathRecto : $noAvailableUnit),
                 'typeIndividu' => $uc->getTypeIndividu()->getNom(),
                 'type' => $uc->getType()->getId(),
                 'isUnique' => $uc->getIsUnique(),

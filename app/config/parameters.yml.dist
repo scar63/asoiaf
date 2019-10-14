@@ -18,3 +18,5 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
     pictures_directory: '%kernel.project_dir%/web/bundles/app/images/uniteus'
+
+    faction_directory: '%kernel.project_dir%/web/bundles/app/images/faction'

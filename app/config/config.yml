@@ -74,12 +74,6 @@ sensio_framework_extra:
    router:
         annotations: false
 
-assetic:
-    filters:
-        lessphp:
-             file: '%kernel.root_dir%/../vendor/oyejorge/less.php/lessc.inc.php'
-             apply_to: ".less$"
-        cssrewrite: ~
 braincrafted_bootstrap:
     output_dir:
     assets_dir: '%kernel.root_dir%/../vendor/twbs/bootstrap'

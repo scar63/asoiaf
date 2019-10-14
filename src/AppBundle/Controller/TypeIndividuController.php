@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\TypeIndividu;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Typeindividu controller.
@@ -17,8 +17,7 @@ class TypeIndividuController extends Controller
     /**
      * Lists all typeIndividu entities.
      *
-     * @Route("/", name="typeindividu_index")
-     * @Method("GET")
+     * @Route("/", name="typeindividu_index", methods={"GET"})
      */
     public function indexAction()
     {
@@ -34,8 +33,7 @@ class TypeIndividuController extends Controller
     /**
      * Creates a new typeIndividu entity.
      *
-     * @Route("/new", name="typeindividu_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="typeindividu_new", methods={"GET", "POST"})
      */
     public function newAction(Request $request)
     {
@@ -60,8 +58,7 @@ class TypeIndividuController extends Controller
     /**
      * Finds and displays a typeIndividu entity.
      *
-     * @Route("/{id}", name="typeindividu_show")
-     * @Method("GET")
+     * @Route("/{id}", name="typeindividu_show", methods={"GET"})
      */
     public function showAction(TypeIndividu $typeIndividu)
     {
@@ -76,8 +73,7 @@ class TypeIndividuController extends Controller
     /**
      * Displays a form to edit an existing typeIndividu entity.
      *
-     * @Route("/{id}/edit", name="typeindividu_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="typeindividu_edit", methods={"GET", "POST"})
      */
     public function editAction(Request $request, TypeIndividu $typeIndividu)
     {
@@ -101,8 +97,7 @@ class TypeIndividuController extends Controller
     /**
      * Deletes a typeIndividu entity.
      *
-     * @Route("/{id}", name="typeindividu_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="typeindividu_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, TypeIndividu $typeIndividu)
     {

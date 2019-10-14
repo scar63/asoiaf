@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Individu;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
@@ -18,8 +18,7 @@ class IndividuController extends Controller
     /**
      * Lists all individu entities.
      *
-     * @Route("/", name="individu_index")
-     * @Method("GET")
+     * @Route("/", name="individu_index", methods={"GET"})
      */
     public function indexAction()
     {
@@ -35,8 +34,7 @@ class IndividuController extends Controller
     /**
      * Creates a new individu entity.
      *
-     * @Route("/new", name="individu_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="individu_new", methods={"GET", "POST"})
      */
     public function newAction(Request $request)
     {
@@ -105,8 +103,7 @@ class IndividuController extends Controller
     /**
      * Finds and displays a individu entity.
      *
-     * @Route("/{id}", name="individu_show")
-     * @Method("GET")
+     * @Route("/{id}", name="individu_show", methods={"GET"})
      */
     public function showAction(Individu $individu)
     {
@@ -121,8 +118,7 @@ class IndividuController extends Controller
     /**
      * Displays a form to edit an existing individu entity.
      *
-     * @Route("/{id}/edit", name="individu_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="individu_edit", methods={"GET", "POST"})
      */
     public function editAction(Request $request, Individu $individu)
     {
@@ -263,8 +259,7 @@ class IndividuController extends Controller
     /**
      * Deletes a individu entity.
      *
-     * @Route("/{id}", name="individu_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="individu_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, Individu $individu)
     {

@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Type;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Type controller.
@@ -17,8 +17,7 @@ class TypeController extends Controller
     /**
      * Lists all type entities.
      *
-     * @Route("/", name="type_index")
-     * @Method("GET")
+     * @Route("/", name="type_index", methods={"GET"})
      */
     public function indexAction()
     {
@@ -34,8 +33,7 @@ class TypeController extends Controller
     /**
      * Creates a new type entity.
      *
-     * @Route("/new", name="type_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="type_new", methods={"GET", "POST"})
      */
     public function newAction(Request $request)
     {
@@ -60,8 +58,7 @@ class TypeController extends Controller
     /**
      * Finds and displays a type entity.
      *
-     * @Route("/{id}", name="type_show")
-     * @Method("GET")
+     * @Route("/{id}", name="type_show", methods={"GET"})
      */
     public function showAction(Type $type)
     {
@@ -76,8 +73,7 @@ class TypeController extends Controller
     /**
      * Displays a form to edit an existing type entity.
      *
-     * @Route("/{id}/edit", name="type_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="type_edit", methods={"GET", "POST"})
      */
     public function editAction(Request $request, Type $type)
     {
@@ -101,8 +97,7 @@ class TypeController extends Controller
     /**
      * Deletes a type entity.
      *
-     * @Route("/{id}", name="type_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="type_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, Type $type)
     {

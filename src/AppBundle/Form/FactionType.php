@@ -5,7 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use AppBundle\Form\ImageType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 class FactionType extends AbstractType
 {
     /**
@@ -13,8 +14,17 @@ class FactionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom');
-    }/**
+        $builder->add('nom')
+            ->add('images', CollectionType::class,array(
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'by_reference' => false,
+                'label' => 'List cartes tactiques'
+            ))
+        ;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

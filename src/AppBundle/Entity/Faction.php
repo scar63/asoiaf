@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Faction
@@ -28,6 +29,15 @@ class Faction
      */
     private $nom;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", cascade={"persist"}, orphanRemoval=true)
+     * @var
+     */
+    private $images;
+
+    function __construct() {
+        $this->images = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -67,4 +77,17 @@ class Faction
         return $this->nom;
     }
 
+    /**
+     * Get files
+     *
+     * @return ArrayCollection
+     */
+    function getImages() {
+        return $this->images;
+    }
+
+
+    function setImages($images) {
+        $this->images = $images;
+    }
 }

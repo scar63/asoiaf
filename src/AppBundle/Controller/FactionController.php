@@ -4,8 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Faction;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Faction controller.
@@ -17,8 +17,7 @@ class FactionController extends Controller
     /**
      * Lists all faction entities.
      *
-     * @Route("/", name="faction_index")
-     * @Method("GET")
+     * @Route("/", name="faction_index", methods={"GET"})
      */
     public function indexAction()
     {
@@ -34,8 +33,7 @@ class FactionController extends Controller
     /**
      * Creates a new faction entity.
      *
-     * @Route("/new", name="faction_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="faction_new", methods={"GET", "POST"})
      */
     public function newAction(Request $request)
     {
@@ -44,6 +42,21 @@ class FactionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $attachments = $faction->getImages();
+            if ($attachments) {
+                foreach($attachments as $attachment)
+                {
+                    $file = $attachment->getImage();
+
+                    $file->move(
+                        $this->getParameter('faction_directory'), $file->getClientOriginalName()
+                    );
+                    $attachment->setImage($file->getClientOriginalName());
+                }
+            }
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($faction);
             $em->flush();
@@ -60,8 +73,7 @@ class FactionController extends Controller
     /**
      * Finds and displays a faction entity.
      *
-     * @Route("/{id}", name="faction_show")
-     * @Method("GET")
+     * @Route("/{id}", name="faction_show", methods={"GET"})
      */
     public function showAction(Faction $faction)
     {
@@ -76,8 +88,7 @@ class FactionController extends Controller
     /**
      * Displays a form to edit an existing faction entity.
      *
-     * @Route("/{id}/edit", name="faction_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="faction_edit", methods={"GET", "POST"})
      */
     public function editAction(Request $request, Faction $faction)
     {
@@ -101,8 +112,7 @@ class FactionController extends Controller
     /**
      * Deletes a faction entity.
      *
-     * @Route("/{id}", name="faction_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="faction_delete", methods={"DELETE"})
      */
     public function deleteAction(Request $request, Faction $faction)
     {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "173cc5fdb5dce41f40d7f8e70d21f3f6",
+    "content-hash": "6e56fd56913898dcf52df0d9a0e3170e",
     "packages": [
         {
             "name": "braincrafted/bootstrap-bundle",

@@ -42,21 +42,6 @@ class FactionController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $attachments = $faction->getImages();
-            if ($attachments) {
-                foreach($attachments as $attachment)
-                {
-                    $file = $attachment->getImage();
-
-                    $file->move(
-                        $this->getParameter('faction_directory'), $file->getClientOriginalName()
-                    );
-                    $attachment->setImage($file->getClientOriginalName());
-                }
-            }
-
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($faction);
             $em->flush();
@@ -97,7 +82,9 @@ class FactionController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($faction);
+            $em->flush();
 
             return $this->redirectToRoute('faction_edit', array('id' => $faction->getId()));
         }

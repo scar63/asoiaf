@@ -30,18 +30,19 @@ class Faction
     private $nom;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="faction", cascade={"persist"}, orphanRemoval=true)
      * @var
      */
     private $images;
 
+    /**
+     * Faction constructor.
+     */
     function __construct() {
         $this->images = new ArrayCollection();
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -50,11 +51,8 @@ class Faction
     }
 
     /**
-     * Set nom
-     *
-     * @param string $nom
-     *
-     * @return Faction
+     * @param $nom
+     * @return $this
      */
     public function setNom($nom)
     {
@@ -64,8 +62,6 @@ class Faction
     }
 
     /**
-     * Get nom
-     *
      * @return string
      */
     public function getNom()
@@ -73,21 +69,36 @@ class Faction
         return $this->nom;
     }
 
+    /**
+     * @return string
+     */
     public function __toString() {
         return $this->nom;
     }
 
     /**
-     * Get files
-     *
+     * @param Image $image
+     * @return $this
+     */
+    public function addImage(Image $image)
+    {
+        $image->setFaction($this);
+        $this->images[] = $image;
+        return $this;
+    }
+
+    /**
+     * @param Image $image
+     */
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
      * @return ArrayCollection
      */
     function getImages() {
         return $this->images;
-    }
-
-
-    function setImages($images) {
-        $this->images = $images;
     }
 }

@@ -3,22 +3,35 @@
 {% block body %}
     <h1>Faction creation</h1>
 
-{#    {{ form_start(form) }}#}
-{#        {{ form_widget(form) }}#}
-{#        <input type="submit" value="Create" />#}
-{#    {{ form_end(form) }}#}
-
     {{ form_start(form) }}
     {{ form_widget(form.nom) }}
     <br>
-    <ul class="files" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
-        {% for element in form.images %}
-            <li>
-                {{ form_widget(element.image) }}
-            </li>
-        {% endfor %}
-    </ul>
-    <input type="submit" value="Create" />
+    <div id="filesProto" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}"></div>
+    <div class="row">
+        <div class="col col-xs-12" id="filesBox">
+            {% set pos = 0 %}
+            {% for img in form.images %}
+
+                <div class="row">
+                    <div class="col col-xs-1" id="jsRemove{{ pos }}" style="">
+                        <button type="button" class="btn btn-danger" onclick="removeFile($(this));"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="col col-xs-11" id="jsPreview{{ pos }}">{{ img.vars.value.name }}</div>
+
+                    <div style="display:none">
+                        {{ form_widget(img) }}
+                    </div>
+                </div>
+                {% set pos = pos + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col col-xs-12">
+            <input type="submit" value="Créer" />
+        </div>
+    </div>
     <br><br>
     {{ form_end(form) }}
 
@@ -27,41 +40,63 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script lang="javascript" type="text/javascript">
-        var $collectionHolder;
-        // setup an "add a tag" link
-        var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter une carte tactique</a>');
-        var $newLinkLi = $('<li></li>').append($addTagLink);
+    <script>
+        var fileCount = '{{ form.images|length }}';
+        var removeButton = "<button type='button' class='btn btn-danger btn-xs' onclick='removeFile($(this));'><i class='fa fa-times' aria-hidden='true'></i></button>";
 
-        jQuery(document).ready(function () {
-            // Get the ul that holds the collection of tags
-            $collectionHolder = $('ul.files');
-            // add the "add a tag" anchor and li to the tags ul
-            $collectionHolder.append($newLinkLi);
-            // count the current form inputs we have (e.g. 2), use that as the new
-            // index when inserting a new item (e.g. 2)
-            $collectionHolder.data('index', $collectionHolder.find(':input').length);
-            $addTagLink.on('click', function (e) {
-                // prevent the link from creating a "#" on the URL
-                e.preventDefault();
-                // add a new tag form (see next code block)
-                addTagForm($collectionHolder, $newLinkLi);
-            });
-        });
-        function addTagForm($collectionHolder, $newLinkLi) {
-            // Get the data-prototype explained earlier
-            var prototype = $collectionHolder.data('prototype');
-            // get the new index
-            var index = $collectionHolder.data('index');
-            // Replace '__name__' in the prototype's HTML to
-            // instead be a number based on how many items we have
-            var newForm = prototype.replace(/__name__/g, index);
-            // increase the index with one for the next item
-            $collectionHolder.data('index', index + 1);
-            // Display the form in the page in an li, before the "Add a tag" link li
-            var $newFormLi = $('<li></li>').append(newForm);
-            $newLinkLi.before($newFormLi);
+        function removeFile(ob) {
+            ob.parent().parent().remove();
         }
+
+        function createAddFile(fileCount)
+        {
+            // grab the prototype template
+            var newWidget = $("#filesProto").attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            newWidget = newWidget.replace(/__name__/g, fileCount);
+
+            newWidget = "<div style='display:none'>" + newWidget + "</div>";
+
+            hideStuff = "";
+            hideStuff += "<div class='col col-xs-1' id='jsRemove" + fileCount + "' style='display: none;'>";
+            hideStuff += removeButton;
+            hideStuff += "</div>";
+
+            hideStuff += "<div class='col col-xs-11' id='jsPreview" + fileCount + "'>";
+            hideStuff += "</div>";
+
+            hideStuff += "<div class='col col-xs-12'>";
+            hideStuff += "<button type='button' id='jsBtnUpload" + fileCount + "' class='btn btn-warning'>";
+            hideStuff += "<i class='fa fa-plus'></i> Ajouter une carte tactique";
+            hideStuff += "</button>";
+            hideStuff += "</div><br><br>";
+
+            $("#filesBox").append("<div class='row'>" + hideStuff + newWidget + "</div>");
+
+            // On click => Simulate file behaviour
+            $("#jsBtnUpload" + fileCount).on('click', function(e){
+                $('#appbundle_faction_images_' + fileCount + '_file').trigger('click');
+            });
+
+            // Once the file is added
+            $('#appbundle_faction_images_' + fileCount + '_file').on('change', function() {
+                // Show its name
+                fileName = $(this).prop('files')[0].name;
+                $("#jsPreview" + fileCount).append(fileName);
+                // Hide the add file button
+                $("#jsBtnUpload" + fileCount).hide();
+                // Show the remove file button
+                $("#jsRemove" + fileCount).show();
+
+                // Create another instance of add file button and company
+                createAddFile(parseInt(fileCount)+1);
+            });
+        }
+
+        $(document).ready(function(){
+            createAddFile(fileCount);
+            fileCount++;
+        });
     </script>
 
 {% endblock %}

@@ -13,20 +13,29 @@
                 <th>Nom</th>
                 <td>{{ faction.nom }}</td>
             </tr>
+            <tr>
+                <th>Liste cartes tactiles</th>
+                <td>
+                    <ul>
+
+                    {% for element in faction.images %}
+                        <li>
+                            {{ element.name }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('faction_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('faction_edit', { 'id': faction.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+    <a href="{{ path('faction_index') }}" class="pull-right">Back to the list</a>
+
+    <a href="{{ path('faction_edit', { 'id': faction.id }) }}">Edit</a>
+    <br><br>
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+    {{ form_end(delete_form) }}
+
 {% endblock %}

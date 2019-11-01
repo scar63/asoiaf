@@ -170,7 +170,7 @@ class DefaultController extends Controller
         if($request->get('type' )== 4)
         {
             $typeIndividu = [4]; //on ajoute les type 1 (générals) et typeIndividu 1(infaterie), 2(Cavalerie)
-            $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu, 'isOnlySetWhenAttach' => false]);
+            $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu, 'isOnlySetWhenAttach' => false], ['cout' => 'DESC']);
         }
 
          //si c'est un attachment alors on recup les général et indivdus avec le même typed'Individu que celui attaché
@@ -186,7 +186,7 @@ class DefaultController extends Controller
                 $typeIndividu = [1,2]; //corrige bug no list Boltons Cutthroats ?
             $type [] = 1; //on ajoute les type 1 (générals)
             $em = $this->getDoctrine()->getEntityManager();
-            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach' )
+            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach order by cout desc' )
                 ->setParameter('faction', $faction)
                 ->setParameter('type', $type)
                 ->setParameter('typeIndividu', $typeIndividu)
@@ -199,10 +199,10 @@ class DefaultController extends Controller
         {
             if($faction != 3)
                 $faction [] = 3;
-            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ]);
+            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ], ['cout' => 'DESC']);
         }
         else
-            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ]);
+            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ], ['cout' => 'DESC']);
 
 
         if(isset($listUCNUC))
@@ -212,7 +212,7 @@ class DefaultController extends Controller
 
         //cas eddard honor guard (specific cmd select)
         if(!empty($idCmdSelect = $request->get('idCmd'))) {
-            if(!empty($listAttchToCmdUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['isOnlySetWhenCmdSelect' => true, 'attachId' => $idCmdSelect])))
+            if(!empty($listAttchToCmdUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['isOnlySetWhenCmdSelect' => true, 'attachId' => $idCmdSelect], ['cout' => 'DESC'])))
                 $listUC = new ArrayCollection(
                     array_merge($listAttchToCmdUC, $listUC)
                 );
@@ -280,7 +280,7 @@ class DefaultController extends Controller
     public function ajaxGetListAttachement(Request $request)
     {
 
-        $listAttachement = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction' => 1, 'type'=> 3, 'typeIndividu' => $request->get('idTypeIndividu')]);
+        $listAttachement = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction' => 1, 'type'=> 3, 'typeIndividu' => $request->get('idTypeIndividu')], ['cout' => 'DESC']);
 
         $selectTotReturn = '<option>Aucun</option>';
 

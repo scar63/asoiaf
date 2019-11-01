@@ -87,10 +87,8 @@ $('#btnlistCartesTactiques').on('click', function () {
 
             var ul = '';
             var ulDisabled = '';
-            console.log(msg);
             for(var individuInfo in msg) {
                 //si individu est général et select en cmd peut être add en attch
-                // if()
                     ul += buildLiTactilcalCards(msg, individuInfo, '.listTacticalCards');
             }
 

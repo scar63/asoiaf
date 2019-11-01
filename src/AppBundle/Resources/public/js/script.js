@@ -504,9 +504,9 @@ function buildLiTactilcalCards(msg, individuInfo, selectId){
     var mustHr = false;
     if(typeof msg['tacticalCards'].length != 0)
         for (var pathCard in msg['tacticalCards']) {
-        if (pathCard != '') {
+        if (msg['tacticalCards'][pathCard] != '') {
             mustHr = true;
-            ul += '<img class="img-responsive col-xs-4 clearfix" src="' + pathCard + '">';
+            ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg['tacticalCards'][pathCard] + '">';
         }
     }
     else{

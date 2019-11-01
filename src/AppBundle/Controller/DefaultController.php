@@ -108,15 +108,24 @@ class DefaultController extends Controller
     {
         $result = array_merge([$request->get('idCmd')], (!empty($request->get('idsUC'))?$request->get('idsUC'):[]),(!empty($request->get('idsNUC'))?$request->get('idsNUC'):[]),(!empty($request->get('nattchID'))?$request->get('nattchID'):[]));
 
+        $arrayCollection = array();
+        $em = $this->getDoctrine()->getEntityManager();
+        $manager = $this->get('assets.packages');
+        if($request->get('idFaction')) {
+            $query2 = $em->createQuery('SELECT img FROM AppBundle:Image img WHERE img.faction =  (:factionId)')
+                ->setParameter('factionId', $request->get('idFaction'));
+
+            foreach ($query2->getResult() as $uc) {
+                $arrayCollection [] = array(
+                    'pathFaction' => $manager->getUrl('bundles/app/images/faction/') . $uc->getName()
+                );
+            }
+        }
+
         foreach($result as $rs)
         {
-
-            $em = $this->getDoctrine()->getEntityManager();
             $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.id in (:faction)' )
                 ->setParameter('faction', $result);
-
-            $manager = $this->get('assets.packages');
-            $arrayCollection = array();
             foreach($query->getResult() as $uc) {
                 $arrayCollection[] = array(
                     'id' => $uc->getId(),

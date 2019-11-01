@@ -76,17 +76,20 @@ $('#btnlistCartesTactiques').on('click', function () {
         //on recup les id des ncu et leurs attch
         var idsNUC = $("input[name='nucID[]']").map(function(){return $(this).val();}).get();
         var nattchID = $("input[name='nattchID[]']").map(function(){ return $(this).val().split("_")[0];}).get();
+        var idFaction = $('#factionSelect').find("option:selected").val();
 
         $.ajax({
             method: "POST",
             url: Routing.generate('ajaxGetLisTacticalCards'),
-            data: { idCmd: idCmd, idsUC: idsUC, idsNUC: idsNUC, nattchID: nattchID, isTogetTacticalCards: true  },
+            data: { idFaction: idFaction,idCmd: idCmd, idsUC: idsUC, idsNUC: idsNUC, nattchID: nattchID, isTogetTacticalCards: true  },
         })
         .done(function( msg ) {
 
             var ul = '';
             var ulDisabled = '';
+            console.log(msg);
             for(var individuInfo in msg) {
+
                 //si individu est général et select en cmd peut être add en attch
                     ul += buildLiTactilcalCards(msg, individuInfo, '.listTacticalCards');
             }
@@ -501,15 +504,19 @@ function buildLiTactilcalCards(msg, individuInfo, selectId){
     ul += '<br><span class="row">';
 
     var mustHr = false;
-    if(msg[individuInfo].pathTactilCardFirst != "") {
+    if(typeof msg[individuInfo].pathFaction  !== 'undefined' && msg[individuInfo].pathFaction  != ''  ) {
         mustHr = true;
-        ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardFirst + '">';
+        ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathFaction + '">';
     }
-    if(msg[individuInfo].pathTactilCardFirst != "") {
+    if(typeof msg[individuInfo].pathTactilCardFirst  !== 'undefined' && msg[individuInfo].pathTactilCardFirst != "") {
+        mustHr = true;
+        ul += '<img class="img-responsive col-xs-4 clearfix '+individuInfo+'" src="' + msg[individuInfo].pathTactilCardFirst + '">';
+    }
+    if(typeof msg[individuInfo].pathTactilCardSecond  !== 'undefined' &&  msg[individuInfo].pathTactilCardSecond != "") {
         mustHr = true;
         ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardSecond + '">';
     }
-    if(msg[individuInfo].pathTactilCardFirst != "") {
+    if(typeof msg[individuInfo].pathTactilCardFirst  !== 'undefined' &&  msg[individuInfo].pathTactilCardFirst != "") {
         mustHr = true;
         ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardThird + '">';
     }

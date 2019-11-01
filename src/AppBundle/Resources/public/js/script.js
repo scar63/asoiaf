@@ -502,7 +502,7 @@ function buildLiTactilcalCards(msg, individuInfo, selectId){
     ul += '<br><span class="row">';
 
     var mustHr = false;
-    if(typeof msg[individuInfo].tacticalCards)
+    if(typeof msg[individuInfo].tacticalCards !== 'undefined')
     for (i = 0; i < msg[individuInfo].tacticalCards.length; i++)
     {
         if (msg[individuInfo].tacticalCards[i].pathFaction != '') {
@@ -510,19 +510,22 @@ function buildLiTactilcalCards(msg, individuInfo, selectId){
             ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].tacticalCards[i].pathFaction + '">';
         }
     }
+    else{
+        if(typeof msg[individuInfo] !== 'undefined' &&typeof msg[individuInfo].pathTactilCardFirst  !== 'undefined' && msg[individuInfo].pathTactilCardFirst != "") {
+            mustHr = true;
+            ul += '<img class="img-responsive col-xs-4 clearfix '+individuInfo+'" src="' + msg[individuInfo].pathTactilCardFirst + '">';
+        }
+        if(typeof msg[individuInfo].pathTactilCardSecond  !== 'undefined' &&  msg[individuInfo].pathTactilCardSecond != "") {
+            mustHr = true;
+            ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardSecond + '">';
+        }
+        if(typeof msg[individuInfo].pathTactilCardFirst  !== 'undefined' &&  msg[individuInfo].pathTactilCardFirst != "") {
+            mustHr = true;
+            ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardThird + '">';
+        }
+    }
 
-    if(typeof msg[individuInfo] !== 'undefined' &&typeof msg[individuInfo].pathTactilCardFirst  !== 'undefined' && msg[individuInfo].pathTactilCardFirst != "") {
-        mustHr = true;
-        ul += '<img class="img-responsive col-xs-4 clearfix '+individuInfo+'" src="' + msg[individuInfo].pathTactilCardFirst + '">';
-    }
-    if(typeof msg[individuInfo].pathTactilCardSecond  !== 'undefined' &&  msg[individuInfo].pathTactilCardSecond != "") {
-        mustHr = true;
-        ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardSecond + '">';
-    }
-    if(typeof msg[individuInfo].pathTactilCardFirst  !== 'undefined' &&  msg[individuInfo].pathTactilCardFirst != "") {
-        mustHr = true;
-        ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathTactilCardThird + '">';
-    }
+
     ul += '</span>';
     ul += '</li>';
     if(mustHr)

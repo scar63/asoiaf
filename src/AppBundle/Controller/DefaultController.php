@@ -186,7 +186,7 @@ class DefaultController extends Controller
                 $typeIndividu = [1,2]; //corrige bug no list Boltons Cutthroats ?
             $type [] = 1; //on ajoute les type 1 (générals)
             $em = $this->getDoctrine()->getEntityManager();
-            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach order by cout desc' )
+            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach order by i.cout desc' )
                 ->setParameter('faction', $faction)
                 ->setParameter('type', $type)
                 ->setParameter('typeIndividu', $typeIndividu)

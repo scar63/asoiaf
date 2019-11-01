@@ -502,12 +502,11 @@ function buildLiTactilcalCards(msg, individuInfo, selectId){
     ul += '<br><span class="row">';
 
     var mustHr = false;
-    if(typeof msg[individuInfo].tacticalCards !== 'undefined')
-    for (i = 0; i < msg[individuInfo].tacticalCards.length; i++)
-    {
-        if (msg[individuInfo].tacticalCards[i].pathFaction != '') {
+    if(typeof msg['tacticalCards'].length != 0)
+        for (var pathCard in msg['tacticalCards']) {
+        if (pathCard != '') {
             mustHr = true;
-            ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].tacticalCards[i].pathFaction + '">';
+            ul += '<img class="img-responsive col-xs-4 clearfix" src="' + pathCard + '">';
         }
     }
     else{

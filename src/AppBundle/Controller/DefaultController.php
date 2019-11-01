@@ -116,7 +116,7 @@ class DefaultController extends Controller
                 ->setParameter('factionId', $request->get('idFaction'));
 
             foreach ($query2->getResult() as $uc) {
-                $arrayCollection []['tacticalCards'][]  = array(
+                $arrayCollection ['tacticalCards'][]  = array(
                     'pathFaction' => $manager->getUrl('bundles/app/images/faction/') . $uc->getName()
                 );
             }

@@ -170,8 +170,7 @@ $(document).on('click', '#copyToClipboard', function () {
     .done(function( rslt ) {
         var $temp = $("<textarea>");
         $("body").append($temp);
-        $temp.val(rslt.replace('/<br\\s*[\\/]?>/gi', "\r\n")).select();
-        console.log($temp);
+        $temp.val(rslt.replace(/<br\s*\/?>/gi, "\r\n")).select();
         document.execCommand("copy");
         $temp.remove();
     });

@@ -87,9 +87,7 @@ $('#btnlistCartesTactiques').on('click', function () {
 
             var ul = '';
             var ulDisabled = '';
-            console.log(msg);
             for(var individuInfo in msg) {
-
                 //si individu est général et select en cmd peut être add en attch
                     ul += buildLiTactilcalCards(msg, individuInfo, '.listTacticalCards');
             }
@@ -504,11 +502,14 @@ function buildLiTactilcalCards(msg, individuInfo, selectId){
     ul += '<br><span class="row">';
 
     var mustHr = false;
-    if(typeof msg[individuInfo].pathFaction  !== 'undefined' && msg[individuInfo].pathFaction  != ''  ) {
-        mustHr = true;
-        ul += '<img class="img-responsive col-xs-4 clearfix" src="' + msg[individuInfo].pathFaction + '">';
+    if(typeof msg[individuInfo].tacticalCards)
+    for(var tacticalsCards in msg[individuInfo].tacticalCards) {
+        if(tacticalsCards.pathFaction  != ''  ) {
+            mustHr = true;
+            ul += '<img class="img-responsive col-xs-4 clearfix" src="' + tacticalsCards.pathFaction + '">';
+        }
     }
-    if(typeof msg[individuInfo].pathTactilCardFirst  !== 'undefined' && msg[individuInfo].pathTactilCardFirst != "") {
+    if(typeof msg[individuInfo] !== 'undefined' &&typeof msg[individuInfo].pathTactilCardFirst  !== 'undefined' && msg[individuInfo].pathTactilCardFirst != "") {
         mustHr = true;
         ul += '<img class="img-responsive col-xs-4 clearfix '+individuInfo+'" src="' + msg[individuInfo].pathTactilCardFirst + '">';
     }

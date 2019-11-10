@@ -1,0 +1,37 @@
+BUILDER_TITLE: "ASOIAF ARMY Builder"
+
+#LABEL
+LABEL_FACTION: "Faction"
+LABEL_ARMY_POINT: "Point de l'armée"
+LABEL_COMMANDER: "Commandant"
+LABEL_UNIT_COMBAT: "Unité de combat"
+LABEL_NO_UNIT_COMBAT: "Unité non-combatttante (NCU)"
+LABEL_ARMY_NAME: "Nom de l'armée"
+LABEL_SUMMARY: "Résumé"
+
+#BUTTON
+BUTTON_COMMANDER: "Ajouter un commandant"
+BUTTON_UNIT_COMBAT: "Ajouter une unité de combat"
+BUTTON_NO_UNIT_COMBAT: "Ajouter une unité de non-combatttante"
+BUTTON_SHOW_TACTICAL_CARDS: "Voir les cartes tactiques"
+BUTTON_PDF: "Générer un PDF"
+BUTTON_COPY: "Copier dans le presse papier"
+
+#TOOLTIP
+RESET_FORM: "Réinitialiser le formulaire"
+
+#SUMARRY
+LABEL_POINT: "Points"
+LABEL_NEUTRAL: "Neutralité"
+LABEL_TACTICAL_CARDS: "Cartes tactiques"
+LABEL_ATTACH_ADVERS:  "Attachement à l'adversaire"
+
+#MODALS
+TITLE_COMMANDER: "Commandant"
+TITLE_UNIT_COMBAT: "Unité de combat"
+TITLE_NO_UNIT_COMBAT: "Unité non-combattante (NCU)"
+TITLE_ATTACHEMENTS: "Attachment"
+
+#ALERT MESSSAGE
+#LISTER TOUT LES MESSAGES D'ERREUR
+ALERT_POINT_CAN_EXCEED: "Le total des points ne peut pas dépasser la limite de taille de l'armée."

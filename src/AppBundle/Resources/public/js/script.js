@@ -447,7 +447,7 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     if (msg[individuInfo].libelleSpecial == 'processByTwo' && $('*[data-id="'+msg[individuInfo].id+'"]').length < 2 )
         ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+msg[individuInfo].nom+' ne peuvent être alignés que par paires.</span>';
     if ((totalPoints > Number($("#armyPoint").val())))
-        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Le total des points ne peut pas dépasser la limite de taille de l\'armée.</span>';
+        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_POINT_CAN_EXCEED+'</span>';
     ul += '<span class="row">' + msg[individuInfo].nom;
     ul += '<br>';
     if (selectId != '.listCmd')

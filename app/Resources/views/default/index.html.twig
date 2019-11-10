@@ -76,8 +76,9 @@
             </div>
             <div class="col-sm-6">
                 <div id="limitOut" class="alert alert-danger hidden" role="alert">Le total de points ne peut pas dépasser la taille limite de l'armée.</div>
-                <div id="limitOutNCU" class="alert alert-danger hidden" role="alert">Les points de l'armée non neutre ne peuvent pas dépasser 50% de neutralité.</div>
+                <div id="limitOutNCU" class="alert alert-danger hidden" role="alert">{{ 'ALERT_NO_NEUTRAL_ARMY'|trans }}</div>
                 <div id="processByTwo" class="alert alert-danger hidden" role="alert">Free Folk Raiders ne peuvent être alignés que par paires.</div>
+                <div id="neutralNoMore50" class="alert alert-danger hidden" role="alert">{{ 'ALERT_NEUTRAL_NO_MORE_50'|trans }}</div>
                 <div class="col-xs-12">
                     <label for="">{{ 'LABEL_SUMMARY'|trans }}</label>
                     <button type="button"  class="btn btn-default pull-right" title="{{ 'RESET_FORM'|trans }}" id="resetForm"><span class="glyphicon glyphicon-refresh"></span></button>
@@ -227,6 +228,8 @@
     <script>
         var TWIG = {};
         TWIG.ALERT_POINT_CAN_EXCEED   = "{{ 'ALERT_POINT_CAN_EXCEED'|trans }}";
+        TWIG.ALERT_NO_NEUTRAL_ARMY   = "{{ 'ALERT_NO_NEUTRAL_ARMY'|trans }}";
+        TWIG.ALERT_NEUTRAL_NO_MORE_50   = "{{ 'ALERT_NEUTRAL_NO_MORE_50'|trans }}";
     </script>
     <script src="{{ asset('bundles/app/js/script.js') }}"></script>
 {% endblock %}

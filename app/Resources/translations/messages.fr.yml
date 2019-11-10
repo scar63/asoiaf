@@ -35,3 +35,5 @@ TITLE_ATTACHEMENTS: "Attachment"
 #ALERT MESSSAGE
 #LISTER TOUT LES MESSAGES D'ERREUR
 ALERT_POINT_CAN_EXCEED: "Le total des points ne peut pas dépasser la limite de taille de l'armée."
+ALERT_NO_NEUTRAL_ARMY: "Les unités Neutres ne peuvent jamais composer plus de 50% de votre total de points.."
+ALERT_NEUTRAL_NO_MORE_50: "Les points de l'armée non neutre ne peuvent pas dépasser 50% de neutralité."

@@ -188,7 +188,10 @@ function addUC(idUCToAdd, idParentToAttach = null)
             var random = Math.round(new Date().getTime() + (Math.random() * 100));
             var ul = '';
             if(idParentToAttach !== null) {
-                ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutAttach">' + individuInfo.cout + '</span>)';
+                if(individuInfo.faction == 3)
+                    ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutNeutral">' + individuInfo.cout + '</span>)';
+                else
+                    ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutAttach">' + individuInfo.cout + '</span>)';
                 ul += '<span style="margin-left: 10px">';
                 if(individuInfo.isOnlySetWhenAttach)
                     ul += '<span class="glyphicon glyphicon-trash attchment isOnlySetWhenAttach"'
@@ -202,7 +205,10 @@ function addUC(idUCToAdd, idParentToAttach = null)
             }
             else
             {
-                ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
+                if(individuInfo.faction == 3)
+                    ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc coutNeutral">'+individuInfo.cout+'</span>)';
+                else
+                    ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
                 // if(!individuInfo.isOnlySetWhenAttach)
                 ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="'+individuInfo.special+'" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
                 ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
@@ -441,8 +447,8 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     });
 
     var neutralLimit = ((Number(msg[individuInfo].cout) + coutNeutral) / totalPoints)  *100;
-    if( neutralLimit > 50  && $("#factionSelect option:selected").val() != 3 && msg[individuInfo].faction == 3)
-        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">Les points de l\'armée non neutre ne peuvent pas dépasser 50% de neutralité.</span>';
+    if($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3 && msg[individuInfo].faction == 3)
+        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_NEUTRAL_NO_MORE_50+'</span>';
 
     if (msg[individuInfo].libelleSpecial == 'processByTwo' && $('*[data-id="'+msg[individuInfo].id+'"]').length < 2 )
         ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+msg[individuInfo].nom+' ne peuvent être alignés que par paires.</span>';
@@ -571,7 +577,13 @@ function checkIfOutOfScore(){
     else if(!$('#limitOutNCU').hasClass('hidden'))
         $('#limitOutNCU').addClass('hidden');
 
-    if($('.listCombatUnitNameResume').find("*[data-special='processByTwo']").length%2 != 0)
+    if($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3 )
+        $('#neutralNoMore50').removeClass('hidden');
+    else if(!$('#neutralNoMore50').hasClass('hidden'))
+        $('#neutralNoMore50').addClass('hidden');
+
+
+        if($('.listCombatUnitNameResume').find("*[data-special='processByTwo']").length%2 != 0)
         $('#processByTwo').removeClass('hidden');
     else if(!$('#processByTwo').hasClass('hidden'))
         $('#processByTwo').addClass('hidden');

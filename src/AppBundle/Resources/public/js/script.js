@@ -448,7 +448,7 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
 
     var neutralLimit = ((Number(msg[individuInfo].cout) + coutNeutral) / totalPoints)  *100;
     if($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3 && msg[individuInfo].faction == 3)
-        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_NEUTRAL_NO_MORE_50+'</span>';
+        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_NEUTRAL_POINTS+'</span>';
 
     if (msg[individuInfo].libelleSpecial == 'processByTwo' && $('*[data-id="'+msg[individuInfo].id+'"]').length < 2 )
         ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+msg[individuInfo].nom+' ne peuvent être alignés que par paires.</span>';
@@ -572,15 +572,11 @@ function checkIfOutOfScore(){
     });
 
     var neutralLimit = (coutNeutral / (countPointUC + countPointAttch + coutNUC + coutNeutral))  *100;
-    if( neutralLimit > 50  && $("#factionSelect option:selected").val() != 3)
+    if(($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3)
         $('#limitOutNCU').removeClass('hidden');
     else if(!$('#limitOutNCU').hasClass('hidden'))
         $('#limitOutNCU').addClass('hidden');
 
-    if($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3 )
-        $('#neutralNoMore50').removeClass('hidden');
-    else if(!$('#neutralNoMore50').hasClass('hidden'))
-        $('#neutralNoMore50').addClass('hidden');
 
 
         if($('.listCombatUnitNameResume').find("*[data-special='processByTwo']").length%2 != 0)

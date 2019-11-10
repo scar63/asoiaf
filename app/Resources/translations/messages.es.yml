@@ -1,37 +1,40 @@
 BUILDER_TITLE: "ASOIAF ARMY Builder"
 
 #LABEL
-LABEL_FACTION: "Faction"
-LABEL_ARMY_POINT: "Point de l'armée"
-LABEL_COMMANDER: "Commandant"
-LABEL_UNIT_COMBAT: "Unité de combat"
-LABEL_NO_UNIT_COMBAT: "Unité non-combatttante (NCU)"
-LABEL_ARMY_NAME: "Nom de l'armée"
-LABEL_SUMMARY: "Résumé"
+LABEL_FACTION: "Facción"
+LABEL_ARMY_POINT: "Puntos del ejército"
+LABEL_COMMANDER: "Comandante"
+LABEL_UNIT_COMBAT: "Unidad Combatiente"
+LABEL_NO_UNIT_COMBAT: "Unidad No Combatiente"
+LABEL_ARMY_NAME: "Nombre del ejército"
+LABEL_SUMMARY: "Resumen"
 
 #BUTTON
-BUTTON_COMMANDER: "Ajouter un commandant"
-BUTTON_UNIT_COMBAT: "Ajouter une unité de combat"
-BUTTON_NO_UNIT_COMBAT: "Ajouter une unité de non-combatttante"
-BUTTON_SHOW_TACTICAL_CARDS: "Voir les cartes tactiques"
-BUTTON_PDF: "Générer un PDF"
-BUTTON_COPY: "Copier dans le presse papier"
+BUTTON_COMMANDER: "Añadir un Comandante"
+BUTTON_UNIT_COMBAT: "Añadir una Unidad Combatiente"
+BUTTON_NO_UNIT_COMBAT: "Añadir una Unidad No Combatiente"
+BUTTON_SHOW_TACTICAL_CARDS: "Ver los cartas de Tácticas"
+BUTTON_PDF: "Generar un PDF"
+BUTTON_COPY: "Copiar en el portapapeles"
 
 #TOOLTIP
-RESET_FORM: "Réinitialiser le formulaire"
+RESET_FORM: "Reiniciar el formulario"
 
 #SUMARRY
-LABEL_POINT: "Points"
-LABEL_NEUTRAL: "Neutralité"
-LABEL_TACTICAL_CARDS: "Cartes tactiques"
-LABEL_ATTACH_ADVERS:  "Attachement à l'adversaire"
+LABEL_POINT: "Puntos"
+LABEL_NEUTRAL: "Total puntos Neutros"
+LABEL_TACTICAL_CARDS: "Cartas de Tácticas"
+LABEL_ATTACH_ADVERS:  "Vínculo al oponente"
 
 #MODALS
-TITLE_COMMANDER: "Commandant"
-TITLE_UNIT_COMBAT: "Unité de combat"
-TITLE_NO_UNIT_COMBAT: "Unité non-combattante (NCU)"
-TITLE_ATTACHEMENTS: "Attachment"
+TITLE_COMMANDER: "Comandante"
+TITLE_UNIT_COMBAT: "Unidad Combatiente"
+TITLE_NO_UNIT_COMBAT: "Unidad No Combatiente"
+TITLE_ATTACHEMENTS: "Vínculo"
 
 #ALERT MESSSAGE
 #LISTER TOUT LES MESSAGES D'ERREUR
-ALERT_POINT_CAN_EXCEED: "Le total des points ne peut pas dépasser la limite de taille de l'armée."
+ALERT_POINT_CAN_EXCEED: "El total de puntos no puede exceder el límite de tamaño de ejército."
+ALERT_FF_RAIDERS: "Las unidades Asaltantes del Pueblo Libre sólo pueden añadirse a ejércitos en pares de 2."
+ALERT_NEUTRAL_POINTS: "Las unidades neutrales nunca pueden representar más del 50% del total de sus puntos."
+ALERT_COMMANDER: "Debe incluir un Comandante en su ejército."

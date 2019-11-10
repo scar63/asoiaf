@@ -2,36 +2,39 @@ BUILDER_TITLE: "ASOIAF ARMY Builder"
 
 #LABEL
 LABEL_FACTION: "Faction"
-LABEL_ARMY_POINT: "Point de l'armée"
-LABEL_COMMANDER: "Commandant"
-LABEL_UNIT_COMBAT: "Unité de combat"
-LABEL_NO_UNIT_COMBAT: "Unité non-combatttante (NCU)"
-LABEL_ARMY_NAME: "Nom de l'armée"
+LABEL_ARMY_POINT: "Army size"
+LABEL_COMMANDER: "Commander"
+LABEL_UNIT_COMBAT: "Combat Units"
+LABEL_NO_UNIT_COMBAT: "Non-Combat Units (NCU)"
+LABEL_ARMY_NAME: "Army name"
 LABEL_SUMMARY: "Summary"
 
 #BUTTON
-BUTTON_COMMANDER: "Ajouter un commandant"
-BUTTON_UNIT_COMBAT: "Ajouter une unité de combat"
-BUTTON_NO_UNIT_COMBAT: "Ajouter une unité de non-combatttante"
-BUTTON_SHOW_TACTICAL_CARDS: "Voir les cartes tactiques"
-BUTTON_PDF: "Générer un PDF"
-BUTTON_COPY: "Copier dans le presse papier"
+BUTTON_COMMANDER: "Add a Commander"
+BUTTON_UNIT_COMBAT: "Add a Combat Unit"
+BUTTON_NO_UNIT_COMBAT: "Add a Non-Combat Unit"
+BUTTON_SHOW_TACTICAL_CARDS: "View Tactics Cards"
+BUTTON_PDF: "Generate a PDF"
+BUTTON_COPY: "Copy to clipboard"
 
 #TOOLTIP
 RESET_FORM: "Reset form"
 
 #SUMARRY
 LABEL_POINT: "Points"
-LABEL_NEUTRAL: "Neutralité"
-LABEL_TACTICAL_CARDS: "Cartes tactiques"
-LABEL_ATTACH_ADVERS:  "Attachement à l'adversaire"
+LABEL_NEUTRAL: "Total Neutrals points"
+LABEL_TACTICAL_CARDS: "Tactics Cards"
+LABEL_ATTACH_ADVERS:  "Attachment to the opponent"
 
 #MODALS
-TITLE_COMMANDER: "Commandant"
-TITLE_UNIT_COMBAT: "Unité de combat"
-TITLE_NO_UNIT_COMBAT: "Unité non-combattante (NCU)"
+TITLE_COMMANDER: "Commander"
+TITLE_UNIT_COMBAT: "Combat Units"
+TITLE_NO_UNIT_COMBAT: "Non-Combat Units (NCU)"
 TITLE_ATTACHEMENTS: "Attachment"
 
 #ALERT MESSSAGE
 #LISTER TOUT LES MESSAGES D'ERREUR
-ALERT_POINT_CAN_EXCEED: "Le total des points ne peut pas dépasser la limite de taille de l'armée."
+ALERT_POINT_CAN_EXCEED: "Point total cannot exceed army size limit."
+ALERT_FF_RAIDERS: "Free Folk Raider units may only be added to armies in pairs of 2."
+ALERT_NEUTRAL_POINTS: "Neutral units can never make up more than 50% of your total points."
+ALERT_COMMANDER: "You must include 1 Commander in your army."

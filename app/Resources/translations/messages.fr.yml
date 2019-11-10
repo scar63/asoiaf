@@ -2,38 +2,39 @@ BUILDER_TITLE: "ASOIAF ARMY Builder"
 
 #LABEL
 LABEL_FACTION: "Faction"
-LABEL_ARMY_POINT: "Point de l'armée"
+LABEL_ARMY_POINT: "Points d'armée"
 LABEL_COMMANDER: "Commandant"
-LABEL_UNIT_COMBAT: "Unité de combat"
-LABEL_NO_UNIT_COMBAT: "Unité non-combatttante (NCU)"
+LABEL_UNIT_COMBAT: "Unité Combatttante"
+LABEL_NO_UNIT_COMBAT: "Unité Non-Combatttante (NCU)"
 LABEL_ARMY_NAME: "Nom de l'armée"
 LABEL_SUMMARY: "Résumé"
 
 #BUTTON
-BUTTON_COMMANDER: "Ajouter un commandant"
-BUTTON_UNIT_COMBAT: "Ajouter une unité de combat"
-BUTTON_NO_UNIT_COMBAT: "Ajouter une unité de non-combatttante"
-BUTTON_SHOW_TACTICAL_CARDS: "Voir les cartes tactiques"
+BUTTON_COMMANDER: "Ajouter un Commandant"
+BUTTON_UNIT_COMBAT: "Ajouter une Unité Combatttante"
+BUTTON_NO_UNIT_COMBAT: "Ajouter une Unité Non-Combatttante"
+BUTTON_SHOW_TACTICAL_CARDS: "Voir les Cartes Tactiques"
 BUTTON_PDF: "Générer un PDF"
-BUTTON_COPY: "Copier dans le presse papier"
+BUTTON_COPY: "Copier dans le presse-papier"
 
 #TOOLTIP
 RESET_FORM: "Réinitialiser le formulaire"
 
 #SUMARRY
 LABEL_POINT: "Points"
-LABEL_NEUTRAL: "Neutralité"
-LABEL_TACTICAL_CARDS: "Cartes tactiques"
+LABEL_NEUTRAL: "Total points Neutres"
+LABEL_TACTICAL_CARDS: "Cartes Tactiques"
 LABEL_ATTACH_ADVERS:  "Attachement à l'adversaire"
 
 #MODALS
 TITLE_COMMANDER: "Commandant"
-TITLE_UNIT_COMBAT: "Unité de combat"
-TITLE_NO_UNIT_COMBAT: "Unité non-combattante (NCU)"
-TITLE_ATTACHEMENTS: "Attachment"
+TITLE_UNIT_COMBAT: "Unité Combattante"
+TITLE_NO_UNIT_COMBAT: "Unité Non-Combattante (NCU)"
+TITLE_ATTACHEMENTS: "Attachement"
 
 #ALERT MESSSAGE
 #LISTER TOUT LES MESSAGES D'ERREUR
 ALERT_POINT_CAN_EXCEED: "Le total des points ne peut pas dépasser la limite de taille de l'armée."
-ALERT_NO_NEUTRAL_ARMY: "Les unités Neutres ne peuvent jamais composer plus de 50% de votre total de points.."
-ALERT_NEUTRAL_NO_MORE_50: "Les points de l'armée non neutre ne peuvent pas dépasser 50% de neutralité."
+ALERT_FF_RAIDERS: "L'unité Pillards du Peuple Libre ne peut être ajoutée que par paires."
+ALERT_NEUTRAL_POINTS: "Les unités Neutres ne peuvent jamais composer plus de 50% de votre total de points."
+ALERT_COMMANDER: "Vous devez inclure 1 Commandant à votre armée."

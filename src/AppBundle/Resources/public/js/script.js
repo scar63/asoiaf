@@ -572,7 +572,7 @@ function checkIfOutOfScore(){
     });
 
     var neutralLimit = (coutNeutral / (countPointUC + countPointAttch + coutNUC + coutNeutral))  *100;
-    if(($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3)
+    if(($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3))
         $('#limitOutNCU').removeClass('hidden');
     else if(!$('#limitOutNCU').hasClass('hidden'))
         $('#limitOutNCU').addClass('hidden');

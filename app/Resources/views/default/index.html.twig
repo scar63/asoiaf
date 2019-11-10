@@ -98,7 +98,7 @@
                                     </ul>
                                 </li>
                                 <li style="clear: both;">{{ 'LABEL_TACTICAL_CARDS'|trans }} :
-                                    <button id="btnlistCartesTactiques" type="button" style="margin-top: 5px" class="btn btn-primary form-control">Voir cartes tactiques</button>
+                                    <button id="btnlistCartesTactiques" type="button" style="margin-top: 5px" class="btn btn-primary form-control">{{ 'BUTTON_SHOW_TACTICAL_CARDS'|trans }}</button>
                                 </li>
                                 <li style="clear: both;display:none"  class="listNameAdversInclude">{{ 'LABEL_ATTACH_ADVERS'|trans }}  :</li>
                             </ul>
@@ -125,7 +125,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Unité de combat</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ 'LABEL_UNIT_COMBAT'|trans }}</h4>
                 </div>
                 <div class="modal-body" id="bodyListUC" style="overflow-x: auto">
                     <ul class="listUC"></ul>
@@ -139,7 +139,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Unité non-combattante (NCU)</h4>
+                    <h4 class="modal-title">{{ 'LABEL_NO_UNIT_COMBAT'|trans }}</h4>
                 </div>
                 <div class="modal-body"  id="bodyListNUC"  style="overflow-x: auto">
                     <ul class="listNUC"></ul>
@@ -154,7 +154,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Commandant</h4>
+                    <h4 class="modal-title">{{ 'LABEL_COMMANDER'|trans }}</h4>
                 </div>
                 <div class="modal-body"  id="bodyListCmd"  style="overflow-x: auto">
                     <ul class="listCmd"></ul>
@@ -168,7 +168,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Attachment</h4>
+                    <h4 class="modal-title">{{ 'TITLE_ATTACHEMENTS'|trans }}</h4>
                 </div>
                 <div class="modal-body"  id="bodyListAttachment"  style="overflow-x: auto">
                     <ul class="listAttachment"></ul>
@@ -182,7 +182,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Cartes tactiques</h4>
+                    <h4 class="modal-title">{{ 'LABEL_TACTICAL_CARDS'|trans }}</h4>
                 </div>
                 <div class="modal-body"  id="bodyListTacticalCards"  style="overflow-x: auto">
                     <ul class="listTacticalCards"></ul>
@@ -229,8 +229,7 @@
     <script>
         var TWIG = {};
         TWIG.ALERT_POINT_CAN_EXCEED   = "{{ 'ALERT_POINT_CAN_EXCEED'|trans }}";
-        TWIG.ALERT_NO_NEUTRAL_ARMY   = "{{ 'ALERT_NO_NEUTRAL_ARMY'|trans }}";
-        TWIG.ALERT_NEUTRAL_NO_MORE_50   = "{{ 'ALERT_NEUTRAL_NO_MORE_50'|trans }}";
+        TWIG.ALERT_NEUTRAL_POINTS   = "{{ 'ALERT_NEUTRAL_POINTS'|trans }}";
     </script>
     <script src="{{ asset('bundles/app/js/script.js') }}"></script>
 {% endblock %}

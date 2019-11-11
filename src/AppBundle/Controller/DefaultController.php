@@ -211,12 +211,12 @@ class DefaultController extends Controller
             );
 
         //cas eddard honor guard (specific cmd select)
-        if(!empty($idCmdSelect = $request->get('idCmd'))) {
-            if(!empty($listAttchToCmdUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['isOnlySetWhenCmdSelect' => true, 'attachId' => $idCmdSelect], ['cout' => 'DESC'])))
-                $listUC = new ArrayCollection(
-                    array_merge($listAttchToCmdUC, $listUC)
-                );
-        }
+//        if(!empty($idCmdSelect = $request->get('idCmd'))) {
+//            if(!empty($listAttchToCmdUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['isOnlySetWhenCmdSelect' => true, 'attachId' => $idCmdSelect], ['cout' => 'DESC'])))
+//                $listUC = new ArrayCollection(
+//                    array_merge($listAttchToCmdUC, $listUC)
+//                );
+//        } 
 
         $manager = $this->get('assets.packages');
         $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.png');

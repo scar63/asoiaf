@@ -76,9 +76,9 @@
                     </div>
             </div>
             <div class="col-sm-6">
-                <div id="limitOut" class="alert alert-danger hidden" role="alert">Le total de points ne peut pas dépasser la taille limite de l'armée.</div>
+                <div id="limitOut" class="alert alert-danger hidden" role="alert">{{ 'ALERT_POINT_CAN_EXCEED'|trans }}</div>
                 <div id="limitOutNCU" class="alert alert-danger hidden" role="alert">{{ 'ALERT_NEUTRAL_POINTS'|trans }}</div>
-                <div id="processByTwo" class="alert alert-danger hidden" role="alert">Free Folk Raiders ne peuvent être alignés que par paires.</div>
+                <div id="processByTwo" class="alert alert-danger hidden" role="alert">{{ 'ALERT_FF_RAIDERS'|trans }}</div>
 {#                <div id="neutralNoMore50" class="alert alert-danger hidden" role="alert">{{ 'ALERT_NEUTRAL_POINTS'|trans }}</div>#}
                 <div class="col-xs-12">
                     <label for="">{{ 'LABEL_SUMMARY'|trans }}</label>
@@ -230,6 +230,7 @@
         var TWIG = {};
         TWIG.ALERT_POINT_CAN_EXCEED   = "{{ 'ALERT_POINT_CAN_EXCEED'|trans }}";
         TWIG.ALERT_NEUTRAL_POINTS   = "{{ 'ALERT_NEUTRAL_POINTS'|trans }}";
+        TWIG.ALERT_FF_RAIDERS   = "{{ 'ALERT_FF_RAIDERS'|trans }}";
     </script>
     <script src="{{ asset('bundles/app/js/script.js') }}"></script>
 {% endblock %}

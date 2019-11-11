@@ -209,9 +209,9 @@ function addUC(idUCToAdd, idParentToAttach = null)
                     ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc coutNeutral">'+individuInfo.cout+'</span>)';
                 else
                     ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
-                if(individuInfo.isOnlySetWhenCmdSelect)
-                    ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="mustBeDelete" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
-                else
+                // if(individuInfo.isOnlySetWhenCmdSelect)
+                //     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="mustBeDelete" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
+                // else
                     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="'+individuInfo.special+'" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
                 ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
                 ul +=   '</span></span>';
@@ -586,7 +586,7 @@ function checkIfOutOfScore(){
         coutNeutral += Number($(this).html());
     });
 
-    var neutralLimit = (coutNeutral / (countPointUC + countPointAttch + coutNUC + coutNeutral))  *100;
+    var neutralLimit = (((coutNeutral - pointresume ) / (pointresume)) +1)  *100;
     if(($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3))
         $('#limitOutNCU').removeClass('hidden');
     else if(!$('#limitOutNCU').hasClass('hidden'))
@@ -599,7 +599,7 @@ function checkIfOutOfScore(){
     else if(!$('#processByTwo').hasClass('hidden'))
         $('#processByTwo').addClass('hidden');
 
-    $(".pointResume").html(countPointUC + countPointAttch + coutNUC + coutNeutral);
+    $(".pointResume").html(countPointUC + countPointAttch + coutNUC);
 
     if(coutNeutral ==  Number($(".pointResume").html()) && Number($(".pointResume").html()) != 0 && (countPointUC + countPointAttch + coutNUC) == 0)
         $(".pointNeutralie").html(coutNeutral + ' (100%)');

@@ -209,8 +209,10 @@ function addUC(idUCToAdd, idParentToAttach = null)
                     ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc coutNeutral">'+individuInfo.cout+'</span>)';
                 else
                     ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
-                // if(!individuInfo.isOnlySetWhenAttach)
-                ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="'+individuInfo.special+'" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
+                if(individuInfo.isOnlySetWhenCmdSelect)
+                    ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="mustBeDelete" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
+                else
+                    ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="'+individuInfo.special+'" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
                 ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
                 ul +=   '</span></span>';
             }
@@ -345,6 +347,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
     else {
         child = toDelete.data('id');
         parent = toDelete.parent().parent().parent().find('.glyphicon.glyphicon-trash').data('id');
+        special = toDelete.parent().parent().parent().find('.glyphicon.glyphicon-trash').data('special');
     }
 
     $.ajax({
@@ -375,9 +378,19 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
         }
         else {
             if(!isOnlySetWhenAttach) {
-                var random = Math.round(new Date().getTime() + (Math.random() * 100));
-                var btn = '<button type="button" id="attachFrom' + random + '" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + parent + '">Ajouter un attachement</button>';
-                $(toDelete).parent().parent().replaceWith(btn);
+                if(isNCnuCmd && special == 'mustBeDelete')
+                {
+                    toDelete.parent().parent().parent().find('.glyphicon.glyphicon-trash').parent().parent().remove();
+
+                    $(toDelete).parent().parent().remove();
+
+                }
+                else
+                {
+                    var random = Math.round(new Date().getTime() + (Math.random() * 100));
+                    var btn = '<button type="button" id="attachFrom' + random + '" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + parent + '">Ajouter un attachement</button>';
+                    $(toDelete).parent().parent().replaceWith(btn);
+                }
             }
             else
                 $(toDelete).parent().parent().remove();

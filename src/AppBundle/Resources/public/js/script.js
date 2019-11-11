@@ -488,7 +488,8 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
         // if(msg[individuInfo].libelleSpecial == 'processByTwo'  &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length >= 2 ))
         //     ul += ' disabled ';
     }
-
+    else if(btnToAdd = 'btnAddCmd' && $('.commandantNameResume').html() != "")
+        ul += ' disabled ';
 
         ul += ' >Ajouter</button></span>';
     ul += '</li><hr>';

@@ -209,9 +209,9 @@ function addUC(idUCToAdd, idParentToAttach = null)
                     ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc coutNeutral">'+individuInfo.cout+'</span>)';
                 else
                     ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutUc">'+individuInfo.cout+'</span>)';
-                // if(individuInfo.isOnlySetWhenCmdSelect)
-                //     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="mustBeDelete" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
-                // else
+                 if(individuInfo.isOnlySetWhenCmdSelect)
+                     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="mustBeDelete" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
+                 else
                     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-special="'+individuInfo.special+'" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"></span>';
                 ul +=  '<input type="hidden" name="ucID[]" value="'+individuInfo.id+'"/>';
                 ul +=   '</span></span>';

@@ -613,10 +613,6 @@ function checkIfOutOfScore(){
 
 
 $(document).ready(function() {
-
-    $( "#armyName" ).focusout(function() {
-        $('.pdfNameArmy').html("&nbsp'"+$('#armyName').val()+"'");
-    });
     //$(".factionNameResume").empty().append($("#factionSelect option:selected").text());
     // $('#commandSelect').select2();
     // $('#commandSelect').select2();

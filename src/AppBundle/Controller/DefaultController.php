@@ -170,7 +170,7 @@ class DefaultController extends Controller
         if($request->get('type' )== 4)
         {
             $typeIndividu = [4]; //on ajoute les type 1 (générals) et typeIndividu 1(infaterie), 2(Cavalerie)
-            $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu, 'isOnlySetWhenAttach' => false], ['cout' => 'DESC']);
+            $listUCNUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => 1, 'typeIndividu' =>  $typeIndividu, 'isOnlySetWhenAttach' => false], ['cout' => 'ASC']);
         }
 
          //si c'est un attachment alors on recup les général et indivdus avec le même typed'Individu que celui attaché
@@ -186,7 +186,7 @@ class DefaultController extends Controller
                 $typeIndividu = [1,2]; //corrige bug no list Boltons Cutthroats ?
             $type [] = 1; //on ajoute les type 1 (générals)
             $em = $this->getDoctrine()->getEntityManager();
-            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach order by i.cout desc' )
+            $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach order by i.cout asc' )
                 ->setParameter('faction', $faction)
                 ->setParameter('type', $type)
                 ->setParameter('typeIndividu', $typeIndividu)
@@ -199,10 +199,10 @@ class DefaultController extends Controller
         {
             if($faction != 3)
                 $faction [] = 3;
-            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ], ['cout' => 'DESC']);
+            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ], ['cout' => 'ASC']);
         }
         else
-            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ], ['cout' => 'DESC']);
+            $listUC = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction'=> $faction, 'type' => $type, 'isOnlySetWhenAttach' => false ], ['cout' => 'ASC']);
 
 
         if(isset($listUCNUC))
@@ -280,7 +280,7 @@ class DefaultController extends Controller
     public function ajaxGetListAttachement(Request $request)
     {
 
-        $listAttachement = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction' => 1, 'type'=> 3, 'typeIndividu' => $request->get('idTypeIndividu')], ['cout' => 'DESC']);
+        $listAttachement = $this->getDoctrine()->getRepository(Individu::class)->findBy(['faction' => 1, 'type'=> 3, 'typeIndividu' => $request->get('idTypeIndividu')], ['cout' => 'ASC']);
 
         $selectTotReturn = '<option>Aucun</option>';
 
@@ -370,6 +370,7 @@ class DefaultController extends Controller
                 </table>';
         $response = new Response();
         $mpdf = new \Mpdf\Mpdf(['tempDir' =>  sys_get_temp_dir().DIRECTORY_SEPARATOR.'mpdf', 'format' => 'A4' ]);
+        $mpdf->SetTitle( (empty($request->get('armyName')) ? "N/R" : $request->get('armyName')));
         $mpdf->AddPage('P','', '', '', '',
             '', // margin_left
             '', // margin right
@@ -414,7 +415,7 @@ class DefaultController extends Controller
         $response->setContent($mpdf->Output());
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Type', ' charset=utf-8');
-        $response->headers->set('Content-disposition', 'filename=1.pdf');
+        $response->headers->set('Content-disposition', 'filename=asoiaf_army_builder.pdf');
 
         return $response;
 

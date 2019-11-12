@@ -183,7 +183,7 @@ class DefaultController extends Controller
             elseif($indivu->getTypeIndividu()->getId() == 5) //cas war machine
                 $typeIndividu = [5];
             else
-                $typeIndividu = [1,2]; //corrige bug no list Boltons Cutthroats ?
+                $typeIndividu = [1]; //corrige bug no list Boltons Cutthroats ?
             $type [] = 1; //on ajoute les type 1 (générals)
             $em = $this->getDoctrine()->getEntityManager();
             $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.faction in (:faction) and i.type in (:type) and i.typeIndividu in (:typeIndividu) and i.isOnlySetWhenAttach = :isOnlySetWhenAttach order by i.cout asc' )

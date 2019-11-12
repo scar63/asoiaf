@@ -463,8 +463,8 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     if($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3 && msg[individuInfo].faction == 3)
         ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_NEUTRAL_POINTS+'</span>';
 
-    if (msg[individuInfo].libelleSpecial == 'processByTwo' && !($('*[data-id="'+msg[individuInfo].id+'"]').length % 2) )
-        ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_FF_RAIDERS+'</span>';
+    // if (msg[individuInfo].libelleSpecial == 'processByTwo' && !($('*[data-id="'+msg[individuInfo].id+'"]').length % 2) )
+    //     ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_FF_RAIDERS+'</span>';
         // ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+msg[individuInfo].nom+' ne peuvent être alignés que par paires.</span>';
     if ((totalPoints > Number($("#armyPoint").val())))
         ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_POINT_CAN_EXCEED+'</span>';

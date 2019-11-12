@@ -7,10 +7,10 @@
         </div>
         <div class="col-lg-2">
             <div class="languageSwitch dropdown pull-right">
-                <a class="btn" btn-primary="" dropdown-toggle="" data-toggle="dropdown" href="#">{{ (app.request.get('_route_params')['_locale'] is defined ) and app.request.get('_route_params')['_locale'] == 'en' ? 'English' : 'Français' }}&nbsp;<span class=caret></span></a>
+                <a class="btn" btn-primary="" dropdown-toggle="" data-toggle="dropdown" href="#">{{ (app.request.get('_route_params')['_locale'] is defined ) and app.request.get('_route_params')['_locale'] ?  app.request.get('_route_params')['_locale']|getLanguageSelect : 'Français'}}&nbsp;<span class=caret></span></a>
                 <ul class=dropdown-menu>
                     <li><a href="{{ path(('Locale' not in app.request.get('_route')) ? app.request.get('_route')~'Locale'  : app.request.get('_route') , ('hash' in app.request.get('_route_params')|keys) ? {'_locale': 'fr', 'hash': app.request.get('_route_params')['hash']} : {'_locale': 'fr'}) }}">Français</a></li>
-                    <li><a href="{{ path(('Locale' not in app.request.get('_route')) ? app.request.get('_route')~'Locale'  : app.request.get('_route') , ('hash' in app.request.get('_route_params')|keys) ? {'_locale': 'en', 'hash': app.request.get('_route_params')['hash']} : {'_locale': 'en'}) }}">English</a></li>
+                    <li><a href="{{ path(('Locale' not in app.request.get('_route')) ? app.request.get('_route')~'Locale'  : app.request.get('_route') , ('hash' in app.request.get('_route_params')|keys) ? {'_locale': 'en', 'hash': app.request.get('_route_params')['hash']} : {'_locale': 'en'}) }}">Anglais</a></li>
                     <li><a href="{{ path(('Locale' not in app.request.get('_route')) ? app.request.get('_route')~'Locale'  : app.request.get('_route') , ('hash' in app.request.get('_route_params')|keys) ? {'_locale': 'es', 'hash': app.request.get('_route_params')['hash']} : {'_locale': 'es'}) }}">Espagnol</a></li>
                 </ul>
             </div>

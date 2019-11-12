@@ -81,7 +81,8 @@ $('#btnlistCartesTactiques').on('click', function () {
         $.ajax({
             method: "POST",
             url: Routing.generate('ajaxGetLisTacticalCards'),
-            data: { idFaction: idFaction,idCmd: idCmd, idsUC: idsUC, idsNUC: idsNUC, nattchID: nattchID, isTogetTacticalCards: true  },
+            data: { idFaction: idFaction,idCmd: idCmd, isTogetTacticalCards: true  },
+            // data: { idFaction: idFaction,idCmd: idCmd, idsUC: idsUC, idsNUC: idsNUC, nattchID: nattchID, isTogetTacticalCards: true  },
         })
         .done(function( msg ) {
 

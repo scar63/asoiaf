@@ -629,6 +629,7 @@ function clearResume()
 {
     $(".commandantNameResume").empty();
     $(".pointResume").html("0");
+    $(".pointNeutralie").empty();
     $(".listCombatUnitNameResume").empty();
     $(".listNonCombatUnitNameResume").empty();
 }

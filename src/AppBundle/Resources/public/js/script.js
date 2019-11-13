@@ -11,8 +11,8 @@ $('#factionSelect').on('change', function () {
     var infoFactionSelect = '<input type="hidden" name="factionID" value="'+factionId+'"/>';
     $(".factionNameResume").empty().append($(this).find("option:selected").text()+infoFactionSelect);
 
-    //si faciotn szelect == lanister alrs on check si les individues on un cas specila attachUnitAdverse) si c'sety le ca on le set
-    if(factionId == 2) {
+    //si faciotn szelect == lanister ou stark alrs on check si les individues on un cas specila attachUnitAdverse) si c'sety le ca on le set
+    if(factionId == 2 || factionId == 1) {
         //on peuple les individus attch à l'adversaire
         $.ajax({
             method: "POST",

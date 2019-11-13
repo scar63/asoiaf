@@ -496,7 +496,8 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
         ul += ' disabled ';
     else if(msg[individuInfo].type != 1)
     {
-        if(typeId != 1 && (msg[individuInfo].libelleSpecial != 'processByTwo') && (msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || (msg[individuInfo].realName != "" && $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 )))
+        // if(typeId != 1 && (msg[individuInfo].libelleSpecial != 'processByTwo') && (msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || (msg[individuInfo].realName != "" && $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 )))
+         if(typeId != 1 && (msg[individuInfo].libelleSpecial != 'processByTwo') && (msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 )))
             ul += ' disabled ';
 
         if(typeId != 1 && msg[individuInfo].type == 1 && msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length > 1 ))

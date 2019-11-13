@@ -460,7 +460,9 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     coutNeutral += Number($(this).html());
     });
 
-    var neutralLimit = ((Number(msg[individuInfo].cout) + coutNeutral) / totalPoints)  *100;
+    // var neutralLimit = ((Number(msg[individuInfo].cout) + coutNeutral) / totalPoints)  *100;
+    var on = Number($(".onPoints").html());
+    var neutralLimit = (coutNeutral / on)  *100;
     if($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3 && msg[individuInfo].faction == 3)
         ul += '<span class="row alert alert-danger col-lg-12 col-xs-12" style="margin-left: 0">'+TWIG.ALERT_NEUTRAL_POINTS+'</span>';
 
@@ -587,7 +589,8 @@ function checkIfOutOfScore(){
         coutNeutral += Number($(this).html());
     });
 
-    var neutralLimit = (((coutNeutral - pointresume ) / (pointresume)) +1)  *100;
+    // var neutralLimit = (((coutNeutral - pointresume ) / (pointresume)) +1)  *100;
+    var neutralLimit = (coutNeutral / on)  *100;
     if(($(".pointResume").html() != 0 && neutralLimit > 50  && $("#factionSelect option:selected").val() != 3))
         $('#limitOutNCU').removeClass('hidden');
     else if(!$('#limitOutNCU').hasClass('hidden'))
@@ -595,7 +598,7 @@ function checkIfOutOfScore(){
 
 
 
-        if($('.listCombatUnitNameResume').find("*[data-special='processByTwo']").length%2 != 0)
+    if($('.listCombatUnitNameResume').find("*[data-special='processByTwo']").length%2 != 0)
         $('#processByTwo').removeClass('hidden');
     else if(!$('#processByTwo').hasClass('hidden'))
         $('#processByTwo').addClass('hidden');
@@ -614,6 +617,8 @@ function checkIfOutOfScore(){
 
 
 $(document).ready(function() {
+    $("#armyPoint").val('40');
+    $(".onPoints").html('40');
     //$(".factionNameResume").empty().append($("#factionSelect option:selected").text());
     // $('#commandSelect').select2();
     // $('#commandSelect').select2();

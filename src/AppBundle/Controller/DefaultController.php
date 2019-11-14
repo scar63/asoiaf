@@ -238,6 +238,9 @@ class DefaultController extends Controller
                 'faction' => $uc->getFaction()->getId(),
                 'isOnlySetWhenCmdSelect' => $uc->isOnlySetWhenCmdSelect(),
                 'hasAttachId' => (!empty($uc->getAttachId())?$uc->getAttachId()->getId():0),
+                'pathTactilCardFirst' => (($request->get('type') == 1) ? $pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardFirst() : null),
+                'pathTactilCardSecond' => (($request->get('type') == 1) ? $pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardSecond() : null),
+                'pathTactilCardThird' => (($request->get('type') == 1) ? $pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardThird() : null),
             );
         }
 

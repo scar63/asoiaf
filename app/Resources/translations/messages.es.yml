@@ -38,3 +38,4 @@ ALERT_POINT_CAN_EXCEED: "El total de puntos no puede exceder el límite de tama�
 ALERT_FF_RAIDERS: "Las unidades Asaltantes del Pueblo Libre sólo pueden añadirse a ejércitos en pares de 2."
 ALERT_NEUTRAL_POINTS: "Las unidades neutrales nunca pueden representar más del 50% del total de sus puntos."
 ALERT_COMMANDER: "Debe incluir un Comandante en su ejército."
+ALERT_SELECT_FACTION: "Por favor selecciona una facción"

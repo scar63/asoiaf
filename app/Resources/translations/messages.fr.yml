@@ -38,3 +38,4 @@ ALERT_POINT_CAN_EXCEED: "Le total des points ne peut pas dépasser la limite de 
 ALERT_FF_RAIDERS: "L'unité Pillards du Peuple Libre ne peut être ajoutée que par paires."
 ALERT_NEUTRAL_POINTS: "Les unités Neutres ne peuvent jamais composer plus de 50% de votre total de points."
 ALERT_COMMANDER: "Vous devez inclure 1 Commandant à votre armée."
+ALERT_SELECT_FACTION: "Veuillez selectionner une faction"

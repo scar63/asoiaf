@@ -46,28 +46,28 @@ $(document).on('click', '.coutAdversInclude', function () {
 
 $('#btnListCmd').on('click', function () {
     if ($('#factionSelect').find("option:selected").val() == '')
-        alert('Veuillez selectionner une faction');
+        alert(TWIG.ALERT_SELECT_FACTION);
     else
         getIndividus($('#factionSelect').find("option:selected").val(), 1, '.listCmd', '#modalListCmd', 'btnAddCmd');
 });
 
 $('#btnListUC').on('click', function () {
    if($('#factionSelect').find("option:selected").val() == '')
-       alert('Veuillez selectionner une faction');
+       alert(TWIG.ALERT_SELECT_FACTION);
     else
         getIndividus($('#factionSelect').find("option:selected").val(), 2, '.listUC', '#modalListUC', 'btnAddUc');
 });
 
 $('#btnListNUC').on('click', function () {
     if($('#factionSelect').find("option:selected").val() == '')
-        alert('Veuillez selectionner une faction');
+        alert(TWIG.ALERT_SELECT_FACTION);
     else
     getIndividus($('#factionSelect').find("option:selected").val(), 4, '.listNUC', '#modalListNUC', 'btnAddNUc');
 });
 
 $('#btnlistCartesTactiques').on('click', function () {
     if($('#factionSelect').find("option:selected").val() == '')
-        alert('Veuillez selectionner une faction');
+        alert(TWIG.ALERT_SELECT_FACTION);
     else
     {
         //on recup l'id du cmd

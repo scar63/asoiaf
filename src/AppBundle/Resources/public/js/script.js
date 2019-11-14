@@ -1,4 +1,5 @@
 $('#resetForm').on('click', function () {
+    $('#factionSelect  option[value=""]').prop("selected", true);
     location.reload();
 });
 $('#armyPoint').on('change', function () {
@@ -635,7 +636,7 @@ $(document).ready(function() {
 
 function clearResume()
 {
-    $('#factionSelect  option[value=""]').prop("selected", true);
+
     $(".commandantNameResume").empty();
     $(".pointResume").html("0");
     $(".pointNeutralie").empty();

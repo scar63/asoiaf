@@ -1,5 +1,5 @@
 $('#resetForm').on('click', function () {
-    location.reload(true);
+    location.reload();
 });
 $('#armyPoint').on('change', function () {
     $(".onPoints").html($(this).val());
@@ -190,7 +190,7 @@ function addUC(idUCToAdd, idParentToAttach = null)
             var ul = '';
             if(idParentToAttach !== null) {
                 if(individuInfo.faction == 3)
-                    ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutNeutral">' + individuInfo.cout + '</span>)';
+                    ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutAttach coutNeutral">' + individuInfo.cout + '</span>)';
                 else
                     ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutAttach">' + individuInfo.cout + '</span>)';
                 ul += '<span style="margin-left: 10px">';
@@ -231,7 +231,10 @@ function addUC(idUCToAdd, idParentToAttach = null)
                     async:false
                 })
                 .done(function( individuInfo ) {
-                    ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'&nbsp;(<span class="coutAttach">'+individuInfo.cout+'</span>)';
+                    if(individuInfo.faction == 3)
+                        ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'&nbsp;(<span class="coutAttach coutNeutral">'+individuInfo.cout+'</span>)';
+                    else
+                        ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'&nbsp;(<span class="coutAttach">'+individuInfo.cout+'</span>)';
                     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
                     // if(individuInfo.typeId == 1)
                         ul += 'data-isncucmd="true"';
@@ -270,7 +273,7 @@ function addNCU(individuInfo)
 {
     var ul = '';
     if(individuInfo.faction == 3)
-        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutNeutral">'+individuInfo.cout+'</span>)';
+        ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutNeutral coutNUC">'+individuInfo.cout+'</span>)';
     else
         ul += '<li><span class="col-xs-11">'+individuInfo.nom+'&nbsp;(<span class="coutNUC">'+individuInfo.cout+'</span>)';
     ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
@@ -306,7 +309,10 @@ $(document).on('click', '.btnAddAttachment', function (e) {
     })
     .done(function( individuInfo ) {
         var ul = '';
-        ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'&nbsp;(<span class="coutAttach">'+individuInfo.cout+'</span>)';
+        if(individuInfo.faction == 3)
+            ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'&nbsp;(<span class="coutAttach coutNeutral">'+individuInfo.cout+'</span>)';
+        else
+            ul += '<div class="col-xs-11 col-xs-offset-1" >avec '+individuInfo.nom+'&nbsp;(<span class="coutAttach">'+individuInfo.cout+'</span>)';
         ul += '<span style="margin-left: 10px"><span class="glyphicon glyphicon-trash attchment" style="cursor: pointer" data-id="'+individuInfo.id+'" data-realname="'+individuInfo.realName+'"';
         if(individuInfo.typeId == 1)
             ul += 'data-isncucmd="true"';

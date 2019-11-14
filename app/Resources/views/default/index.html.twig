@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label for="factionSelect">{{ 'LABEL_FACTION' |trans }}</label>
                                 <select class="form-control" id="factionSelect">
-                                    <option></option>
+                                    <option value=""></option>
                                     {% for faction in listFaction  %}
                                         <option value="{{ faction.id }}">
                                             {{ faction.nom }}

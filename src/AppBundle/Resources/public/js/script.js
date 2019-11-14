@@ -191,9 +191,9 @@ function addUC(idUCToAdd, idParentToAttach = null)
             var ul = '';
             if(idParentToAttach !== null) {
                 if(individuInfo.faction == 3)
-                    ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutAttach coutNeutral">' + individuInfo.cout + '</span>)';
+                    ul += '<div class="col-xs-11" style="margin-left: -4.2em"><li>' + individuInfo.nom + '&nbsp;(<span class="coutAttach coutNeutral">' + individuInfo.cout + '</span>)';
                 else
-                    ul += '<div class="col-xs-11 col-xs-offset-1" >et ' + individuInfo.nom + '&nbsp;(<span class="coutAttach">' + individuInfo.cout + '</span>)';
+                    ul += '<div class="col-xs-11" style="margin-left: -4.2em"><li>' + individuInfo.nom + '&nbsp;(<span class="coutAttach">' + individuInfo.cout + '</span>)';
                 ul += '<span style="margin-left: 10px">';
                 if(individuInfo.isOnlySetWhenAttach)
                     ul += '<span class="glyphicon glyphicon-trash attchment isOnlySetWhenAttach"'
@@ -203,7 +203,7 @@ function addUC(idUCToAdd, idParentToAttach = null)
                 if (individuInfo.typeId == 1)
                     ul += 'data-isncucmd="true"';
                 ul += '></span></span>' +
-                    '<input type="hidden" name="nattchID[]" value="' + individuInfo.id + '_' + idParentToAttach + '"></div>';
+                    '<input type="hidden" name="nattchID[]" value="' + individuInfo.id + '_' + idParentToAttach + '"></li></div>';
             }
             else
             {

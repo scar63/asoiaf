@@ -490,6 +490,11 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     if(typeId == "1" || typeId == "3" || typeId == "4") {
         ul += '<span class="row"><img class="img-responsive col-xs-6 clearfix" src="'+msg[individuInfo].pathRecto+'">';
         ul += '<img class="img-responsive col-xs-6" src="'+msg[individuInfo].pathVerso+'"></span>';
+        if(typeId == "1") {
+            ul += '<span class="row"><img class="img-responsive col-xs-4" src="' + msg[individuInfo].pathTactilCardFirst + '">';
+            ul += '<img class="img-responsive col-xs-4" src="' + msg[individuInfo].pathTactilCardSecond + '">';
+            ul += '<img class="img-responsive col-xs-4" src="' + msg[individuInfo].pathTactilCardThird + '"></span>';
+        }
     }
     else
         ul += '<span class="row"><img class="img-responsive col-xs-12" src="'+msg[individuInfo].pathVerso+'"></span>';

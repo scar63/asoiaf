@@ -428,10 +428,10 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
             // if((msg[individuInfo].type == 1  && msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length == 1 )) || (msg[individuInfo].libelleSpecial == 'processByTwo' && $('*[data-id="'+msg[individuInfo].id+'"]').length < 2 ))
             if((msg[individuInfo].type == 1  && msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length == 1 )) || (msg[individuInfo].libelleSpecial == 'processByTwo' ))
                 ul += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd, idUCrattach);
-            else if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ) || (msg[individuInfo].realName != "" && $('*[data-realname="'+msg[individuInfo].realName+'"]').length != 0 ))
-                ulDisabled += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd);
-            else
+            else if(!msg[individuInfo].isUnique)
                 ul += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd, idUCrattach);
+            else if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ))
+                ulDisabled += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd);
         }
 
         $(selectId).empty();

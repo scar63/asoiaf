@@ -22,12 +22,10 @@ $('#factionSelect').on('change', function () {
         })
             .done(function( individusInfo ) {
                 $(".listNameAdversInclude").empty();
-                var ul = '<ul class="">';
+                var ul = '';
                 for(var [key, individuInfo]  of Object.entries(individusInfo)) {
-                    ul += '<li><span class="col-lg-11"><input class="coutAdversInclude" type="checkbox" value="' + individuInfo.cout + '"> Inclure <span class="nameAdversInclude">"' + individuInfo.nom + '&nbsp;(' + individuInfo.cout + ')"</span> ';
-                    ul += '</li>';
+                    ul += '<input class="coutAdversInclude" type="checkbox" value="' + individuInfo.cout + '">&nbsp;&nbsp;'+ TWIG.RESUME_INCLUDE_HOSTAGE+'<span class="nameAdversInclude"> "' + individuInfo.nom + '&nbsp;(' + individuInfo.cout + ')"</span>';
                 }
-                ul += '</ul>';
                 $(".listNameAdversInclude").append(ul);
                 $(".listNameAdversInclude").show();
             });
@@ -482,7 +480,7 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     ul += '<span class="row">' + msg[individuInfo].nom;
     ul += '<br>';
     if (selectId != '.listCmd')
-        ul += msg[individuInfo].cout + ' points - ';
+        ul += msg[individuInfo].cout + ' '+TWIG.MODAL_POINTS+' - ';
     ul += msg[individuInfo].typeIndividu;
     if(msg[individuInfo].type == 1)
         ul += '<span style="margin-left: 5px"><img src="/asoiaf/web/bundles/app/images/sigle-commandant.png"></span>';

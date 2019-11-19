@@ -14,6 +14,8 @@ BUTTON_COMMANDER: "Añadir un Comandante"
 BUTTON_UNIT_COMBAT: "Añadir una Unidad Combatiente"
 BUTTON_NO_UNIT_COMBAT: "Añadir una Unidad No Combatiente"
 BUTTON_SHOW_TACTICAL_CARDS: "Ver los cartas de Tácticas"
+BUTTON_ADD: "Añadir"
+BUTTON_ADD_ATTCHEMENT: "Agregar un archivo adjunto"
 BUTTON_PDF: "Generar un PDF"
 BUTTON_COPY: "Copiar en el portapapeles"
 

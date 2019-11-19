@@ -127,7 +127,7 @@ $(document).on('click', '.btnAddCmd', function () {
 
             if($(".listCombatUnitNameResume").find('[data-isncucmd="true"]').length != 0) {
                 var random = Math.round(new Date().getTime() + (Math.random() * 100));
-                $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").replaceWith('<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>');
+                $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").replaceWith('<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">'+TWIG.BUTTON_ADD_ATTCHEMENT+'</button>');
             }
 
             //si cmd est NCU alors ajoute direct à attement
@@ -218,7 +218,7 @@ function addUC(idUCToAdd, idParentToAttach = null)
             }
 
             if(!individuInfo.isOnlySetWhenAttach && !individuInfo.isOnlySetWhenCmdSelect)
-                ul += '<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">Ajouter un attachement</button>';
+                ul += '<button id="attachFrom'+random+'" type="button" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="'+individuInfo.id+'">'+TWIG.BUTTON_ADD_ATTCHEMENT+'</button>';
 
             if(individuInfo.isOnlySetWhenCmdSelect)
             {
@@ -372,7 +372,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
                 if(idFirst) {
                     var res = idFirst.split("_");
                     var random = Math.round(new Date().getTime() + (Math.random() * 100));
-                    var btn = '<button type="button" id="attachFrom' + random + '" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + res[1] + '">Ajouter un attachement</button>';
+                    var btn = '<button type="button" id="attachFrom' + random + '" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + res[1] + '">'+TWIG.BUTTON_ADD_ATTCHEMENT+'</button>';
                     $(".listCombatUnitNameResume").find('[data-isncucmd="true"]').closest("div").replaceWith(btn);
                 }
 
@@ -394,7 +394,7 @@ $(document).on('click', '.listCombatUnitNameResume .glyphicon.glyphicon-trash, .
                 else
                 {
                     var random = Math.round(new Date().getTime() + (Math.random() * 100));
-                    var btn = '<button type="button" id="attachFrom' + random + '" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + parent + '">Ajouter un attachement</button>';
+                    var btn = '<button type="button" id="attachFrom' + random + '" class="btn btn-primary btn-sm btnListAttchment" style="margin-left: 3.5em;" data-iducrattach="' + parent + '">'+TWIG.BUTTON_ADD_ATTCHEMENT+'</button>';
                     $(toDelete).parent().parent().replaceWith(btn);
                 }
             }
@@ -519,7 +519,7 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
     else if(btnToAdd = 'btnAddCmd' && $('.commandantNameResume').html() != "")
         ul += ' disabled ';
 
-        ul += ' >Ajouter</button></span>';
+        ul += ' >'+TWIG.BUTTON_ADD+'</button></span>';
     ul += '</li><hr>';
 
     return ul;

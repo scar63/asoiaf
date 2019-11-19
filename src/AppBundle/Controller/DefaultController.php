@@ -231,7 +231,7 @@ class DefaultController extends Controller
                 'cout' => $uc->getCout(),
                 'pathVerso' => (!empty($pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathVersoPicture()) && $pathVerso != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathVerso : $noAvailableUnit),
                 'pathRecto' => (!empty($pathRecto = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathRectoPicture()) && $pathRecto != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathRecto : $noAvailableUnit),
-                'typeIndividu' => $uc->getTypeIndividu()->getNom(),
+                'typeIndividu' => $uc->getTypeIndividu()->getNom($request->get('_locale')),
                 'type' => $uc->getType()->getId(),
                 'isUnique' => $uc->getIsUnique(),
                 'factionId' => $uc->getFaction()->getId(),

@@ -416,7 +416,7 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
     $.ajax({
         method: "POST",
         url: Routing.generate('ajaxGetListIndividus'),
-        data: { faction: factionId, type: typeId, individuId: idUCrattach, idCmd: idCmd },//attention arg !!idCmd: idCmd
+        data: { faction: factionId, type: typeId, individuId: idUCrattach, idCmd: idCmd, '_locale': $('.languageChoose').val() },//attention arg !!idCmd: idCmd
     })
     .done(function( msg ) {
 

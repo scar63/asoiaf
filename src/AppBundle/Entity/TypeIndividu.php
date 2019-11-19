@@ -58,8 +58,50 @@ class TypeIndividu
      *
      * @return string
      */
-    public function getNom()
+    public function getNom($locale = null)
     {
+        if(!empty($locale))
+        {
+            if($locale == 'en' )
+            {
+                switch ($this->nom) {
+                    case 'Infanterie':
+                        $this->setNom('Infantry');
+                        break;
+                    case 'Cavalerie':
+                        $this->setNom('Cavalry');
+                        break;
+                    case 'Monstre':
+                        $this->setNom('Monster');
+                        break;
+                    case 'Machine de guerre':
+                        $this->setNom('War Machine');
+                        break;
+                }
+            }
+
+            if($locale == 'es' )
+            {
+                switch ($this->nom) {
+                    case 'Infanterie':
+                        $this->setNom('Infantería');
+                        break;
+                    case 'Cavalerie':
+                        $this->setNom('Caballería');
+                        break;
+                    case 'Monstre':
+                        $this->setNom('Monstruo');
+                        break;
+                    case 'Machine de guerre':
+                        $this->setNom('Máquina de guerra');
+                        break;
+                }
+            }
+
+
+            return $this->nom;
+        }
+
         return $this->nom;
     }
 

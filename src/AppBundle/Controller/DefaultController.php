@@ -219,8 +219,10 @@ class DefaultController extends Controller
 //        } 
 
         $manager = $this->get('assets.packages');
-        $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.png');
-        $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.png');
+        if($request->get('type') == 1)
+            $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_individu_available.jpg');
+        else
+            $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.jpg');
         $arrayCollection = array();
         foreach($listUC as $uc) {
             $arrayCollection[] = array(

@@ -75,23 +75,30 @@ class DefaultController extends Controller
     public function copyToClipboard(Request $request)
     {
         $cmdInfo= $this->getDoctrine()->getRepository(Individu::class)->findOneById($request->get('idCmd'));
-        $resume = 'Commandant: '.$cmdInfo->getNom().' ('.$cmdInfo->getCout().')<br>';
-        $resume .= 'Points: '.$request->get('points').'('.$request->get('neutral').' Neutralité )<br>';
+        $resume = (!empty($armyName = $request->get('armyName')) ? $armyName : 'N/R').'<br><br>';
+        $resume .= 'Faction: '.$request->get('faction').'<br>';
+        $resume .= 'Commandant: '.$cmdInfo->getNom().' ('.$cmdInfo->getCout().')<br>';
+        $resume .= 'Points: '.$request->get('points').'('.$request->get('neutral').' Neutralité )<br><br>';
+
         $resume .= 'Unités de combat: <br>';
         if(!empty($request->get('idsUC')))
             foreach($request->get('idsUC') as $ucId){
                 $info = $this->getDoctrine()->getRepository(Individu::class)->findOneById($ucId);
                 $resume .= '- '.$info->getNom().' ('.$info->getCout().')<br>';
+
+                if(!empty($request->get('nattchID')))
+                    foreach($request->get('nattchID') as $natchID){
+                        $infoAttch = explode('_', $natchID);
+                        if($infoAttch[1] == $ucId)
+                        {
+                            $infoAttchTmp = $this->getDoctrine()->getRepository(Individu::class)->findOneById($infoAttch[0]);
+                            $resume .= '  avec '.$infoAttchTmp->getNom().' ('.$info->getCout().')<br>';
+                        }
+                    }
             }
         $resume .= 'Unités non-combattantes: <br>';
         if(!empty($request->get('idsNUC')))
             foreach($request->get('idsNUC') as $ucId){
-                $info = $this->getDoctrine()->getRepository(Individu::class)->findOneById($ucId);
-                $resume .= '- '.$info->getNom().' ('.$info->getCout().')<br>';
-            }
-        $resume .= 'Attachements: <br>';
-        if(!empty($request->get('nattchID')))
-            foreach($request->get('nattchID') as $ucId){
                 $info = $this->getDoctrine()->getRepository(Individu::class)->findOneById($ucId);
                 $resume .= '- '.$info->getNom().' ('.$info->getCout().')<br>';
             }

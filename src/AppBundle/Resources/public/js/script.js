@@ -144,15 +144,13 @@ $(document).on('click', '.btnAddUc', function () {
 
 $(document).on('click', '#copyToClipboard', function () {
 
-
-    var resume = 'Faction: '+$("#factionSelect option:selected").html().trim()+'\n';
-
-
     $.ajax({
         method: "POST",
         url: Routing.generate('copyToClipboard'),
         async: false,
         data: {
+            armyName:  $('#armyName').val(),
+            faction: $("#factionSelect option:selected").html().trim(),
             points: $('.pointResume').html()+'/'+$('.onPoints').html(),
             neutral: $('.pointNeutralie').html(),
             idCmd: $("input[name='cmdID']").val(),
@@ -163,7 +161,7 @@ $(document).on('click', '#copyToClipboard', function () {
                 return $(this).val();
             }).get(),
             nattchID: $("input[name='nattchID[]']").map(function () {
-                return $(this).val().split("_")[0];
+                return $(this).val();
             }).get()
         }
     })

@@ -124,7 +124,8 @@
                     <h4 class="modal-title" id="myModalLabel">{{ 'LABEL_UNIT_COMBAT'|trans }}</h4>
                 </div>
                 <div class="modal-body" id="bodyListUC" style="overflow-x: auto">
-                    <ul class="listUC"></ul>
+                    <input type="text" id="searchModalUC" class="searchInModal" onkeyup="searchModal('ModalUC')" placeholder="{{ 'SEARCH_BY_NAME' |trans }}">
+                    <ul id="listModalUC" class="listUC"></ul>
                 </div>
                 <div class="modal-footer"></div>
             </div>
@@ -138,7 +139,8 @@
                     <h4 class="modal-title">{{ 'LABEL_NO_UNIT_COMBAT'|trans }}</h4>
                 </div>
                 <div class="modal-body"  id="bodyListNUC"  style="overflow-x: auto">
-                    <ul class="listNUC"></ul>
+                    <input type="text" id="searchModalNUC" class="searchInModal" onkeyup="searchModal('ModalNUC')" placeholder="{{ 'SEARCH_BY_NAME' |trans }}">
+                    <ul id="listModalNUC" class="listNUC"></ul>
                 </div>
                 <div class="modal-footer"></div>
             </div>
@@ -153,7 +155,8 @@
                     <h4 class="modal-title">{{ 'LABEL_COMMANDER'|trans }}</h4>
                 </div>
                 <div class="modal-body"  id="bodyListCmd"  style="overflow-x: auto">
-                    <ul class="listCmd"></ul>
+                    <input type="text" id="searchModalCmd" class="searchInModal" onkeyup="searchModal('ModalCmd')" placeholder="{{ 'SEARCH_BY_NAME' |trans }}">
+                    <ul id="listModalCmd" class="listCmd"></ul>
                 </div>
                 <div class="modal-footer"></div>
             </div>
@@ -167,7 +170,8 @@
                     <h4 class="modal-title">{{ 'TITLE_ATTACHEMENTS'|trans }}</h4>
                 </div>
                 <div class="modal-body"  id="bodyListAttachment"  style="overflow-x: auto">
-                    <ul class="listAttachment"></ul>
+                    <input type="text" id="searchModalAttch" class="searchInModal" onkeyup="searchModal('ModalAttch')" placeholder="{{ 'SEARCH_BY_NAME' |trans }}">
+                    <ul id="listModalAttch" class="listAttachment"></ul>
                 </div>
                 <div class="modal-footer"></div>
             </div>

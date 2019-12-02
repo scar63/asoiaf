@@ -13,6 +13,11 @@
     margin-bottom: 12px; /* Add some space below the input */
 }
 
-#listModalAttch {
+#listModalAttch,  #listModalCmd, #listModalNUC, #listModalUC {
     background-color: #f6f6f6; /* Grey background color */
+}
+
+
+#listModalAttch li,  #listModalCmd li, #listModalNUC li, #listModalUC li{
+    border-bottom: 1px solid #8c8c8c;
 }

@@ -430,9 +430,10 @@ function getIndividus(factionId, typeId, selectId, modalId, btnToAdd, idUCrattac
             else if(msg[individuInfo].isUnique &&  ($('*[data-id="'+msg[individuInfo].id+'"]').length != 0 ))
                 ulDisabled += buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnToAdd);
         }
-
         $(selectId).empty();
-        $(selectId).append(ul += ulDisabled);
+        ul += ulDisabled;
+        $(selectId).append(ul);
+        sortList(modalId),
         $('.searchInModal').val('');
         $(modalId).modal('show');
     });
@@ -519,7 +520,7 @@ function buildLi(msg, individuInfo, selectId, typeId, idAttchBtnToReplace, btnTo
         ul += ' disabled ';
 
         ul += ' >'+TWIG.BUTTON_ADD+'</button></span>';
-    ul += '</li><hr>';
+    ul += '</li>';
 
     return ul;
 }
@@ -662,6 +663,29 @@ function searchModal(toExplote) {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
+        }
+    }
+}
+
+function sortList(modalId) {
+    var listTmp, list, i, switching, b, shouldSwitch;
+    listTmp = document.getElementById(modalId.replace('#', ''));
+    list = listTmp.querySelector('ul');
+    switching = true;
+    while (switching) {
+        switching = false;
+        b = list.getElementsByTagName("LI");
+        // Loop through all list-items:
+        for (i = 0; i < (b.length - 1); i++) {
+            shouldSwitch = false;
+            if (b[i].querySelector('button').hasAttribute('disabled') == true && b[i + 1].querySelector('button').hasAttribute('disabled') == false) {
+                shouldSwitch = true;
+                break;
+            }
+        }
+        if (shouldSwitch) {
+            b[i].parentNode.insertBefore(b[i + 1], b[i]);
+            switching = true;
         }
     }
 }

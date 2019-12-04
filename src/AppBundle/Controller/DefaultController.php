@@ -134,13 +134,17 @@ class DefaultController extends Controller
             $query = $em->createQuery( 'SELECT i FROM AppBundle:Individu i WHERE i.id in (:faction)' )
                 ->setParameter('faction', $result);
             foreach($query->getResult() as $uc) {
+                if($uc->getType()->getId() != 2)
+                    $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_individu_available.jpg');
+                else
+                    $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.jpg');
                 $arrayCollection[] = array(
                     'id' => $uc->getId(),
                     'nom' => $uc->getNom(),
                     'cout' => $uc->getCout(),
-                    'pathTactilCardFirst' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardFirst(),
-                    'pathTactilCardSecond' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardSecond(),
-                    'pathTactilCardThird' => $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardThird(),
+                    'pathTactilCardFirst' => (!empty($pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardFirst()) && $pathVerso != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathVerso : $noAvailableUnit),
+                    'pathTactilCardSecond' => (!empty($pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardSecond()) && $pathVerso != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathVerso : $noAvailableUnit),
+                    'pathTactilCardThird' => (!empty($pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardThird()) && $pathVerso != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathVerso : $noAvailableUnit),
                     'typeIndividu' => $uc->getTypeIndividu()->getNom(),
                     'type' => $uc->getType()->getId(),
                     'isUnique' => $uc->getIsUnique(),
@@ -226,12 +230,12 @@ class DefaultController extends Controller
 //        } 
 
         $manager = $this->get('assets.packages');
-        if($request->get('type') == 1)
-            $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_individu_available.jpg');
-        else
-            $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.jpg');
         $arrayCollection = array();
         foreach($listUC as $uc) {
+            if( $uc->getType()->getId() == 2)
+                $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_individu_available.jpg');
+            else
+                $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.jpg');
             $arrayCollection[] = array(
                 'id' => $uc->getId(),
                 'nom' => $uc->getNom(),
@@ -247,9 +251,9 @@ class DefaultController extends Controller
                 'faction' => $uc->getFaction()->getId(),
                 'isOnlySetWhenCmdSelect' => $uc->isOnlySetWhenCmdSelect(),
                 'hasAttachId' => (!empty($uc->getAttachId())?$uc->getAttachId()->getId():0),
-                'pathTactilCardFirst' => (($request->get('type') == 1) ? $pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardFirst() : null),
-                'pathTactilCardSecond' => (($request->get('type') == 1) ? $pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardSecond() : null),
-                'pathTactilCardThird' => (($request->get('type') == 1) ? $pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardThird() : null),
+                'pathTactilCardFirst' => (($request->get('type') == 1) ?(!empty($pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardFirst()) && $pathVerso != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathVerso : $noAvailableUnit) : null),
+                'pathTactilCardSecond' => (($request->get('type') == 1) ? (!empty($pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardSecond()) && $pathVerso != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathVerso : $noAvailableUnit) : null),
+                'pathTactilCardThird' => (($request->get('type') == 1) ? (!empty($pathVerso = $manager->getUrl('bundles/app/images/uniteus/').$uc->getPathTactilCardThird()) && $pathVerso != '/asoiaf/web/bundles/app/images/uniteus/' ? $pathVerso : $noAvailableUnit) : null),
             );
         }
 

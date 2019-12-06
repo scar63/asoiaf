@@ -232,7 +232,7 @@ class DefaultController extends Controller
         $manager = $this->get('assets.packages');
         $arrayCollection = array();
         foreach($listUC as $uc) {
-            if( $uc->getType()->getId() == 2)
+            if( $uc->getType()->getId() != 2)
                 $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_individu_available.jpg');
             else
                 $noAvailableUnit =  $manager->getUrl('bundles/app/images/no_image_available.jpg');
